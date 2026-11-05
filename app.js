@@ -306,6 +306,8 @@ function hierarchy(){
  const nav=$('breadcrumbs');nav.replaceChildren();
  if(visited.length||path.length)nav.append(button('‹ Back',navigateBack,'back'));
  const steps=breadcrumbSteps();
+ // The reverse-side landing page has no breadcrumb trail; detail pages keep theirs.
+ if(mode==='pac'&&path.at(-1)==='back-index')return;
  if(steps.length<2)return;
  const trail=E('div','crumb-trail');trail.setAttribute('aria-label','Current location');
  steps.forEach((step,i)=>{
@@ -366,7 +368,7 @@ function pacGroupIcons(group){
  return wrap;
 }
 function showPowerList(){
- setHeading('Powers & Abilities','PAC · Front');
+ setHeading('Powers & Abilities');
  const content=$('view');
  for(const group of groups){
   const candidates=db.pac.filter(p=>p.group===group&&(!query||searchText(p)));
@@ -380,7 +382,7 @@ function showPowerList(){
  }
 }
 function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const paper=E('div','rule-paper');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));paper.append(header,p.inlineContent?tokenContent(p.inlineContent,{type:'power',id:p.id}):textNode(p.text,{type:'power',id:p.id}));article.append(paper);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
-function showBackIndex(){setHeading('PAC · Reverse Side','Reference card');const v=$('view');const stack=E('div','stack');db.back.filter(b=>b.id!=='back-terrain-values').forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows());const terrainValues=db.back.find(b=>b.id==='back-terrain-values');if(terrainValues)v.append(row('',terrainValues.name,()=>move(['back:'+terrainValues.id])))}
+function showBackIndex(){setHeading('PAC · Reverse Side');const v=$('view');const stack=E('div','stack');db.back.filter(b=>b.id!=='back-terrain-values').forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows());const terrainValues=db.back.find(b=>b.id==='back-terrain-values');if(terrainValues)v.append(row('',terrainValues.name,()=>move(['back:'+terrainValues.id])))}
 function terrainRows(){
  const stack=E('div','terrain-accordions');
  for(const [title,id,color] of db.terrain){
@@ -487,7 +489,7 @@ function showRule(s){setHeading(s.id+' '+s.title,'Comprehensive Rules','July 1, 
 function enter(s){if(s.level===1)move(['chapter:'+s.id]);else if(s.level===2)move(['chapter:'+s.chapter,'section:'+s.id]);else move(['chapter:'+s.chapter,'section:'+s.id.match(/^\d+\.\d+/)?.[0],'rule:'+s.id])}
 function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(stack)}
 function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper section-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(stack);else if(!s.text)showRule(s)}
-function showChapters(){setHeading('Comprehensive Rules','July 1, 2026');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(stack)}
+function showChapters(){setHeading('Comprehensive Rules');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(stack)}
 function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
 
 function sidebarRow(label,fn,depth=0,selected=false){
