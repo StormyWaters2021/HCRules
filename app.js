@@ -25,16 +25,81 @@ const groups=['Speed','Attack','Defense','Damage'];
 const combat=['autonomous_white','bolt','colossal_white','fist_white','flight_white','improved','run_white','shield_white','standard_white','swim_white','tiny_white','trait','vehicle_white'];
 const iconPath=(name,dark=false)=>'assets/combat/'+(dark?'dark/':'')+name+'.png';
 const linkTargets=[];let linkPattern=null;
+const contextualAbilityNames=new Set(['elevated','hindering','blocking','outdoor blocking','destroy blocking','characters','move through','adjacent']);
+const improvedRuleIds={movement:new Map(),targeting:new Map()};
 function initLinks(){
- for(const s of db.sections){if(s.id.includes('.'))linkTargets.push({term:s.id,type:'rule',id:s.id,p:9});if(s.level===3&&s.id.startsWith('27.')){const name=s.title.replace(/\s*\([^)]*\)\s*$/,'');linkTargets.push({term:name,type:'rule',id:s.id,p:6})}}
- for(const p of db.pac)linkTargets.push({term:p.name,type:'power',id:p.id,p:7});
- for(const [name,id] of db.terrain)linkTargets.push({term:name,type:'rule',id,p:3});
- for(const [term,id] of [['Improved Movement','back-1'],['Improved Targeting','back-1'],['Keyphrase Abilities','back-2'],['Inherent Abilities','back-0']])linkTargets.push({term,type:'back',id,p:2});
- const unique=new Map();for(const t of linkTargets.sort((a,b)=>b.p-a.p)){if(!unique.has(low(t.term)))unique.set(low(t.term),t)}
- const terms=[...unique.values()].sort((a,b)=>b.term.length-a.term.length);window.linkMap=new Map(terms.map(t=>[low(t.term),t]));
- const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');linkPattern=new RegExp('(?<![\\p{L}\\p{N}.])('+terms.map(t=>esc(t.term)).join('|')+')(?![\\p{L}\\p{N}])','giu');
+ linkTargets.length=0;improvedRuleIds.movement.clear();improvedRuleIds.targeting.clear();
+ for(const s of db.sections){
+  if(s.id.includes('.'))linkTargets.push({term:s.id,type:'rule',id:s.id,p:20});
+  if(/^27\.[56][a-z]$/.test(s.id)){
+   const kind=s.id.startsWith('27.5')?'movement':'targeting';
+   improvedRuleIds[kind].set(low(s.title),s.id);
+   const heading='Improved '+(kind==='movement'?'Movement':'Targeting');
+   linkTargets.push({term:heading+': '+s.title,type:'rule',id:s.id,p:16});
+   linkTargets.push({term:heading+' '+s.title,type:'rule',id:s.id,p:15});
+  }else if(s.level===3&&s.id.startsWith('27.')){
+   const name=s.title.replace(/\s*\([^)]*\)\s*$/,'');
+   if(!contextualAbilityNames.has(low(name)))linkTargets.push({term:name,type:'rule',id:s.id,p:8});
+  }
+ }
+ for(const p of db.pac)linkTargets.push({term:p.name,type:'power',id:p.id,p:9});
+ for(const [name,id] of db.terrain)linkTargets.push({term:name,type:'rule',id,p:13});
+ // Unqualified terrain words refer to the terrain rules, never to an improved ability.
+ for(const [term,id] of [['Elevated','16.5'],['Hindering','16.2'],['Blocking','16.3'],['Outdoor Blocking','16.3'],['Water','16.6']])
+  linkTargets.push({term,type:'rule',id,p:12});
+ // Terms such as "Characters" and "Adjacent" are ordinary words outside
+ // an explicitly identified Improved Movement/Targeting list.
+ for(const term of contextualAbilityNames)linkTargets.push({term,type:'context-only',id:'',p:1});
+ for(const [term,id] of [['Improved Movement','27.5'],['Improved Targeting','27.6'],['Keyphrase Abilities','back-2'],['Inherent Abilities','back-0']])
+  linkTargets.push({term,type:id.startsWith('27.')?'rule':'back',id,p:6});
+ const unique=new Map();
+ for(const target of linkTargets.sort((a,b)=>b.p-a.p)){
+  const key=low(target.term);
+  if(!unique.has(key)){
+   if(target.type==='rule'&&!byId(target.id))throw Error('Unknown rule reference '+target.id);
+   if(target.type==='power'&&!findPac(target.id))throw Error('Unknown power reference '+target.id);
+   if(target.type==='back'&&!findBack(target.id))throw Error('Unknown PAC reference '+target.id);
+   unique.set(key,target);
+  }
+ }
+ const terms=[...unique.values()].sort((a,b)=>b.term.length-a.term.length);
+ window.linkMap=new Map(terms.map(t=>[low(t.term),t]));
+ const esc=term=>term.replace(/[.*+?^$()|[\]{}\\]/g,'\\$&');
+ linkPattern=new RegExp('(?<![\\p{L}\\p{N}.])('+terms.map(t=>esc(t.term)).join('|')+')(?![\\p{L}\\p{N}])','giu');
 }
-function linkedLine(t,source){const node=E('span');if(!t){return node}let pos=0,m;linkPattern.lastIndex=0;while((m=linkPattern.exec(t))){const obj=window.linkMap.get(low(m[0]));if(!obj||obj.type===source.type&&obj.id===source.id){node.append(document.createTextNode(t.slice(pos,m.index+m[0].length)));pos=m.index+m[0].length;continue;}node.append(document.createTextNode(t.slice(pos,m.index)));const a=E('a','',m[0]);a.href='#'+obj.type+'/'+encodeURIComponent(obj.id);a.onclick=e=>{e.preventDefault();goTarget(obj.type,obj.id)};node.append(a);pos=m.index+m[0].length}node.append(document.createTextNode(t.slice(pos)));return node}
+function resolveTextReference(word,fullText,position,source){
+ const plain=low(word);
+ let ref=window.linkMap.get(plain);
+ if(contextualAbilityNames.has(plain)){
+  const prefix=fullText.slice(0,position);
+  const qualified=prefix.match(/\bImproved\s+(Movement|Targeting)\s*:\s*([^.!?]*)$/i);
+  let kind=qualified?low(qualified[1]):null;
+  if(!kind&&source?.type==='rule'){
+   if(/^27\.5[a-z]$/.test(source.id))kind='movement';
+   if(/^27\.6[a-z]$/.test(source.id))kind='targeting';
+  }
+  const id=kind&&improvedRuleIds[kind].get(plain);
+  if(id)ref={type:'rule',id};
+ }
+ return ref&&ref.type!=='context-only'?ref:null;
+}
+function linkedLine(t,source){
+ const node=E('span');if(!t)return node;
+ let pos=0,m;linkPattern.lastIndex=0;
+ while((m=linkPattern.exec(t))){
+  const ref=resolveTextReference(m[0],t,m.index,source);
+  if(!ref||(ref.type===source.type&&ref.id===source.id)){
+   node.append(document.createTextNode(t.slice(pos,m.index+m[0].length)));
+   pos=m.index+m[0].length;continue;
+  }
+  node.append(document.createTextNode(t.slice(pos,m.index)));
+  const a=E('a','rule-reference',m[0]);
+  a.href='#'+ref.type+'/'+encodeURIComponent(ref.id);
+  a.onclick=e=>{e.preventDefault();goTarget(ref.type,ref.id)};
+  node.append(a);pos=m.index+m[0].length;
+ }
+ node.append(document.createTextNode(t.slice(pos)));return node;
+}
 function glyph(src,alt='Combat symbol'){
  const key=Object.keys(symbolRegistry).find(k=>symbolRegistry[k].image===src);
  if(key)return symbolButton(key);
