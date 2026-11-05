@@ -554,3 +554,37 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
     font-size:12px;
   }
 }
+
+
+/* Consistent, high-contrast text references across the rules and PAC. */
+:root{--reference-link:#bfeaff;--reference-link-hover:#ffffff}
+:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a,
+.crumb-link{
+  color:var(--reference-link);
+  font-weight:600;
+  text-decoration-line:underline;
+  text-decoration-style:solid;
+  text-decoration-thickness:1px;
+  text-decoration-color:currentColor;
+  text-underline-offset:3px;
+}
+:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a:hover,
+.crumb-link:hover{
+  color:var(--reference-link-hover);
+  text-decoration-thickness:2px;
+}
+:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a:focus-visible,
+.crumb-link:focus-visible{color:#fff;outline:2px solid #ffcf65;outline-offset:3px}
+:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a:visited{color:var(--reference-link)}
+
+/* Wall swatch: centered black stripe at one quarter of the swatch height. */
+.terrain-swatch-wall{position:relative;overflow:hidden}
+.terrain-swatch-wall::after{
+  content:"";
+  position:absolute;
+  display:block;
+  left:0;right:0;top:37.5%;
+  height:25%;
+  background:#090909;
+  pointer-events:none;
+}
