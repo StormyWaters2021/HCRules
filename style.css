@@ -261,3 +261,117 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .shared-terrain-values .verbatim{line-height:1.65}
 .shared-terrain-values .inline-symbol-button{vertical-align:middle}
 .shared-terrain-values .symbol-art{max-width:none}
+
+
+/* Editorial refresh: comic-book navigation, quiet reference typography.
+   Back Issues is only used if licensed and installed on the visitor's device.
+   No third-party font file is redistributed by this website. */
+@font-face{
+  font-family:"Back Issues Local";
+  src:local("Back Issues BB"),local("BackIssuesBB Regular"),local("BackIssuesBB_reg");
+  font-style:normal;
+  font-weight:400 900;
+  font-display:swap;
+}
+:root{
+  --display-font:"Back Issues Local","Trebuchet MS",Verdana,sans-serif;
+  --reading-font:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --ink:#0e1725;
+  --panel:#1a293b;
+  --rule-panel:#223146;
+  --stroke:#41566b;
+  --muted:#b1c3d6;
+}
+body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
+.header{background:#142135;border-bottom:2px solid #d94a56;box-shadow:none}
+.brand-logo{border-radius:2px;background:#df4855}
+.brand,.sidebar-title,.context h1,.group-head,.power-group-heading,
+.entry .label,.entry .num,.back,.mode-toggle button,.pac-side-switch button,
+.sidebar-power-heading,.keyphrase-heading h2,.inherent-entry h2,
+.improved-cell h2,.pac-title h2,.symbol-dialog-header h2,
+.symbol-ref-title,.sidebar-group{
+  font-family:var(--display-font);
+}
+.brand{font-size:19px;letter-spacing:.015em}
+.context{margin-top:10px;margin-bottom:22px}
+.context h1{letter-spacing:.015em;line-height:1.14;font-weight:800}
+.context .effective-date{font-family:var(--reading-font);font-size:12px;letter-spacing:.02em;color:#acbfd2}
+.search-area{background:var(--ink);border-bottom:1px solid #33485f}
+.search-frame{border-radius:5px;background:#1c2a3c;box-shadow:none}
+.search-frame:focus-within{outline:1px solid #e9636c}
+.mode-toggle,.pac-side-switch{border-radius:5px!important;background:#17263b}
+.mode-toggle button,.pac-side-switch button{border-radius:3px!important;letter-spacing:.025em}
+.back,.small-action{border-radius:4px;background:#24354a;box-shadow:none}
+.back:hover,.small-action:hover{background:#354960}
+.entry,.power-group,.terrain-detail,.panel-accordion,.improved-row,.keyphrase-entry,
+.terrain-value-entry{border-radius:5px;box-shadow:none}
+.entry{background:#1d2d42;border:1px solid #3a536b;border-left:3px solid #506982}
+.entry:hover,.entry:focus-visible{background:#283c53;outline:1px solid #7a9bb7}
+.entry .label{font-size:1.02em;font-weight:750;letter-spacing:.008em}
+.entry .num{font-size:.9em}
+.entry .chevron{font-size:20px}
+.chapter.entry{border-left:4px solid #df4c56}
+.rule-paper{background:var(--rule-panel);border:1px solid #3d5269;border-radius:5px;box-shadow:none;font-family:var(--reading-font)}
+.rule-paper .verbatim,.rule-paper .structured-content,
+.rule-paper .structured-content *,.rule-paper .rule-paragraph,
+.symbol-ref-content,.symbol-ref-content *,.terrain-rule .verbatim{
+  font-family:var(--reading-font);
+}
+.power-group{background:var(--panel);border-color:var(--stroke);overflow:hidden}
+.power-group-heading{position:relative;border-left-width:6px;padding:16px 18px;gap:10px;line-height:1.2;letter-spacing:.04em}
+.power-group-heading .group-name{font-size:1.14rem}
+.power-group-heading .group-count{display:none!important}
+.power-group-heading .group-arrow{
+  margin-left:auto;font-family:var(--reading-font);font-size:17px;
+  font-weight:900;color:#e9eff6;line-height:1;
+  transition:transform .18s ease;transform-origin:center;
+}
+.power-group[open] .group-arrow{transform:rotate(90deg)}
+.power-group-stack{border-top:1px solid #354960;padding:10px}
+.power-group-stack .entry{background:#22334a;border-left:1px solid #415771;box-shadow:none}
+.power-group-stack .entry:hover{background:#2c4158}
+.group-symbols{gap:5px}
+.combat-icon-circle{box-shadow:none;width:34px;height:34px;border:0}
+.combat-stat-icon{width:26px;height:26px}
+.group-head{background:transparent;border-radius:0;border-left:0;border-bottom:2px solid #d94a56;padding:0 0 8px;margin-top:23px;letter-spacing:.025em}
+.sidebar-title{letter-spacing:.025em}
+.desktop-sidebar{border-radius:5px;box-shadow:none}
+.sidebar-item.active{box-shadow:inset 3px 0 #e35460}
+.symbol-dialog{border-radius:7px;box-shadow:0 16px 45px #0008}
+.symbol-ref-detail{border-radius:4px}
+.crumb-trail{border-radius:4px;background:#1a2a3e}
+
+/* Shared navigation row: Back first, compact PAC Front/Back beside it.
+   A breadcrumb trail sits on a second line only for detail views. */
+.navigation-bar{
+  display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;
+  width:100%;max-width:660px;margin:0 auto 8px;min-height:0;
+}
+.navigation-bar .breadcrumbs{
+  display:contents;
+}
+.navigation-bar .back{order:0;margin:0;min-height:37px}
+.navigation-bar .pac-side-switch,
+.navigation-bar .pac-side-switch:not([hidden]){
+  order:1;display:flex;align-self:auto;
+  width:174px!important;min-width:0!important;max-width:174px!important;
+  margin:0!important;padding:2px!important;height:37px;
+  flex:none!important;align-items:stretch;
+}
+.navigation-bar .pac-side-switch[hidden]{display:none!important}
+.navigation-bar .pac-side-switch button{min-height:0;height:31px;padding:4px 13px}
+.navigation-bar .crumb-trail{order:3;flex-basis:100%;margin:2px 0 0;max-width:100%}
+@media(min-width:1050px){
+  .navigation-bar{max-width:900px;margin:0 auto 12px}
+  .navigation-bar .pac-side-switch,
+  .navigation-bar .pac-side-switch:not([hidden]){margin:0!important}
+}
+@media(max-width:480px){
+  .navigation-bar{gap:8px}
+  .navigation-bar .back{padding:8px 11px}
+  .navigation-bar .pac-side-switch,
+  .navigation-bar .pac-side-switch:not([hidden]){width:148px!important;max-width:148px!important}
+  .power-group-heading{padding:14px 12px}
+  .combat-icon-circle{width:31px;height:31px}
+  .combat-stat-icon{width:23px;height:23px}
+}
