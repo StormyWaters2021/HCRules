@@ -498,3 +498,59 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
   .power-group-stack{padding:9px;gap:7px}
   .power.entry .power-text{font-size:1.02rem}
 }
+
+
+/* Compact primary navigation: no branding bar or redundant overlines. */
+.search-area{
+  position:sticky;
+  top:0;
+  z-index:15;
+  padding:10px max(12px,env(safe-area-inset-left)) 10px;
+  background:#0e1725;
+  border-bottom:1px solid #35485f;
+}
+.search-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  max-width:1040px;
+  margin:0 auto;
+}
+.search-controls .search-frame{
+  display:flex;
+  flex:1 1 auto;
+  width:auto;
+  min-width:0;
+  max-width:none;
+  margin:0;
+}
+.search-controls .mode-toggle{
+  display:flex;
+  flex:0 0 auto;
+  align-self:center;
+  white-space:nowrap;
+}
+.search-controls .mode-toggle button{
+  min-width:58px;
+  min-height:36px;
+  padding:7px 12px;
+}
+.context .eyebrow{display:none}
+@media(min-width:1050px){
+  .desktop-sidebar{
+    top:88px;
+    max-height:calc(100dvh - 106px);
+  }
+}
+@media(max-width:420px){
+  .search-controls{gap:7px}
+  .search-area{padding:8px 9px}
+  .search-controls .search-frame{padding:0 9px}
+  .search-controls .mode-toggle{gap:2px;padding:3px}
+  .search-controls .mode-toggle button{
+    min-width:48px;
+    padding:7px 9px;
+    font-size:12px;
+  }
+}
