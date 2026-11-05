@@ -151,10 +151,10 @@ function eligible(s,term){return low([s.id,s.title,s.text,s.searchText].join(' '
 
 function powerSymbol(p){
  // Use the actual combat-category artwork supplied with the project.
- const names={Speed:'run_white.png',Attack:'fist_white.png',Defense:'shield_white.png',Damage:'standard_white.png'};
+ const names={Speed:'speed/run_white.png',Attack:'attack/fist_white.png',Defense:'defense/shield_white.png',Damage:'damage/standard_white.png'};
  const shell=E('span','power-symbol');shell.style.setProperty('--power-color',p.color||'#777');
  shell.setAttribute('role','img');shell.setAttribute('aria-label',p.group+' combat symbol; '+p.name+' color');
- const im=E('img','power-category-icon');im.src='assets/combat/'+(names[p.group]||'standard_white.png');im.alt='';
+ const im=E('img','power-category-icon');im.src='assets/source-icons/'+(names[p.group]||'damage/standard_white.png');im.alt='';
  shell.append(im);return shell;
 }
 
@@ -200,23 +200,35 @@ function terrainRows(){
  }
  return stack;
 }
+// The PAC contains sequences of independent symbols. Each image is taken directly
+// from the supplied individual-icon archive; the visible rule wording is untouched.
+const pacIconBase='assets/source-icons/';
+const pacIconSequence={
+ flightPowers:['improved-abilities/movement.png','improved-abilities/elevated.png','improved-abilities/outdoorblocking.png','improved-abilities/throughadjacent.png'],
+ greatSizePowers:['improved-abilities/movement.png','improved-abilities/elevated.png','improved-abilities/outdoorblocking.png','improved-abilities/throughadjacent.png','improved-abilities/targeting.png','improved-abilities/throughadjacent.png'],
+ giantReach:['improved-abilities/targeting.png','improved-abilities/hindering.png']
+};
+function pacIcons(keys,aria){
+ const group=E('span','pac-icon-sequence');group.setAttribute('role','img');group.setAttribute('aria-label',aria);
+ for(const key of keys){const img=E('img','pac-source-inline');img.src=pacIconBase+key;img.alt='';img.loading='lazy';group.append(img)}
+ return group;
+}
 function keyphraseText(e,b){
- const source={type:'back',id:b.id}, div=E('div','verbatim');
+ const source={type:'back',id:b.id},div=E('div','verbatim');
  const append=t=>div.append(linkedLine(t,source));
- const graphic=(name,alt)=>{const sym=pacSymbol(name,'pac-vector-inline',alt);if(sym)div.append(sym)};
- if(e.name==='Flight' && e.inlineIcons){
-   graphic(e.inlineIcons[0],'Flight: standard combat symbols');
-   append(', ');graphic(e.inlineIcons[1],'Passenger symbol');append(':1.');
- }else if(e.name==='Giant Reach: X' && e.inlineIcons){
-   const pieces=e.text.split('you may use and target');
-   if(pieces.length===2){append(pieces[0]+'you may use ');graphic(e.inlineIcons[0],'Giant Reach targeting symbols');append(' and target'+pieces[1]);}
+ if(e.name==='Flight'){
+   div.append(pacIcons(pacIconSequence.flightPowers,'Improved Movement, Elevated, Outdoor Blocking and Move Through symbols'));
+   append(', ');div.append(pacSymbol(e.inlineIcons[1],'pac-passenger-single','Passenger symbol'));append(':1.');
+ }else if(e.name==='Giant Reach: X'){
+   const marker='you may use and target';const index=e.text.indexOf(marker);
+   if(index>=0){append(e.text.slice(0,index)+'you may use ');div.append(pacIcons(pacIconSequence.giantReach,'Improved Targeting and Hindering symbols'));append(' and target'+e.text.slice(index+marker.length));}
    else append(e.text);
- }else if(e.name==='Great Size' && e.inlineIcons){
-   graphic(e.inlineIcons[0],'Great Size combat symbols');append(' '+e.text);
+ }else if(e.name==='Great Size'){
+   div.append(pacIcons(pacIconSequence.greatSizePowers,'Improved Movement, Elevated, Outdoor Blocking, Move Through, Targeting and Adjacent symbols'));append(e.text);
  }else if(e.name==='Passenger: X'){
-   append('This character can use the Carry ability to carry up to X characters, including characters that are the same size. A character with ');
-   if(e.inlineIcons?.[0]) graphic(e.inlineIcons[0],'Passenger symbol');
-   append(': 0 can’t use the Carry ability.');
+   const marker=': 0';const index=e.text.indexOf(marker);
+   if(index>=0){append(e.text.slice(0,index));div.append(pacSymbol(e.inlineIcons?.[0]||'assets/keyphrase/passenger-symbol.png','pac-passenger-single','Passenger symbol'));append(e.text.slice(index));}
+   else append(e.text);
  }else append(e.text);
  return div;
 }
@@ -227,7 +239,9 @@ function showBack(b){
  }else if(b.id==='back-1'&&Array.isArray(b.entries)){
   for(const row of b.entries){
    const wrap=E('section','improved-row');
-   const img=E('img','improved-icon');img.src=row.icon;img.alt='Improved ability symbol';wrap.append(img);
+   const img=E('img','improved-icon');
+   const improvedName=['elevated','hindering','blocking','outdoorblocking','destroyblocking','characters','throughadjacent'][b.entries.indexOf(row)];
+   img.src=pacIconBase+'improved-abilities/'+improvedName+'.png';img.alt='Improved ability symbol';wrap.append(img);
    const info=E('div','improved-pair');
    for(const side of ['movement','targeting']){
     const cell=E('div','improved-cell '+side);
@@ -241,7 +255,8 @@ function showBack(b){
   for(const entry of b.entries){
     const article=E('section','rule-paper keyphrase-entry');
     const heading=E('div','keyphrase-heading');
-    if(entry.icon){const sym=pacSymbol(entry.icon,'pac-vector-heading',entry.name+' symbol');if(sym)heading.append(sym)}
+    const headIcons={Flight:'speed/flight_white.png','Giant Reach: X':'damage/giant_white.png', 'Great Size':'damage/colossal_white.png',Swim:'speed/swim_white.png','Tiny Size':'damage/tiny_white.png'};
+    if(headIcons[entry.name]){const icon=E('img','pac-source-heading');icon.src=pacIconBase+headIcons[entry.name];icon.alt=entry.name+' symbol';heading.append(icon)}
     heading.append(E('h2','',entry.name));article.append(heading);
     article.append(keyphraseText(entry,b));v.append(article);
   }

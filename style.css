@@ -142,3 +142,16 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .pac-side-switch[hidden]{display:none!important}
 .pac-side-switch button{flex:1 1 0!important;min-width:0!important;padding:5px 12px;min-height:34px}
 @media(min-width:1050px){.pac-side-switch,.pac-side-switch:not([hidden]){margin-left:max(0px,calc((100% - 900px)/2))!important}}
+
+/* November 5: standalone supplied icons, no contour tracing or PNG inversion. */
+.pac-icon-sequence{display:inline-flex;align-items:center;flex-wrap:wrap;gap:3px;max-width:100%;vertical-align:-.38em;margin:0 .12em;line-height:1}
+.pac-source-inline{display:inline-block;object-fit:contain;width:34px;height:34px;flex:0 0 34px;background:transparent;border:0;filter:none!important}
+.pac-source-heading{display:block;object-fit:contain;width:48px;height:48px;flex:0 0 48px;filter:none!important;background:transparent}
+.keyphrase-heading{align-items:center;min-height:53px}
+.keyphrase-entry .verbatim{line-height:1.9;overflow-wrap:break-word}
+.improved-row .improved-icon{background:transparent;padding:0;border:0;object-fit:contain}
+@media(max-width:620px){.pac-source-inline{width:32px;height:32px;flex-basis:32px}.pac-source-heading{width:43px;height:43px;flex-basis:43px}.pac-icon-sequence{gap:2px}}
+
+.pac-passenger-single{display:inline-block;width:26px;height:34px;vertical-align:-.36em;margin:0 .13em;fill:currentColor;color:#eef4fa}
+/* Supplied standalone combat symbols inside color-coded power markers. */
+.power-symbol .power-category-icon,.pac-title .power-symbol .power-category-icon{filter:drop-shadow(0 1px 1px #0009);background:transparent;border:0;object-fit:contain}
