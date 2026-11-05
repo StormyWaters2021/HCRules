@@ -375,7 +375,7 @@ function showPowerList(){
   if(!candidates.length)continue;
   const section=E('details','power-group');section.dataset.pacGroup=group;if(query)section.open=true;
   const heading=E('summary','power-group-heading '+low(group));
-  heading.append(E('span','group-name',group.toUpperCase()),pacGroupIcons(group),E('span','group-count',String(candidates.length)),E('span','group-arrow','⌄'));
+  heading.append(E('span','group-name',group.toUpperCase()),pacGroupIcons(group),E('span','group-arrow','▶'));
   section.append(heading);
   const stack=E('div','stack power-group-stack');candidates.forEach(p=>stack.append(cardPower(p)));
   section.append(stack);content.append(section);
