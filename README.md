@@ -1,15 +1,16 @@
-# HeroClix Interactive Rulebook — mobile and desktop
+# HeroClix Interactive Rules – mobile / desktop
 
-Static site for GitHub Pages. Copy the contents of this folder to the repository root, then deploy main/(root).
+Static GitHub Pages site. Extract the changed-files ZIP into your repository root and overwrite existing files, then commit and push.
 
-## This update
-- PAC Front Speed, Attack, Defense, Damage begin collapsed.
-- PAC reverse-side Improved Abilities are shown in the seven original icon rows, separating Movement and Targeting text.
-- Corrected source-based inline symbol placement for rule entries 1.3a–1.3i, 1.4 and 1.10.
-- Removed instructional helper captions.
-- No PDF screenshots or PDF documents are included.
+This update includes:
+- PAC reverse-side detail navigation and a compact Front/Back toggle.
+- Separate keyphrase entries instead of the PDF's interleaved columns.
+- PAC power markers rendered as correctly colored dial-style X markers.
+- Improved Ability symbols freshly cropped from the actual PAC.
+- Inline graphics from the rulebook placed with source coordinate checks, including vehicles and dice results.
+- Portable PNG glyph artwork; no embedded PDFs, page screenshots, or font files.
+- An icon-placement audit covering all 107 pages (`ICON-AUDIT.md`).
 
-**Accuracy:** These changes preserve the wording of the source passages while changing presentation. The complete site has not been manually audited glyph-for-glyph against the PDFs. Some other symbol-bearing passages may still need inspection.
+Rules are kept in `data.json`. Terrain panels reuse the same rule entries rather than copying their content.
 
-## Refreshing the site
-After committing and pushing to GitHub, allow Pages to deploy. On Chrome mobile, verify in an Incognito tab if the cache serves an older version.
+**Accuracy note:** this was a source-coordinate and extraction-text audit, with two manual repairs, not a comprehensive pixel-by-pixel visual comparison of every rule page. Some vector-only icons and text-extraction abnormalities remain possible. The source PDFs remain authoritative.

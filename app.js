@@ -20,9 +20,14 @@ function initLinks(){
 }
 function linkedLine(t,source){const node=E('span');if(!t){return node}let pos=0,m;linkPattern.lastIndex=0;while((m=linkPattern.exec(t))){const obj=window.linkMap.get(low(m[0]));if(!obj||obj.type===source.type&&obj.id===source.id){node.append(document.createTextNode(t.slice(pos,m.index+m[0].length)));pos=m.index+m[0].length;continue;}node.append(document.createTextNode(t.slice(pos,m.index)));const a=E('a','',m[0]);a.href='#'+obj.type+'/'+encodeURIComponent(obj.id);a.onclick=e=>{e.preventDefault();goTarget(obj.type,obj.id)};node.append(a);pos=m.index+m[0].length}node.append(document.createTextNode(t.slice(pos)));return node}
 function glyph(src,alt='Combat symbol'){
- const c=glyphMap[src];if(!c){const im=E('img','inline-graphic');im.src=src;im.alt=alt;return im}
- const el=E('span','rule-glyph',c);el.setAttribute('role','img');el.setAttribute('aria-label',alt);return el;
+ const c=glyphMap[src];
+ const im=E('img','rule-glyph');
+ im.src=c?'assets/glyphs/'+c.codePointAt(0).toString(16)+'.png':src;
+ im.alt=alt;
+ im.decoding='async';
+ return im;
 }
+
 function textNode(value,source,graphics=[]){
  const div=E('div','verbatim');const lines=String(value||'').split('\n');const byLine=new Map();
  for(const g of graphics||[]){const i=Math.max(0,g.line);if(!byLine.has(i))byLine.set(i,[]);byLine.get(i).push(g)}
@@ -35,8 +40,44 @@ function textNode(value,source,graphics=[]){
 }
 // These two source entries use graphic-only PDF runs that were assigned to
 // separate extraction lines. Render the exact text runs with font glyphs in their proper spots.
+function verifiedSymbolText(s){
+ const div=E('div','verbatim');const source={type:'rule',id:s.id};
+ for(const run of s.verifiedInline){
+  if(run.g)div.append(glyph(run.g,s.title+' symbol'));
+  else if(run.t)div.append(linkedLine(run.t,source));
+ }
+ return div;
+}
 function symbolRule(s){
- const special=['1.3a','1.3b','1.3c','1.3d','1.3e','1.3f','1.3g','1.3h','1.3i','1.4','1.10'];
+ if(s.verifiedInline && !['1.3a','1.4'].includes(s.id))return verifiedSymbolText(s);
+ if(s.id==='24.4'){
+  const div=E('div','verbatim'),source={type:'rule',id:s.id};
+  const t=s.text, anchor='▪ Generates a standard heavy object in a square it occupied when it is KO’d. Place the pilot';
+  const i=t.indexOf(anchor), end=t.indexOf('▪ Has SAFEGUARD: Mind Control.',i);
+  if(i>=0 && end>i && s.graphics.length===5){
+   const prefix=t.slice(0,i);
+   const vehicle='Characters with the \n symbol are vehicles.';
+   if(prefix.includes(vehicle)){
+     const parts=prefix.split(vehicle);
+     div.append(linkedLine(parts[0]+'Characters with the ',source));
+     div.append(glyph(s.graphics[0].src,'Vehicle combat symbol'));
+     div.append(linkedLine(' symbol are vehicles.'+parts.slice(1).join(vehicle),source));
+   }else div.append(linkedLine(prefix,source));
+   div.append(linkedLine('▪ Generates a standard heavy object in a square it occupied when it is KO’d. Place the pilot in or adjacent to that square and roll a d6. ',source));
+   div.append(glyph(s.graphics[1].src,'First dice result'));div.append(document.createTextNode(' - '));
+   div.append(glyph(s.graphics[2].src,'Second dice result'));
+   div.append(linkedLine(': Deal the pilot 2 unavoidable damage. ',source));
+   div.append(glyph(s.graphics[3].src,'Third dice result'));div.append(document.createTextNode(' - '));
+   div.append(glyph(s.graphics[4].src,'Fourth dice result'));
+   div.append(linkedLine(': Deal the pilot 1 unavoidable damage.\n',source));
+   div.append(linkedLine(t.slice(end),source));return div;
+  }
+ }
+ if(s.id==='1.3h'){
+  const div=E('div','verbatim');div.append(glyph(s.graphics.at(-1).src,'Colossal symbol'));
+  div.append(linkedLine(' '+s.text,{type:'rule',id:s.id}));return div;
+ }
+ const special=['1.3a','1.4'];
  if(!special.includes(s.id))return textNode(s.text,{type:'rule',id:s.id},s.graphics);
  const div=E('div','verbatim');const source={type:'rule',id:s.id};
  const append=t=>div.append(linkedLine(t,source));
@@ -80,7 +121,16 @@ function setHeading(title,eyebrow='',subtitle=''){
 }
 function row(num,label,fn,cls=''){const b=button('',fn,'entry '+cls);if(num)b.append(E('span','num',num));b.append(E('span','label',label),E('span','chevron','›'));return b}
 function showButtons(items,container){for(const it of items)container.append(it)}
-function hierarchy(){const p=path;const nav=$('breadcrumbs');nav.replaceChildren();if(p.length && !(mode==='pac' && p.length===1 && (p[0]==='back-index'||p[0].startsWith('back:')))){nav.append(button('‹ Back',()=>{path.pop();query='';$('search').value='';render()},'back'))}else if(mode==='pac'&&p.length===0){} }
+function hierarchy(){
+ const p=path;const nav=$('breadcrumbs');nav.replaceChildren();
+ if(mode==='pac'){
+  const last=p.at(-1)||'';
+  if(last.startsWith('back:'))nav.append(button('‹ Back',()=>move(['back-index']),'back'));
+  else if(last.startsWith('power:'))nav.append(button('‹ Back',()=>move([]),'back'));
+  return;
+ }
+ if(p.length)nav.append(button('‹ Back',()=>{path.pop();query='';$('search').value='';render()},'back'));
+}
 function resetScroll(){window.scrollTo({top:0,behavior:'instant'})}
 function move(p,resetSearch=true){path=p;if(resetSearch){query='';$('search').value=''}render();resetScroll();syncHash()}
 function goTarget(type,id){if(type==='rule') {mode='rules';const s=byId(id);if(!s)return;let p=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)p.push('section:'+parent)}p.push('rule:'+id);move(p)}else if(type==='power'){mode='pac';move(['power:'+id])}else if(type==='back'){mode='pac';move(['back:'+id])}}
@@ -88,11 +138,13 @@ function syncHash(){const last=path[path.length-1];const hash=last?mode+'/'+enco
 function eligible(s,term){return low([s.id,s.title,s.text,s.searchText].join(' ')).includes(term)}
 
 function powerSymbol(p){
+ // PAC powers are represented by colored dial circles with an X, not a
+ // movement/attack icon scaled into a circle (which misidentifies the power).
  const shell=E('span','power-symbol');shell.style.setProperty('--power-color',p.color||'#777');
- const category={Speed:'run_white',Attack:'fist_white',Defense:'shield_white',Damage:'standard_white'}[p.group]||'standard_white';
- const img=E('img');const c=(p.color||'#777').replace('#','');const rgb=c.length===6?[0,2,4].map(i=>parseInt(c.slice(i,i+2),16)):[100,100,100];const bright=(rgb[0]*.299+rgb[1]*.587+rgb[2]*.114)>135;img.src=iconPath(category,bright);img.alt=p.group+' combat symbol';img.loading='lazy';
- shell.append(img);return shell;
+ shell.setAttribute('role','img');shell.setAttribute('aria-label',p.name+' power dial color');
+ shell.append(E('span','power-x','X'));return shell;
 }
+
 function specialRuleText(s){
  if(s.id!=='1.3a'||!s.inlineSequence)return textNode(s.text,{type:'rule',id:s.id},s.graphics);
  const root=E('div','verbatim');const lines=s.text.split('\n');let k=0;
@@ -120,8 +172,8 @@ function showPowerList(){
   section.append(stack);content.append(section);
  }
 }
-function showPower(p){setHeading(p.name,'PAC · '+p.group,'Original PAC wording');const v=$('view');const article=E('article','pac-article');const paper=E('div','rule-paper');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));paper.append(header,textNode(p.text,{type:'power',id:p.id}));article.append(paper);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
-function showBackIndex(){setHeading('PAC · Reverse Side','Reference card','Inherent, improved and keyphrase abilities, plus terrain');const v=$('view');const stack=E('div','stack');db.back.forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows())}
+function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const paper=E('div','rule-paper');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));paper.append(header,textNode(p.text,{type:'power',id:p.id}));article.append(paper);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
+function showBackIndex(){setHeading('PAC · Reverse Side','Reference card');const v=$('view');const stack=E('div','stack');db.back.forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows())}
 function terrainRows(){
  const stack=E('div','terrain-accordions');
  for(const [title,id,color] of db.terrain){
@@ -134,6 +186,26 @@ function terrainRows(){
   details.append(content);stack.append(details);
  }
  return stack;
+}
+function keyphraseText(e,b){
+ const source={type:'back',id:b.id}, div=E('div','verbatim');
+ const append=t=>div.append(linkedLine(t,source));
+ const graphic=(name,alt)=>{const im=E('img','keyphrase-inline');im.src=name;im.alt=alt;div.append(im)};
+ if(e.name==='Flight' && e.inlineIcons){
+   graphic(e.inlineIcons[0],'Flight: standard combat symbols');
+   append(', ');graphic(e.inlineIcons[1],'Passenger symbol');append(':1.');
+ }else if(e.name==='Giant Reach: X' && e.inlineIcons){
+   const pieces=e.text.split('you may use and target');
+   if(pieces.length===2){append(pieces[0]+'you may use ');graphic(e.inlineIcons[0],'Giant Reach targeting symbols');append(' and target'+pieces[1]);}
+   else append(e.text);
+ }else if(e.name==='Great Size' && e.inlineIcons){
+   graphic(e.inlineIcons[0],'Great Size combat symbols');append(' '+e.text);
+ }else if(e.name==='Passenger: X'){
+   append('This character can use the Carry ability to carry up to X characters, including characters that are the same size. A character with ');
+   if(e.inlineIcons?.[0]) graphic(e.inlineIcons[0],'Passenger symbol');
+   append(': 0 can’t use the Carry ability.');
+ }else append(e.text);
+ return div;
 }
 function showBack(b){
  setHeading(b.name,'PAC · Reverse Side');const v=$('view');
@@ -152,6 +224,14 @@ function showBack(b){
    }
    wrap.append(info);v.append(wrap);
   }
+ }else if(Array.isArray(b.entries)){
+  for(const entry of b.entries){
+    const article=E('section','rule-paper keyphrase-entry');
+    const heading=E('div','keyphrase-heading');
+    if(entry.icon){const im=E('img','keyphrase-icon');im.src=entry.icon;im.alt=entry.name+' symbol';heading.append(im)}
+    heading.append(E('h2','',entry.name));article.append(heading);
+    article.append(keyphraseText(entry,b));v.append(article);
+  }
  }else{
   const panel=E('div','rule-paper');panel.append(textNode(b.text,{type:'back',id:b.id}));v.append(panel);
  }
@@ -159,10 +239,10 @@ function showBack(b){
 function family(s){return db.sections.filter(x=>x.id.startsWith(s.id)&&x.id!==s.id&&x.level===s.level+1)}
 function showRule(s){setHeading(s.id+' '+s.title,'Comprehensive Rules','July 1, 2026 · source page '+Math.max(1,s.page-17));const v=$('view');const body=E('article','rule-paper');body.append(symbolRule(s));v.append(body);const children=family(s);if(children.length){v.append(E('h2','group-head','SUBSECTIONS'));const stack=E('div','stack');children.forEach(c=>stack.append(row(c.id,c.title,()=>enter(c))));v.append(stack)}const tools=E('div','rule-tools');tools.append(button('Copy link',()=>navigator.clipboard?.writeText(location.href),'small-action'));v.append(tools)}
 function enter(s){if(s.level===1)move(['chapter:'+s.id]);else if(s.level===2)move(['chapter:'+s.chapter,'section:'+s.id]);else move(['chapter:'+s.chapter,'section:'+s.id.match(/^\d+\.\d+/)?.[0],'rule:'+s.id])}
-function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules','Choose a section');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(symbolRule(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(stack)}
-function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter,'Choose a rule');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper section-intro');intro.append(symbolRule(s));v.append(intro)}db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(stack);else if(!s.text)showRule(s)}
-function showChapters(){setHeading('Comprehensive Rules','July 1, 2026','Select a chapter');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(stack)}
-function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card','Matches include full rule text, not just titles');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
+function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(symbolRule(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(stack)}
+function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper section-intro');intro.append(symbolRule(s));v.append(intro)}db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(stack);else if(!s.text)showRule(s)}
+function showChapters(){setHeading('Comprehensive Rules','July 1, 2026');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(stack)}
+function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
 
 function sidebarRow(label,fn,depth=0,selected=false){
  const b=button(label,fn,'sidebar-item depth-'+depth+(selected?' active':''));
@@ -213,4 +293,4 @@ function sidebar(){
 
 function render(){const v=$('view');v.replaceChildren();const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder=mode==='rules'?'Search all rule text…':'Search all PAC text…';$('clear').hidden=!query;hierarchy();sidebar();if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
  const key=path.at(-1)||'';if(key.startsWith('rule:'))showRule(byId(key.slice(5)));else if(key.startsWith('section:'))showSection(key.slice(8));else if(key.startsWith('chapter:'))showChapter(key.slice(8));else showChapters()}
-async function init(){try{[db,glyphMap]=await Promise.all([fetch('data.json?v=20261105-3').then(r=>r.json()),fetch('glyph-map.json?v=20261105-3').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}initLinks();$('rulesTab').onclick=()=>{mode='rules';move([])};$('pacTab').onclick=()=>{mode='pac';move([])};$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac'].includes(h[0])){mode=h[0];path=h[1]?[h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}render()}})}init();
+async function init(){try{[db,glyphMap]=await Promise.all([fetch('data.json?v=20261105-5').then(r=>r.json()),fetch('glyph-map.json?v=20261105-5').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}initLinks();$('rulesTab').onclick=()=>{mode='rules';move([])};$('pacTab').onclick=()=>{mode='pac';move([])};$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac'].includes(h[0])){mode=h[0];path=h[1]?[h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}render()}})}init();
