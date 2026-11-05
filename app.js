@@ -252,7 +252,7 @@ function symbolRule(s){
 const RULE_DATE='July 1, 2026', PAC_DATE='October 3, 2022';
 function setHeading(title,eyebrow='',subtitle=''){
  const c=$('context');c.replaceChildren();
- if(eyebrow)c.append(E('div','eyebrow',eyebrow));
+ // Page title and effective date provide the context; no redundant eyebrow labels.
  c.append(E('h1','',title));
  // The effective date belongs directly beneath the current heading.
  const date=mode==='pac'?PAC_DATE:RULE_DATE;
