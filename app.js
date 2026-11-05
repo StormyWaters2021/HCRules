@@ -138,11 +138,12 @@ function syncHash(){const last=path[path.length-1];const hash=last?mode+'/'+enco
 function eligible(s,term){return low([s.id,s.title,s.text,s.searchText].join(' ')).includes(term)}
 
 function powerSymbol(p){
- // PAC powers are represented by colored dial circles with an X, not a
- // movement/attack icon scaled into a circle (which misidentifies the power).
+ // Use the actual combat-category artwork supplied with the project.
+ const names={Speed:'run_white.png',Attack:'fist_white.png',Defense:'shield_white.png',Damage:'standard_white.png'};
  const shell=E('span','power-symbol');shell.style.setProperty('--power-color',p.color||'#777');
- shell.setAttribute('role','img');shell.setAttribute('aria-label',p.name+' power dial color');
- shell.append(E('span','power-x','X'));return shell;
+ shell.setAttribute('role','img');shell.setAttribute('aria-label',p.group+' combat symbol; '+p.name+' color');
+ const im=E('img','power-category-icon');im.src='assets/combat/'+(names[p.group]||'standard_white.png');im.alt='';
+ shell.append(im);return shell;
 }
 
 function specialRuleText(s){

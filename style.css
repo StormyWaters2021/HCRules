@@ -111,3 +111,22 @@
 
 /* The symbols are transparent, resolution-independent relative to the reading font. */
 img.rule-glyph{display:inline-block!important;font-family:inherit!important;vertical-align:-.17em;height:1.24em;width:auto;max-width:1.65em;margin:0 .085em;object-fit:contain;line-height:normal!important;white-space:normal}
+
+/* PAC visual corrections (Nov 5): align navigation to reading column. */
+.pac-side-switch{margin:7px auto 10px;max-width:none;min-width:0;width:max-content;gap:3px;justify-content:flex-start}
+.pac-side-switch button{flex:0 0 auto;padding:5px 15px;min-width:73px}
+@media(min-width:1050px){.pac-side-switch{margin:7px auto 10px;width:900px;max-width:100%;justify-content:flex-start}}
+@media(max-width:1049px){.pac-side-switch{margin-left:0;margin-right:0}}
+/* Navigation appears directly below PAC side switch on detail screens. */
+.breadcrumbs:empty{display:none}
+/* Distinct readable category glyphs, rather than generic X discs. */
+.power-symbol{display:inline-flex;align-items:center;justify-content:center;overflow:hidden;background:var(--power-color);box-shadow:0 2px 7px #0008,inset 0 -3px 6px #0007}
+.power-symbol:before{pointer-events:none}
+.power-symbol .power-category-icon{position:relative;z-index:2;display:block;width:31px;height:31px;object-fit:contain;filter:drop-shadow(0 1px 2px #000b)}
+.pac-title .power-symbol .power-category-icon{width:38px;height:38px}
+/* Keyphrase icons are black source artwork; reverse to high-contrast white. */
+.keyphrase-icon,.keyphrase-inline{filter:brightness(0) invert(1);background:transparent!important}
+.keyphrase-heading .keyphrase-icon{min-height:43px;max-height:66px;max-width:92px;width:auto;height:auto;object-fit:contain}
+.keyphrase-heading{align-items:center;min-height:44px}
+.keyphrase-inline{height:1.55em;max-width:65%;vertical-align:-.28em}
+@media(max-width:620px){.keyphrase-heading .keyphrase-icon{min-height:36px;max-height:54px;max-width:78px}.power-symbol .power-category-icon{width:29px;height:29px}}
