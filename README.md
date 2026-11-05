@@ -1,25 +1,20 @@
-# HeroClix mobile-first rules reference
+# HeroClix Interactive Rules — GitHub Pages
 
-Static GitHub Pages site. Upload the entire extracted contents to the repository root and enable Settings → Pages → Deploy from a branch → main / root.
+Upload the contents of this folder to the root of a GitHub Pages repository. No build step or server component is required.
 
-## Navigation
-- Rules: Chapters → Sections → numbered rules, with Back at each level.
-- PAC: Front grouped by Speed / Attack / Defense / Damage; reverse-side reference panels and terrain links.
-- Search filters the full text of all entries. Results link to individual rules/abilities.
-- Internal references link between named powers and numbered rules.
+## November 5 update
 
-## Source and fidelity
-Rule wording is loaded from `data.json` extracted from the user-provided 2026 Comprehensive Rules and 2022 PAC. Extracted graphics are preserved in `assets/inline/`, with larger user-supplied symbol images in `assets/combat/`. No PDF page images or original PDFs are packaged. Graphics positions are estimated from PDF layout and may need manual correction, and embedded text may have PDF extraction imperfections. This build is not certified word-for-word against visual originals. Do not modify rule text casually.
+- Scalable symbol font in `assets/fonts/heroclix-symbols.ttf`, with character mapping in `glyph-map.json`. Built from source graphics and the supplied combat-symbol images. Embedded rule graphics render as inline font glyphs (text characters), not floating images.
+- Fixed source-layout placement specifically for the standard combat symbols (1.3a) and standard characters (1.10) examples.
+- PAC Front/Back switch no longer creates a redundant Back button on the reverse-side landing page.
+- PAC map-terrain items expand in place and read the original text from the corresponding entries of the comprehensive-rule database. Text is not copied into separate terrain data fields.
+- Inherent PAC abilities are nine separate source-positioned entries with each description under its own heading.
+- Cache-busting query strings for CSS/JS/data to help deploy changes to browsers with cached assets.
 
-## Local test
-`python -m http.server 8000` and visit `http://localhost:8000`.
+## Fidelity note
 
+Original comprehensive-rule and PAC textual source data are kept in `data.json`. The special symbol-only passages use explicit display assembly to put glyphs at their original positions. The underlying source text is retained without editorial rewrites. This is not a claim of full visual character-by-character verification across every PDF section; the remaining extracted PAC reverse-side panels can contain interleaved columns and missing image-only glyphs. No PDF files or page screenshots are shipped.
 
-## November 5 interface refinements
-- Dark slate reading panels replace the previous bright white panels.
-- PDF line wraps are displayed as continuous inline text; source text strings in `data.json` are unchanged.
-- Inline PDF glyphs have their white backgrounds removed and are tinted for dark panels.
-- PAC Front/Back segmented switch above the content.
-- Dark versions of the supplied combat icons provided for contrast on bright power backgrounds, with light versions on dark powers.
+## Deployment
 
-After deploying, use a private/incognito tab or clear this site's Chrome storage if an old version remains cached.
+In GitHub → Settings → Pages, select Deploy from a branch, `main`, `/(root)`. For updates, replace the project files and commit/push.

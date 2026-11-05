@@ -47,3 +47,23 @@
 .pac-side-switch button{flex:1;min-height:43px;border:0;border-radius:11px;background:transparent;color:#b5c7dd;font-weight:800;font-size:15px;cursor:pointer}
 .pac-side-switch button.active{background:#df4b59;color:white;box-shadow:0 2px 6px #0005}
 @media(min-width:1050px){.pac-side-switch{margin:0 0 16px;max-width:420px}}
+
+/* Source-derived scalable symbol font; glyphs participate in the text line box. */
+@font-face{font-family:HeroClixSymbols;src:url('assets/fonts/heroclix-symbols.ttf') format('truetype');font-weight:normal;font-style:normal;font-display:block}
+.rule-glyph{font-family:HeroClixSymbols!important;display:inline!important;font-size:1.08em;line-height:1!important;font-weight:400!important;white-space:nowrap;vertical-align:-.09em;margin:0 .075em;letter-spacing:0;color:inherit}
+.rule-paper .verbatim{white-space:normal;overflow-wrap:normal;line-height:1.72}
+.rule-bullets{padding-left:1.5em;margin:.7em 0 0;list-style:square}
+.rule-bullets li{padding-left:.2em;margin:.55em 0}
+.inherent-entry{margin-bottom:12px;padding:18px 20px}
+.inherent-entry h2{font-size:1.04rem;color:#f7abb0;margin:0 0 7px}
+.terrain-accordions{display:flex;flex-direction:column;gap:9px}
+.terrain-detail{border:1px solid #435a74;border-radius:12px;background:#223248;overflow:hidden}
+.terrain-summary{display:flex;align-items:center;gap:13px;list-style:none;cursor:pointer;padding:15px 17px;font-weight:700}
+.terrain-summary::-webkit-details-marker{display:none}
+.terrain-summary>span:nth-child(2){flex:1}
+.terrain-chevron{color:#a3bed6;transition:transform .15s}
+.terrain-detail[open] .terrain-chevron{transform:rotate(180deg)}
+.terrain-content{border-top:1px solid #42546b;padding:12px 18px 18px;background:#233246}
+.terrain-rule{margin-bottom:16px}
+.terrain-rule h3{font-size:14px;color:#f3a1a5;margin:10px 0 7px}
+.terrain-rule .verbatim{font-size:15px;line-height:1.65}
