@@ -375,3 +375,126 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
   .combat-icon-circle{width:31px;height:31px}
   .combat-stat-icon{width:23px;height:23px}
 }
+
+
+/* Reference-card finish: distinct power rows and editorial hierarchy.
+   All descriptions and rule definitions intentionally keep the reading font. */
+.power.entry .power-text,
+.power.entry .entry .label,
+.power-group-stack .power-text{
+  font-family:var(--display-font);
+  font-size:clamp(1rem,1.5vw,1.12rem);
+  font-weight:800;
+  letter-spacing:.025em;
+  line-height:1.2;
+}
+.power.entry{
+  position:relative;
+  background:#192a3e;
+  border:1px solid #3b536e;
+  border-left:2px solid #536c86;
+  border-radius:2px;
+  min-height:66px;
+  padding:10px 14px;
+  gap:14px;
+}
+.power.entry:hover,.power.entry:focus-visible{
+  background:#2b3e54;
+  border-color:#7898b7;
+}
+.power.entry .power-symbol{flex:none}
+.power.entry .chevron{
+  color:#b5c4d4;
+  font-family:var(--reading-font);
+  font-size:16px;
+  font-weight:700;
+  margin-left:auto;
+}
+.power-group{
+  border-radius:2px;
+  border:1px solid #33475e;
+  background:#162338;
+  margin-bottom:14px;
+}
+.power-group-heading{
+  background:#1b2a3e;
+  border-left:0;
+  border-bottom:1px solid #354b62;
+  min-height:68px;
+  padding:13px 17px;
+}
+.power-group-heading::before{
+  content:"";
+  position:absolute;top:0;bottom:0;left:0;
+  width:6px;background:#e44956;
+}
+.power-group-heading.attack::before{background:#eab439}
+.power-group-heading.defense::before{background:#4bafe7}
+.power-group-heading.damage::before{background:#45b97c}
+.power-group-heading.attack,.power-group-heading.defense,.power-group-heading.damage{
+  border-left:0;
+  border-color:#354b62;
+}
+.power-group-heading .group-name{
+  font-family:var(--display-font);
+  font-size:1.13rem;
+  letter-spacing:.045em;
+}
+.power-group-stack{
+  padding:11px 12px 13px;
+  gap:8px;
+  background:repeating-linear-gradient(0deg,#162438 0,#162438 31px,#18263a 31px,#18263a 32px);
+}
+.power-group-stack .power.entry{box-shadow:none}
+.power-group-heading:hover{background:#22344b}
+.power-group-heading:focus-visible{outline:2px solid #f3c06a;outline-offset:-3px}
+.power-group-heading .group-arrow{font-size:15px;color:#d5e1ec}
+.context h1{
+  font-family:var(--display-font);
+  font-size:clamp(25px,4.6vw,35px);
+  letter-spacing:.02em;
+}
+.context .effective-date{
+  text-transform:none;
+  font-weight:500;
+}
+.search-frame{
+  background:#142136;
+  border-color:#3c526b;
+  height:45px;
+}
+.search-frame input{
+  font-family:var(--reading-font);
+  font-size:15px;
+}
+.search-frame input::placeholder{color:#bac7d5;opacity:1}
+.chapter.entry,.entry:not(.power){
+  border-radius:2px;
+  box-shadow:none;
+}
+.chapter.entry{
+  background:#192a3f;
+  border-left:4px solid #db4654;
+}
+.chapter.entry:hover{background:#293d54}
+.group-head{
+  color:#f0f5fa;
+  font-family:var(--display-font);
+  font-weight:800;
+  letter-spacing:.035em;
+}
+.rule-paper{
+  box-shadow:none;
+  border-color:#42566d;
+  background:#233146;
+  border-radius:3px;
+}
+.rule-paper .rule-paragraph,.rule-paper li,.rule-paper .verbatim{
+  font-family:var(--reading-font);
+}
+@media(max-width:500px){
+  .power.entry{padding:9px 11px;gap:11px;min-height:60px}
+  .power-group-heading{min-height:62px;padding:11px 12px}
+  .power-group-stack{padding:9px;gap:7px}
+  .power.entry .power-text{font-size:1.02rem}
+}
