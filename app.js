@@ -452,7 +452,7 @@ function terrainRows(){
  const stack=E('div','terrain-accordions');
  for(const [title,id,color] of db.terrain){
   const details=E('details','terrain-detail');const summary=E('summary','terrain-summary');
-  const sw=E('span','terrain-swatch');sw.style.background=color;summary.append(sw,E('span','',title),E('span','terrain-chevron','⌄'));
+  const sw=E('span','terrain-swatch');sw.style.background=color;if(title==='Walls')sw.classList.add('terrain-swatch-wall');summary.append(sw,E('span','',title),E('span','terrain-chevron','⌄'));
   details.append(summary);const content=E('div','terrain-content');
   const root=byId(id);const descendants=db.sections.filter(s=>s.id.startsWith(id+'.')||s.id.startsWith(id)&&id==='17'&&s.id!=='17');
   if(root){const sub=E('section','terrain-rule');sub.append(E('h3','',root.id+' '+root.title));sub.append(universalRuleText(root));content.append(sub)}
