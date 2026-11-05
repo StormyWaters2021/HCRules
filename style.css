@@ -155,3 +155,109 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .pac-passenger-single{display:inline-block;width:26px;height:34px;vertical-align:-.36em;margin:0 .13em;fill:currentColor;color:#eef4fa}
 /* Supplied standalone combat symbols inside color-coded power markers. */
 .power-symbol .power-category-icon,.pac-title .power-symbol .power-category-icon{filter:drop-shadow(0 1px 1px #0009);background:transparent;border:0;object-fit:contain}
+
+/* v20261105-10: navigation trail and document effective dates */
+.context .effective-date{margin:7px 0 0;color:#afc5d9;font-size:13px;font-weight:550}
+.context .source-caption{margin-top:4px;color:#8fa8c0;font-size:12px}
+.breadcrumbs{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;max-width:900px;margin-left:auto;margin-right:auto}
+.crumb-trail{display:flex;flex-wrap:wrap;align-items:center;gap:4px 7px;max-width:100%;padding:9px 11px;background:#19283a;border:1px solid #354b65;border-radius:10px;font-size:13px;line-height:1.5}
+.crumb-link{background:none;border:0;padding:4px 2px;color:#93d2ff;cursor:pointer;font:inherit;text-align:left;text-decoration:underline;text-decoration-color:#658daa;text-underline-offset:3px}
+.crumb-link:hover,.crumb-link:focus-visible{color:#fff;outline-offset:3px}
+.crumb-divider{color:#91a7be;font-size:18px;line-height:1}
+.crumb-current{color:#f2f5fa;font-weight:700;overflow-wrap:anywhere;padding:4px 0}
+/* Icons directly follow each PAC combat-stat label: black artwork in white circles. */
+.power-group-heading{flex-wrap:wrap;gap:8px 11px}
+.group-name{white-space:nowrap}
+.group-symbols{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:2px;min-width:0}
+.combat-icon-circle{display:inline-flex;align-items:center;justify-content:center;flex:none;width:37px;height:37px;border-radius:50%;background:#fff;border:1px solid #f2f2f2;box-shadow:0 1px 3px #0006}
+.combat-stat-icon{width:27px;height:27px;display:block;object-fit:contain;background:transparent}
+.power-group-heading .group-count{margin-left:auto}
+@media(max-width:460px){.combat-icon-circle{width:33px;height:33px}.combat-stat-icon{width:24px;height:24px}.group-symbols{gap:4px}.crumb-trail{font-size:12px;padding:8px}}
+/* Shared inline reference system: the browser decides wrapping, never PDF coordinates. */
+.inline-symbol-button{display:inline-flex;align-items:center;justify-content:center;vertical-align:-.22em;margin:0 .14em;padding:2px;min-width:1.45em;height:1.55em;max-width:2.4em;border:1px solid #617890;border-radius:5px;background:#dfe9f2;color:#111923;cursor:pointer;white-space:nowrap;line-height:1}
+.inline-symbol-button:focus-visible,.combat-icon-circle:focus-visible,.pac-source-heading:focus-visible{outline:3px solid #f7b75e;outline-offset:2px}
+.symbol-art{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
+.symbol-text-fallback{font-size:.62em;font-weight:bold;line-height:1.05}
+.unknown-symbol{color:#ffb0b0;background:#5d2533;border-radius:4px;padding:2px}
+.structured-content .rule-paragraph{margin:0 0 .7em}
+.structured-content .rule-bullets{margin:.5em 0;padding-inline-start:1.5em;list-style-type:square}
+.structured-content .rule-bullets li{margin:.55em 0;white-space:normal}
+.symbol-overlay{position:fixed;inset:0;z-index:200;background:#050a13c9;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.symbol-dialog{background:#223246;color:#edf4ff;border:1px solid #647d97;border-radius:16px;width:min(100%,640px);max-height:min(90dvh,900px);overflow:auto;padding:18px;box-shadow:0 18px 50px #000b}
+.symbol-dialog-header{display:flex;align-items:center;gap:15px;margin-bottom:17px}
+.dialog-symbol{width:55px;height:55px;object-fit:contain;background:#f2f6fa;border-radius:9px;padding:8px}
+.symbol-dialog-header h2{margin:0;font-size:clamp(19px,4vw,25px);line-height:1.25;flex:1}
+.symbol-close{background:#364c64;color:#fff;font-weight:bold;border:1px solid #637b94;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:16px}
+.symbol-ref-detail{border:1px solid #4e6780;border-radius:10px;margin:9px 0;background:#192737;overflow:hidden}
+.symbol-ref-title{cursor:pointer;padding:13px 15px;font-weight:700;line-height:1.4}
+.symbol-ref-detail[open]>.symbol-ref-title{border-bottom:1px solid #4e6780}
+.symbol-ref-content{padding:14px 16px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.symbol-ref-content a{color:#82c9ff}
+.symbol-empty{color:#bfd2e5}
+/* Narrow, content aligned PAC toggle. */
+.pac-side-switch,.pac-side-switch:not([hidden]){width:174px!important;max-width:174px!important;min-width:0!important;flex:none!important;margin-left:max(0px,calc((100% - 660px)/2))!important;margin-right:0!important}
+@media(max-width:740px){.pac-side-switch,.pac-side-switch:not([hidden]){margin-left:0!important}}
+.improved-source-row{padding:9px 0;border-bottom:1px solid #455b73}
+.improved-source-row:last-child{border-bottom:0}
+.improved-source-row h4{margin:7px 0 3px;font-size:15px;color:#ffd2d4}
+
+/* 2026-11-05: rule-symbol artwork stays inline without a white box. */
+.inline-symbol-button{background:transparent;border:0;border-radius:0;padding:0;margin:0 .12em;min-width:1.48em;height:1.65em;max-width:none;vertical-align:-.36em;box-shadow:none;color:inherit}
+.inline-symbol-button .symbol-art{width:1.48em;height:1.48em;max-width:none;object-fit:contain}
+.inline-symbol-button.monochrome-symbol .symbol-art{filter:brightness(0) invert(1)}
+.inline-symbol-button.improved-symbol .symbol-art{width:1.62em;height:1.62em}
+.inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:2px;border-radius:4px}
+.symbol-ref-detail[open]>.symbol-ref-title{border-bottom:1px solid #4e6780}
+
+/* Icon token behavior is independent from artwork display.
+   Never apply brightness/invert to original colored icons. */
+.inline-symbol-button,
+.inline-symbol-button.monochrome-symbol,
+.inline-symbol-button.improved-symbol,
+.inline-symbol-button.combat-symbol,
+.inline-symbol-button.default-symbol{
+  display:inline-flex;align-items:center;justify-content:center;
+  vertical-align:-.38em;line-height:1;padding:0;margin:0 .11em;
+  border:0;background:transparent;border-radius:0;
+  min-width:0;max-width:none;height:auto;box-shadow:none;
+  white-space:nowrap;cursor:pointer;
+}
+.inline-symbol-button .symbol-art,
+.inline-symbol-button.monochrome-symbol .symbol-art,
+.inline-symbol-button.improved-symbol .symbol-art,
+.inline-symbol-button.combat-symbol .symbol-art{
+  display:block;width:auto;height:1.82em;max-width:2.35em;
+  object-fit:contain;background:transparent;
+  filter:none!important;
+}
+.inline-symbol-button.improved-symbol .symbol-art{height:2.08em;max-width:2.15em}
+.inline-symbol-button.combat-symbol .symbol-art{height:1.78em;max-width:2.2em}
+.inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:3px;border-radius:3px}
+
+/* Symbol reference previews: show light glyphs on a dark panel, not a pale tile. */
+.symbol-dialog .dialog-symbol{
+  background:#172536;
+  border:1px solid #435c76;
+  padding:8px;
+  width:64px;
+  height:64px;
+  object-fit:contain;
+  flex:none;
+  filter:none;
+}
+
+/* Terrain Marker Values: restore the three original PAC table rows. */
+.terrain-value-entry{display:flex;align-items:center;gap:18px;padding:18px 20px;margin-bottom:12px;background:#24344a;border:1px solid #455c75;border-radius:13px;color:#eef3fa;line-height:1.65}
+.terrain-value-icon{width:56px;height:56px;object-fit:contain;flex:0 0 56px}
+.terrain-value-description{flex:1;min-width:0}
+.terrain-value-description a{color:#82c9ff;text-decoration:underline dotted;text-underline-offset:3px;font-weight:650}
+@media(max-width:520px){.terrain-value-entry{gap:12px;padding:14px 12px}.terrain-value-icon{width:46px;height:46px;flex-basis:46px}}
+
+/* Shared terrain values: one source of rule wording, independent icon art. */
+.shared-terrain-values{display:block}
+.shared-terrain-values .terrain-value-name{font-size:1.16rem;margin:0 0 .55rem;color:#f2f6fb}
+.shared-terrain-values .terrain-value-source+.terrain-value-source{margin-top:1rem;padding-top:1rem;border-top:1px solid #435b74}
+.shared-terrain-values .terrain-value-source h3{font-size:.9rem;color:#b9ccdf;margin:0 0 .3rem}
+.shared-terrain-values .verbatim{line-height:1.65}
+.shared-terrain-values .inline-symbol-button{vertical-align:middle}
+.shared-terrain-values .symbol-art{max-width:none}
