@@ -35,3 +35,15 @@
 }
 @media(min-width:1400px){.desktop-layout{grid-template-columns:360px minmax(0,1fr);gap:34px}}
 @media(max-width:360px){.brand{font-size:13px}.mode-toggle button{padding:8px 10px}.entry .num{min-width:36px}}
+
+/* November update: quieter dark reading panels and continuous inline PDF glyphs. */
+.rule-paper{background:#233246;color:#e8f0f9;border:1px solid #40536c;box-shadow:0 5px 19px #050a1480}
+.rule-paper .verbatim{white-space:pre-wrap;line-height:1.7}
+.rule-paper a{color:#82c9ff;text-decoration-color:#82c9ff}
+.rule-paper a:hover{color:#ffb7bd}
+.inline-graphic{display:inline;vertical-align:-.19em;height:1.1em;max-width:2.2em;max-height:1.25em;width:auto;margin:0 .09em;background:transparent;object-fit:contain;white-space:normal}
+.pac-side-switch{display:flex;gap:3px;margin:10px auto 16px;width:min(100%,420px);border-radius:15px;border:1px solid #526780;background:#182537;padding:5px}
+.pac-side-switch[hidden]{display:none}
+.pac-side-switch button{flex:1;min-height:43px;border:0;border-radius:11px;background:transparent;color:#b5c7dd;font-weight:800;font-size:15px;cursor:pointer}
+.pac-side-switch button.active{background:#df4b59;color:white;box-shadow:0 2px 6px #0005}
+@media(min-width:1050px){.pac-side-switch{margin:0 0 16px;max-width:420px}}

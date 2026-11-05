@@ -13,3 +13,13 @@ Rule wording is loaded from `data.json` extracted from the user-provided 2026 Co
 
 ## Local test
 `python -m http.server 8000` and visit `http://localhost:8000`.
+
+
+## November 5 interface refinements
+- Dark slate reading panels replace the previous bright white panels.
+- PDF line wraps are displayed as continuous inline text; source text strings in `data.json` are unchanged.
+- Inline PDF glyphs have their white backgrounds removed and are tinted for dark panels.
+- PAC Front/Back segmented switch above the content.
+- Dark versions of the supplied combat icons provided for contrast on bright power backgrounds, with light versions on dark powers.
+
+After deploying, use a private/incognito tab or clear this site's Chrome storage if an old version remains cached.
