@@ -67,3 +67,28 @@
 .terrain-rule{margin-bottom:16px}
 .terrain-rule h3{font-size:14px;color:#f3a1a5;margin:10px 0 7px}
 .terrain-rule .verbatim{font-size:15px;line-height:1.65}
+
+/* PAC front opens closed, like the four columns on the physical card. */
+.power-group{background:#1b293b;border:1px solid #415771;border-radius:13px;margin:0 0 12px;overflow:hidden}
+.power-group-heading{list-style:none;display:flex;align-items:center;gap:12px;padding:17px 18px;font-weight:850;letter-spacing:.6px;cursor:pointer;border-left:5px solid #e84b59}
+.power-group-heading::-webkit-details-marker{display:none}
+.power-group-heading.attack{border-color:#f0b632}.power-group-heading.defense{border-color:#52a7e1}.power-group-heading.damage{border-color:#51bb82}
+.group-count{margin-left:auto;color:#aebed0;font-size:13px;font-weight:500}
+.group-arrow{font-size:22px;color:#aebed0;transition:transform .15s}
+.power-group[open] .group-arrow{transform:rotate(180deg)}
+.power-group-stack{padding:0 11px 12px}
+.power-group-stack .entry{box-shadow:none}
+.improved-row{display:flex;gap:14px;align-items:flex-start;padding:14px;background:#24344a;border:1px solid #455c75;border-radius:13px;margin:0 0 12px}
+.improved-icon{width:54px;height:54px;object-fit:contain;flex:0 0 54px;background:#eee;border-radius:50%;padding:3px}
+.improved-pair{display:grid;grid-template-columns:1fr 1fr;flex:1;min-width:0;gap:12px}
+.improved-cell{min-width:0;padding:7px 9px 9px}
+.improved-cell h2{font-size:15px;color:#f3c5c8;line-height:1.35;margin:0 0 8px}
+.improved-cell .verbatim{font-size:15px;line-height:1.62}
+.improved-na{color:#91a5bb}
+@media(max-width:620px){.improved-row{gap:8px;padding:10px}.improved-icon{width:42px;height:42px;flex-basis:42px}.improved-pair{grid-template-columns:1fr;gap:8px}.improved-cell{padding:4px 6px;border-bottom:1px solid #40546d}.improved-cell:last-child{border-bottom:0}}
+
+.sidebar-power-fold{border-bottom:1px solid #35495e;padding:3px 0}
+.sidebar-power-heading{list-style:none;cursor:pointer;padding:12px 13px;color:#cdd9e6;font-weight:800;font-size:13px}
+.sidebar-power-heading::-webkit-details-marker{display:none}
+.sidebar-power-heading::after{content:'⌄';float:right;color:#94a9bc}
+.sidebar-power-fold[open] .sidebar-power-heading::after{content:'⌃'}

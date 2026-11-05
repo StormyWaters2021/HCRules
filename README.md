@@ -1,20 +1,15 @@
-# HeroClix Interactive Rules — GitHub Pages
+# HeroClix Interactive Rulebook — mobile and desktop
 
-Upload the contents of this folder to the root of a GitHub Pages repository. No build step or server component is required.
+Static site for GitHub Pages. Copy the contents of this folder to the repository root, then deploy main/(root).
 
-## November 5 update
+## This update
+- PAC Front Speed, Attack, Defense, Damage begin collapsed.
+- PAC reverse-side Improved Abilities are shown in the seven original icon rows, separating Movement and Targeting text.
+- Corrected source-based inline symbol placement for rule entries 1.3a–1.3i, 1.4 and 1.10.
+- Removed instructional helper captions.
+- No PDF screenshots or PDF documents are included.
 
-- Scalable symbol font in `assets/fonts/heroclix-symbols.ttf`, with character mapping in `glyph-map.json`. Built from source graphics and the supplied combat-symbol images. Embedded rule graphics render as inline font glyphs (text characters), not floating images.
-- Fixed source-layout placement specifically for the standard combat symbols (1.3a) and standard characters (1.10) examples.
-- PAC Front/Back switch no longer creates a redundant Back button on the reverse-side landing page.
-- PAC map-terrain items expand in place and read the original text from the corresponding entries of the comprehensive-rule database. Text is not copied into separate terrain data fields.
-- Inherent PAC abilities are nine separate source-positioned entries with each description under its own heading.
-- Cache-busting query strings for CSS/JS/data to help deploy changes to browsers with cached assets.
+**Accuracy:** These changes preserve the wording of the source passages while changing presentation. The complete site has not been manually audited glyph-for-glyph against the PDFs. Some other symbol-bearing passages may still need inspection.
 
-## Fidelity note
-
-Original comprehensive-rule and PAC textual source data are kept in `data.json`. The special symbol-only passages use explicit display assembly to put glyphs at their original positions. The underlying source text is retained without editorial rewrites. This is not a claim of full visual character-by-character verification across every PDF section; the remaining extracted PAC reverse-side panels can contain interleaved columns and missing image-only glyphs. No PDF files or page screenshots are shipped.
-
-## Deployment
-
-In GitHub → Settings → Pages, select Deploy from a branch, `main`, `/(root)`. For updates, replace the project files and commit/push.
+## Refreshing the site
+After committing and pushing to GitHub, allow Pages to deploy. On Chrome mobile, verify in an Incognito tab if the cache serves an older version.
