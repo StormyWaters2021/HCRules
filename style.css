@@ -130,3 +130,15 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .keyphrase-heading{align-items:center;min-height:44px}
 .keyphrase-inline{height:1.55em;max-width:65%;vertical-align:-.28em}
 @media(max-width:620px){.keyphrase-heading .keyphrase-icon{min-height:36px;max-height:54px;max-width:78px}.power-symbol .power-category-icon{width:29px;height:29px}}
+
+/* PAC icons are source-derived vector contours; no opaque PNG backgrounds or filter. */
+.pac-vector-heading,.pac-vector-inline{display:inline-block;vertical-align:-.14em;color:#dce7f4;filter:none!important;background:none!important;overflow:visible;flex:none}
+.pac-vector-heading{height:46px;width:55px;align-self:center}
+.pac-vector-inline{height:1.48em;width:auto;max-width:6.7em;vertical-align:-.3em;margin:0 .12em;color:#dce7f4}
+.keyphrase-heading{align-items:center;gap:14px}
+@media(max-width:620px){.pac-vector-heading{height:41px;width:48px}}
+/* Small Front/Back switch aligned with the PAC content column. */
+.pac-side-switch,.pac-side-switch:not([hidden]){display:flex;flex:none;align-self:auto;justify-content:flex-start;box-sizing:border-box;gap:3px;width:174px!important;min-width:0!important;max-width:174px!important;padding:3px!important;margin:7px 0 12px max(0px,calc((100% - 660px)/2))!important;border-radius:10px}
+.pac-side-switch[hidden]{display:none!important}
+.pac-side-switch button{flex:1 1 0!important;min-width:0!important;padding:5px 12px;min-height:34px}
+@media(min-width:1050px){.pac-side-switch,.pac-side-switch:not([hidden]){margin-left:max(0px,calc((100% - 900px)/2))!important}}
