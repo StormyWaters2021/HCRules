@@ -14,8 +14,8 @@ function pacSymbol(src,cl="pac-vector-inline",alt="PAC symbol"){
  svg.append(path);return svg;
 }
 "use strict";
-let db,glyphMap={},symbolRegistry={},mode='rules',path=[],query='';
-let visited=[],lastVisited={mode:'rules',path:[]};
+let db,glyphMap={},symbolRegistry={},mode='home',path=[],query='';
+let visited=[],lastVisited={mode:'home',path:[]};
 const $=x=>document.getElementById(x), E=(tag,cls,txt)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=txt;return n};
 const low=s=>String(s||'').toLocaleLowerCase();
 const button=(label,click,cls='')=>{const n=E('button',cls,label);n.type='button';n.onclick=click;return n};
@@ -340,12 +340,13 @@ function navigateBack(){
  const prior=visited.pop();
  if(prior){mode=prior.mode;path=[...prior.path]}
  else if(path.length){path=path.slice(0,-1)}
- else if(mode==='pac'){mode='rules';path=[]}
+ else if(mode!=='home'){mode='home';path=[]}
  else return;
  clearSearch();render();resetScroll();syncHash();
 }
 function breadcrumbSteps(){
  const steps=[];
+ if(mode==='home')return steps;
  if(mode==='rules'){
   steps.push({label:'Comprehensive Rules',path:[]});
   const chapter=path.find(k=>k.startsWith('chapter:'))?.slice(8);
@@ -362,6 +363,7 @@ function breadcrumbSteps(){
    const ability=findPac(last.slice(6));
    if(ability)steps.push({label:ability.group,path:[],group:ability.group});
   }
+  if(last.startsWith('group:'))steps.push({label:last.slice(6),path:[last]});
   if(last.startsWith('back:')){const b=findBack(last.slice(5));steps.push({label:b?.name||'Reference',path:[last]})}
   if(last.startsWith('power:')){const p=findPac(last.slice(6));steps.push({label:p?.name||'Power',path:[last]})}
  }
@@ -369,6 +371,10 @@ function breadcrumbSteps(){
 }
 function hierarchy(){
  const nav=$('breadcrumbs');nav.replaceChildren();
+ if(mode!=='home'){
+  const home=button('Home',()=>visitLocation('home',[]),'back home-link');
+  home.setAttribute('aria-label','Return to home');nav.append(home);
+ }
  if(visited.length||path.length)nav.append(button('‹ Back',navigateBack,'back'));
  const steps=breadcrumbSteps();
  // The reverse-side landing page has no breadcrumb trail; detail pages keep theirs.
@@ -432,19 +438,42 @@ function pacGroupIcons(group){
  }
  return wrap;
 }
+function comicPanel(label,kind,click){
+ const b=button(label,click,'comic-panel comic-panel-'+kind);
+ b.setAttribute('aria-label',label);
+ return b;
+}
+function showHome(){
+ $('context').replaceChildren();
+ const view=$('view'),grid=E('div','comic-home');
+ const mast=E('div','comic-home-mast','HEROCLIX RULES');
+ grid.append(mast);
+ grid.append(comicPanel('Comprehensive Rules','rules',()=>visitLocation('rules',[])));
+ grid.append(comicPanel('PAC','pac',()=>visitLocation('pac',[])));
+ grid.append(comicPanel('Team Abilities','team',()=>goTarget('rule','19.4')));
+ const contact=comicPanel('Contact','contact',()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer'));
+ contact.title='Open a GitHub issue to contact the project maintainer';
+ grid.append(contact);view.append(grid);
+}
 function showPowerList(){
- setHeading('Powers & Abilities');
- const content=$('view');
- for(const group of groups){
-  const candidates=db.pac.filter(p=>p.group===group&&(!query||searchText(p)));
-  if(!candidates.length)continue;
-  const section=E('details','power-group');section.dataset.pacGroup=group;if(query)section.open=true;
-  const heading=E('summary','power-group-heading '+low(group));
-  heading.append(E('span','group-name',group.toUpperCase()),pacGroupIcons(group),E('span','group-arrow','▶'));
-  section.append(heading);
-  const stack=E('div','stack power-group-stack');candidates.forEach(p=>stack.append(cardPower(p)));
-  section.append(stack);content.append(section);
+ const current=path.at(-1)||'';
+ const selected=current.startsWith('group:')?current.slice(6):null;
+ if(!selected){
+  setHeading('Powers & Abilities');
+  const list=E('div','comic-pac');
+  for(const group of groups)list.append(comicPanel(group,'stat-'+low(group),()=>move(['group:'+group])));
+  $('view').append(list);
+  return;
  }
+ setHeading(selected);
+ const content=$('view');
+ const section=E('div','power-group power-group-selected');
+ const heading=E('div','power-group-heading '+low(selected));
+ heading.append(E('span','group-name',selected.toUpperCase()),pacGroupIcons(selected));
+ section.append(heading);
+ const stack=E('div','stack power-group-stack');
+ for(const p of db.pac.filter(p=>p.group===selected))stack.append(cardPower(p));
+ section.append(stack);content.append(section);
 }
 function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const paper=E('div','rule-paper');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));paper.append(header,p.inlineContent?tokenContent(p.inlineContent,{type:'power',id:p.id}):textNode(p.text,{type:'power',id:p.id}));article.append(paper);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
 function showBackIndex(){setHeading('PAC · Reverse Side');const v=$('view');const stack=E('div','stack');db.back.filter(b=>b.id!=='back-terrain-values').forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows());const terrainValues=db.back.find(b=>b.id==='back-terrain-values');if(terrainValues)v.append(row('',terrainValues.name,()=>move(['back:'+terrainValues.id])))}
@@ -564,6 +593,7 @@ function sidebarRow(label,fn,depth=0,selected=false){
 function sidebar(){
  const host=$('sidebarContents');if(!host)return;host.replaceChildren();
  const isPac=mode==='pac';const last=path.at(-1)||'';
+ if(mode==='home')return;
  $('desktopSidebar').querySelector('.sidebar-title').textContent=isPac?'Powers & Abilities':'Comprehensive Rules';
  if(isPac){
   host.append(sidebarRow('All powers',()=>move([]),0,!path.length));
@@ -604,8 +634,8 @@ function sidebar(){
  }
 }
 
-function render(){lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
+function render(){lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
  const key=path.at(-1)||'';if(key.startsWith('rule:'))showRule(byId(key.slice(5)));else if(key.startsWith('section:'))showSection(key.slice(8));else if(key.startsWith('chapter:'))showChapter(key.slice(8));else showChapters()}
-async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();$('rulesTab').onclick=()=>{mode='rules';move([])};$('pacTab').onclick=()=>{mode='pac';move([])};$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
+async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('symbolOverlay')?.remove()});
