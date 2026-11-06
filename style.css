@@ -1867,3 +1867,23 @@ body:not(.home-mode) #context{margin-top:3px}
  white-space:nowrap;
  line-height:1;
 }
+
+/* Cropped inline icon data URLs retain their original source path as metadata.
+   The visual PNG is cropped, while the source's contrast rules still apply. */
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+:is(img.tone-monochrome-art,img.rule-glyph.tone-monochrome-art){
+ filter:brightness(0)!important;
+ opacity:1!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+img.symbol-art[data-original-src*="/improved-abilities/"]{
+ filter:none!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+img.symbol-art[data-original-src*="/terrain-values/"]{
+ filter:none!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+img.symbol-art[data-original-src$="/terrain-values/destroy-clean.png"]{
+ filter:brightness(0)!important;
+}
