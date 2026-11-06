@@ -445,15 +445,50 @@ function comicPanel(label,kind,click){
 }
 function showHome(){
  $('context').replaceChildren();
- const view=$('view'),grid=E('div','comic-home');
- const mast=E('div','comic-home-mast','HEROCLIX RULES');
- grid.append(mast);
- grid.append(comicPanel('Comprehensive Rules','rules',()=>visitLocation('rules',[])));
- grid.append(comicPanel('PAC','pac',()=>visitLocation('pac',[])));
- grid.append(comicPanel('Team Abilities','team',()=>goTarget('rule','19.4')));
- const contact=comicPanel('Contact','contact',()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer'));
- contact.title='Open a GitHub issue to contact the project maintainer';
- grid.append(contact);view.append(grid);
+ const view=$('view');
+ const host=E('div','home-artwork');
+ const imageLayer=E('div','comic-cover');
+ imageLayer.hidden=true;
+ const cover=E('img','comic-cover-image');
+ cover.src='assets/WebsiteCover.png';
+ cover.alt='Clix Rules comic cover with four navigation panels';
+ cover.decoding='async';
+ const ns='http://www.w3.org/2000/svg';
+ const map=document.createElementNS(ns,'svg');
+ map.setAttribute('class','comic-cover-map');
+ map.setAttribute('viewBox','0 0 1420 2048');
+ map.setAttribute('preserveAspectRatio','xMidYMid meet');
+ map.setAttribute('aria-label','Choose a section');
+ const panels=[
+  {name:'Comprehensive Rules',points:'58,535 698,594 711,1240 58,1310',open:()=>visitLocation('rules',[])},
+  {name:'PAC',points:'713,594 1362,688 1362,1207 711,1240',open:()=>visitLocation('pac',[])},
+  {name:'Team Abilities',points:'58,1322 710,1257 745,1914 58,1914',open:()=>goTarget('rule','19.4')},
+  {name:'Contact',points:'714,1257 1362,1210 1362,1914 747,1914',open:()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer')}
+ ];
+ for(const panel of panels){
+  const shape=document.createElementNS(ns,'polygon');
+  shape.setAttribute('points',panel.points);
+  shape.setAttribute('class','comic-cover-hitarea');
+  shape.setAttribute('role','link');
+  shape.setAttribute('tabindex','0');
+  shape.setAttribute('aria-label',panel.name);
+  shape.addEventListener('click',panel.open);
+  shape.addEventListener('keydown',event=>{
+   if(event.key==='Enter'||event.key===' '){event.preventDefault();panel.open()}
+  });
+  map.append(shape);
+ }
+ imageLayer.append(cover,map);
+ const fallback=E('div','comic-home comic-home-fallback');
+ fallback.append(E('div','comic-home-mast','CLIX RULES!'));
+ fallback.append(comicPanel('Comprehensive Rules','rules',()=>visitLocation('rules',[])));
+ fallback.append(comicPanel('PAC','pac',()=>visitLocation('pac',[])));
+ fallback.append(comicPanel('Team Abilities','team',()=>goTarget('rule','19.4')));
+ fallback.append(comicPanel('Contact','contact',()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer')));
+ cover.onload=()=>{imageLayer.hidden=false;fallback.hidden=true};
+ cover.onerror=()=>{imageLayer.hidden=true;fallback.hidden=false};
+ host.append(imageLayer,fallback);
+ view.append(host);
 }
 function showPowerList(){
  const current=path.at(-1)||'';
