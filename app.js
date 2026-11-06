@@ -903,8 +903,8 @@ function watchRulesStickyHeadings(){
  refresh();
  rulesStickyCleanup=()=>controller.abort();
 }
-function makeRulesAccordion(rule,index=0){
- const details=E('details','rules-accordion rules-depth-'+rule.level);
+function makeRulesAccordion(rule,index=0,searchResult=false){
+ const details=E('details','rules-accordion rules-depth-'+rule.level+(searchResult?' rules-search-match':''));
  const summary=E('summary','entry comic-paper-row rules-accordion-heading');
  summary.dataset.panel=String(index%2);
  if(rule.id)summary.append(E('span','num',rule.id));
@@ -919,6 +919,7 @@ function makeRulesAccordion(rule,index=0){
   for(const other of details.parentElement.querySelectorAll(':scope > details.rules-accordion')){
    if(other!==details&&other.open)other.open=false;
   }
+  if(!searchResult){
   updateRulesStickyOffset();
   requestAnimationFrame(()=>{
    if(!details.open||!details.isConnected)return;
@@ -930,6 +931,7 @@ function makeRulesAccordion(rule,index=0){
    const target=summary.getBoundingClientRect().top+window.scrollY-stickyTop-headerHeight;
    window.scrollTo({top:Math.max(0,target),behavior:'instant'});
   });
+  }
   if(populated)return;
   populated=true;
   if(rule.text)appendRulePanels(contents,rule);
@@ -937,7 +939,7 @@ function makeRulesAccordion(rule,index=0){
    child.level===rule.level+1 &&
    (rule.level===1?child.chapter===rule.id:
     rule.level===2?child.id.match(/^\d+\.\d+/)?.[0]===rule.id:false));
-  if(descendants.length){
+  if(descendants.length&&!searchResult){
    const children=E('div','rules-accordion-children');
    descendants.forEach((child,i)=>children.append(makeRulesAccordion(child,i)));
    contents.append(children);
@@ -952,7 +954,40 @@ function showChapters(){
  $('view').append(root);
  watchRulesStickyHeadings();
 }
-function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
+function showSearch(){
+ setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');
+ const view=$('view');
+ if(mode==='rules'){
+  const matches=db.sections.filter(section=>eligible(section,query));
+  const host=E('div','rules-accordion-tree rules-search-results');
+  matches.forEach((section,index)=>host.append(makeRulesAccordion(section,index,true)));
+  view.append(host);
+  if(!matches.length)view.append(E('p','empty','No results found.'));
+  return;
+ }
+ let count=0;
+ const powers=E('div','pac-filter-results pac-search-results');
+ for(const group of groups){
+  const matches=db.pac.filter(power=>power.group===group&&searchText(power));
+  for(const power of matches){
+   const card=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power));
+   // Search results use the same expandable single-panel ability card as the PAC.
+   powers.append(card);
+   count++;
+  }
+ }
+ if(powers.childElementCount)view.append(powers);
+ const reverse=db.back.filter(back=>searchText(back));
+ if(reverse.length){
+  const heading=E('h2','group-head','PAC REVERSE SIDE');
+  view.append(heading);
+  const host=E('div','pac-reverse-accordions pac-search-reverse');
+  reverse.forEach((back,index)=>host.append(makePacAccordion(back.name,index,content=>showBack(back,content))));
+  view.append(host);
+  count+=reverse.length;
+ }
+ if(!count)view.append(E('p','empty','No results found.'));
+}
 
 function sidebarRow(label,fn,depth=0,selected=false){
  const b=button(label,fn,'sidebar-item depth-'+depth+(selected?' active':''));
