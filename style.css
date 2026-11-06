@@ -1127,7 +1127,19 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 #view .pac-front-accordions > .pac-front-section{
  width:100%;
  max-width:690px;
+ background:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ overflow:visible!important;
 }
+#view .pac-front-accordions > .pac-front-section > .terrain-content{
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+
 #view .pac-front-accordions > .pac-front-section > summary.pac-front-summary{
  position:relative;
  display:flex;
