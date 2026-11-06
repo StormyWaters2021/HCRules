@@ -144,15 +144,17 @@ function tokenContent(value,source){
  let prev=0,m;
  while((m=re.exec(String(value||'')))){
   node.append(linkedLine(value.slice(prev,m.index),source));
-  // Keep punctuation attached to its preceding inline symbol so a colon
-  // cannot wrap onto the next line by itself.
+  // Treat an icon, its colon, and the following value as one token.
+  // This avoids breaks either before the colon or between ":" and "4".
   const suffix=String(value).slice(re.lastIndex);
-  const punctuation=suffix.match(/^([ \t]*)([:;,])/);
-  if(punctuation){
+  const colonValue=suffix.match(/^[ \\t]*:[ \\t\\r\\n]*[^\\s,;]+/);
+  const punctuation=suffix.match(/^[ \\t]*[:;,]/);
+  if(colonValue||punctuation){
+   const matched=colonValue||punctuation;
    const group=E('span','symbol-punctuation-group');
-   group.append(symbolButton(m[1]),document.createTextNode(punctuation[1]+punctuation[2]));
+   group.append(symbolButton(m[1]),document.createTextNode(matched[0].replace(/\\s+/g,' ')));
    node.append(group);
-   re.lastIndex+=punctuation[0].length;
+   re.lastIndex+=matched[0].length;
   }else node.append(symbolButton(m[1]));
   prev=re.lastIndex;
  }
