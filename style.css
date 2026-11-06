@@ -887,230 +887,9 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
 
 
 
-/* Alternating original gray halftone tiles. Keep the PNGs' native
-   1800:753 aspect ratio rather than stretching to a wide, short card. */
-:root{
- --halftone-a:radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px);
- --halftone-b:radial-gradient(circle,rgba(0,0,0,.09) .65px,transparent .9px);
-}
-:is(.stack,.comic-paper-stack,.power-group-stack):has(> button.entry.comic-paper-row){
- gap:0;
- align-items:center;
-}
-button.entry.comic-paper-row,
-summary.terrain-summary.comic-paper-row{
- position:relative;
- display:flex;
- flex:0 0 auto;
- align-items:center;
- justify-content:center;
- gap:clamp(5px,1.4vw,12px);
- width:min(100%,520px);
- height:auto;
- min-height:0;
- max-height:none;
- aspect-ratio:1800 / 753;
- padding:9% 10%;
- margin:0 auto;
- border:0;
- border-radius:0;
- box-shadow:none;
- background:transparent var(--halftone-a) center / contain no-repeat;
- color:#171717;
- text-align:center;
- overflow:visible;
- cursor:pointer;
- transition:none!important;
- clip-path:polygon(2% 3.7%,98% 5%,98% 96.3%,2% 96.3%);
-}
-button.entry.comic-paper-row .label,
-button.entry.comic-paper-row .num,
-button.entry.comic-paper-row .power-text,
-summary.terrain-summary.comic-paper-row>span:not(.terrain-swatch):not(.terrain-chevron){
- color:#151515;
- font-family:var(--display-font);
- font-size:clamp(.98rem,2.65vw,1.4rem);
- font-weight:800;
- line-height:1.2;
- letter-spacing:.01em;
- text-shadow:0 1px 0 #fff8;
-}
-button.entry.comic-paper-row .num{flex:none;white-space:nowrap}
-button.entry.comic-paper-row .label,
-button.entry.comic-paper-row .power-text{flex:0 1 auto;overflow-wrap:anywhere}
-button.entry.comic-paper-row .chevron,
-summary.terrain-summary.comic-paper-row .terrain-chevron{
- margin:0;color:#242424;font-size:1.2rem;font-weight:800;
-}
-button.entry.comic-paper-row.power .power-symbol{flex:0 0 48px;width:48px;height:48px}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:nth-child(even),
-.terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
- background-image:var(--halftone-b);
- clip-path:polygon(2% 6.2%,98% 3.7%,98% 96.3%,2% 96.3%);
-}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
- margin-top:-3.3%;
-}
-.terrain-accordions{display:flex;flex-direction:column;align-items:center;gap:0}
-.terrain-accordions > .terrain-detail{width:min(100%,520px);background:transparent;border:0;overflow:visible;margin:0}
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row{width:100%}
-.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-3.3%}
-.terrain-detail[open] .terrain-content{background:#223146;border:1px solid #41566b;border-radius:4px}
-button.entry.comic-paper-row:hover,
-summary.terrain-summary.comic-paper-row:hover{
- background-color:transparent!important;
- filter:drop-shadow(0 0 6px rgba(240,245,255,.65));
-}
-button.entry.comic-paper-row:focus-visible,
-summary.terrain-summary.comic-paper-row:focus-visible{
- outline:2px solid #ffe09a;outline-offset:-9px;
- filter:drop-shadow(0 0 6px rgba(255,224,154,.75));
-}
-@media(max-width:480px){
- button.entry.comic-paper-row,
- summary.terrain-summary.comic-paper-row{padding:9% 8%;gap:5px}
- button.entry.comic-paper-row .label,
- button.entry.comic-paper-row .num,
- button.entry.comic-paper-row .power-text,
- summary.terrain-summary.comic-paper-row>span:not(.terrain-swatch):not(.terrain-chevron){
-  font-size:clamp(.88rem,3.6vw,1.12rem);
- }
- button.entry.comic-paper-row.power .power-symbol{flex-basis:39px;width:39px;height:39px}
-}
 
 
-/* Unified source-art navigation and reading panels. The custom Home and PAC
-   cover images remain untouched. All art is from the repository PNGs. */
-:root{
- --reading-ink:#191919;
- --reading-link:#075583;
-}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row,
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row{
- transition:none!important;
- filter:none!important;
- box-shadow:none!important;
- color:var(--reading-ink)!important;
- text-shadow:none!important;
-}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:hover,
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:hover{
- filter:none!important;
- background-color:transparent!important;
- box-shadow:inset 0 0 0 2px #f1d48b!important;
-}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:focus-visible,
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:focus-visible{
- filter:none!important;
- background-color:transparent!important;
- box-shadow:inset 0 0 0 2px #f3bd57!important;
- outline:2px solid #f3bd57;
- outline-offset:-10px;
-}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row :is(.num,.label,.power-text),
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row>span{
- color:#171717!important;
- text-shadow:none!important;
-}
-button.entry.comic-paper-row .chevron,
-summary.terrain-summary.comic-paper-row .terrain-chevron{
- display:none!important;
-}
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
- margin-top:-6.2%;
-}
-.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-6.2%}
-
-/* Actual rule descriptions, PAC abilities, keyphrases, improved abilities,
-   source terrain entries and icon-popup references use the same two tiles. */
-#view .rule-paper,
-#view .improved-row,
-#view .terrain-value-entry,
-#view .terrain-rule,
-.symbol-reference-panel.comic-reading-panel{
- position:relative;
- width:min(100%,680px);
- max-width:680px;
- min-height:185px;
- height:auto;
- margin:0 auto 4px;
- padding:clamp(34px,5.5vw,56px) clamp(32px,6.7vw,65px);
- border:0!important;
- border-radius:0!important;
- box-shadow:none!important;
- background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
- color:var(--reading-ink)!important;
- font-family:var(--reading-font);
- font-size:clamp(15px,1.5vw,17px);
- line-height:1.65;
- overflow-wrap:break-word;
-}
-#view .rule-paper:nth-of-type(even),
-#view .improved-row:nth-of-type(even),
-#view .terrain-value-entry:nth-of-type(even),
-#view .terrain-rule:nth-of-type(even),
-#view .comic-reading-panel[data-panel="1"],
-.symbol-reference-panel[data-panel="1"]{
- background-image:var(--halftone-b)!important;
-}
-#view :is(.rule-paper,.improved-row,.terrain-value-entry,.terrain-rule) + :is(.rule-paper,.improved-row,.terrain-value-entry,.terrain-rule){
- margin-top:-15px;
-}
-#view .comic-reading-panel :is(.verbatim,.structured-content,.tokenized-content,.rule-paragraph,.improved-cell,.terrain-value-source,.terrain-value-name,.terrain-value-source h3,.inherent-entry h2,.keyphrase-heading h2,.improved-cell h2,.terrain-rule h3),
-.symbol-reference-panel.comic-reading-panel{
- color:var(--reading-ink)!important;
-}
-#view .comic-reading-panel a,
-#view .comic-reading-panel a:visited,
-.symbol-reference-panel.comic-reading-panel a,
-.symbol-reference-panel.comic-reading-panel a:visited{
- color:var(--reading-link)!important;
- text-decoration:underline;
- text-decoration-thickness:1px;
- text-decoration-color:currentColor;
- text-underline-offset:3px;
-}
-#view .comic-reading-panel a:hover,
-.symbol-reference-panel.comic-reading-panel a:hover{color:#003958!important}
-#view .comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content),
-.symbol-reference-panel.comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content){
- font-family:var(--reading-font);
- font-size:inherit;
- line-height:1.6;
-}
-#view .comic-reading-panel .rule-bullets{margin:.4em 0;padding-left:1.25em}
-#view .comic-reading-panel :is(.inherent-entry h2,.keyphrase-heading h2,.improved-cell h2,.terrain-rule h3,.terrain-value-name){
- color:#232323!important;
- font-family:var(--display-font);
-}
-/* The improved two-column structure and interactive icons remain unchanged. */
-#view .improved-row{display:flex;align-items:flex-start;gap:12px}
-#view .improved-cell{background:transparent!important;border-color:#9c9c9c!important}
-#view .improved-na{color:#575757!important}
-#view .terrain-value-source{background:transparent!important;border:0!important}
-#view .terrain-content{background:transparent!important;border:0!important;padding:8px 0}
-#view .terrain-rule{padding-top:32px;padding-bottom:32px}
-#view .terrain-rule h3{margin-top:0}
-/* Breadcrumbs are navigation, not separate dark content cards. */
-.crumb-trail{
- box-shadow:none!important;
- border:0!important;
- border-bottom:1px solid #40536a!important;
- border-radius:0!important;
- background:transparent!important;
-}
-@media(max-width:620px){
- #view .rule-paper,
- #view .improved-row,
- #view .terrain-value-entry,
- #view .terrain-rule{
-  min-height:135px;
-  padding:clamp(25px,7vw,39px) clamp(27px,7.5vw,48px);
-  font-size:15px;
- }
- #view .improved-row{gap:7px}
-}
-
+:root{--reading-ink:#191919;--reading-link:#075583;--clix-panel-slope:12px;--clix-panel-edge:6px;--rules-sticky-top:60px;--rules-heading-height:52px;--pac-sticky-top:112px}
 
 /* Stable full-width reading layout: no sidebar and no filter/clip hover compositing. */
 @media (min-width: 1050px){
@@ -1226,6 +1005,7 @@ body:not(.home-mode) .group-head{
 body.pac-comic-mode{background:#101827!important;background-image:none!important}
 
 
+
 /* PDF-extracted combat symbols are monochrome. On gray/white rule art,
    render their silhouettes dark instead of inheriting the old light style.
    Other full-color symbols and the PAC's dark cover icons are untouched. */
@@ -1244,6 +1024,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
   background:transparent!important;
   border:0!important;
 }
+
 
 
 /* PAC light-tile cleanup: remove category card remnants and darken monochrome icons. */
@@ -1381,245 +1162,6 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 }
 
 
-/* PAC terrain accordion: each opened rule starts with the opposite tile
-   from its heading and alternates for additional source-rule sections. */
-#view .terrain-accordions{
-  gap:0;
-}
-#view .terrain-accordions > .terrain-detail{
-  padding:0;
-  margin-bottom:0;
-  overflow:visible;
-}
-#view .terrain-accordions .terrain-content{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:0;
-  width:100%;
-  margin:0;
-  padding:0!important;
-  background:transparent!important;
-  border:0!important;
-}
-#view .terrain-accordions .terrain-rule.comic-reading-panel{
-  width:100%;
-  max-width:100%;
-  margin:0!important;
-  padding-top:clamp(30px,5.5vw,50px);
-  padding-bottom:clamp(30px,5.5vw,50px);
-  border:0!important;
-  border-radius:0!important;
-}
-#view .terrain-accordions .terrain-rule.comic-reading-panel[data-panel="0"]{
-  background-image:var(--halftone-a)!important;
-}
-#view .terrain-accordions .terrain-rule.comic-reading-panel[data-panel="1"]{
-  background-image:var(--halftone-b)!important;
-}
-#view .terrain-accordions .terrain-detail[open] > .terrain-summary{
-  margin-bottom:0;
-  border-bottom:0!important;
-}
-#view .terrain-accordions .terrain-detail[open] > .terrain-content > :last-child{
-  margin-bottom:0!important;
-}
-
-
-/* PAC reverse-side accordion: shared tile rhythm and readable sticky heading.
-   Sticky heading stays in its own details section; page scrolling remains enabled. */
-:root{--pac-sticky-top:112px}
-#view .pac-reverse-accordions{
- display:flex;
- flex-direction:column;
- align-items:center;
- width:100%;
- max-width:900px;
- margin:0 auto;
- padding:0 0 2px;
- gap:0;
-}
-#view .pac-reverse-accordions > .pac-reverse-section{
- width:min(100%,680px);
- max-width:680px;
- margin:0!important;
- padding:0!important;
- border:0!important;
- border-radius:0!important;
- overflow:visible!important;
- background:transparent!important;
- box-shadow:none!important;
-}
-#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary{
- position:relative;
- z-index:1;
- display:flex;
- align-items:center;
- justify-content:center;
- gap:clamp(9px,2vw,22px);
- width:100%;
- height:auto;
- min-height:0;
- aspect-ratio:1800/753;
- margin:0!important;
- padding:8% 9%;
- cursor:pointer;
- list-style:none;
- border:0!important;
- border-radius:0!important;
- background-color:transparent!important;
- background-position:center!important;
- background-size:100% 100%!important;
- background-repeat:no-repeat!important;
- box-shadow:none!important;
-}
-#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary::-webkit-details-marker{display:none}
-#view .pac-reverse-accordions .pac-reverse-section:nth-of-type(odd) > summary.terrain-summary{
- background-image:var(--halftone-a)!important;
-}
-#view .pac-reverse-accordions .pac-reverse-section:nth-of-type(even) > summary.terrain-summary{
- background-image:var(--halftone-b)!important;
-}
-/* The exact tile is determined by data-panel rather than sibling index,
-   so the terrain heading between groups never shifts alternation. */
-#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary[data-panel="0"]{background-image:var(--halftone-a)!important}
-#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary[data-panel="1"]{background-image:var(--halftone-b)!important}
-#view .pac-reverse-accordions > .pac-reverse-section[open] > summary.terrain-summary{
- position:sticky;
- top:var(--pac-sticky-top);
- z-index:7;
-}
-#view .pac-reverse-accordions .pac-reverse-section > .pac-reverse-content{
- display:flex;
- flex-direction:column;
- align-items:center;
- width:100%;
- padding:0!important;
- margin:-12px 0 -8px!important;
- gap:0!important;
- border:0!important;
- background:transparent!important;
- overflow:visible!important;
-}
-#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel{
- flex:none;
- width:100%;
- max-width:100%;
- min-height:0;
- height:auto;
- margin:0!important;
- padding:clamp(28px,6vw,50px) clamp(28px,7vw,60px)!important;
- border:0!important;
- border-radius:0!important;
- box-shadow:none!important;
- background-color:transparent!important;
- background-position:center!important;
- background-size:100% 100%!important;
- background-repeat:no-repeat!important;
-}
-#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel[data-panel="0"]{
- background-image:var(--halftone-a)!important;
-}
-#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel[data-panel="1"]{
- background-image:var(--halftone-b)!important;
-}
-#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel + .comic-reading-panel{
- margin-top:-10px!important;
-}
-#view .pac-reverse-accordions > .pac-reverse-section + .pac-reverse-section{
- margin-top:-9px!important;
-}
-#view .pac-reverse-accordions .pac-reverse-section:not([open]) > .pac-reverse-content{
- display:none;
-}
-#view .pac-reverse-accordions .pac-reverse-subheading{
- align-self:stretch;
- width:100%;
- max-width:680px;
- margin:4px auto 0!important;
- padding:5px 12px;
- background:transparent!important;
- border:0!important;
- text-align:center;
-}
-#view .pac-reverse-accordions .pac-reverse-section > summary .pac-reverse-label{
- color:#171717!important;
- font-family:var(--display-font);
- font-size:clamp(1rem,2.8vw,1.5rem);
- text-shadow:none!important;
-}
-#view .pac-reverse-accordions .pac-reverse-content :is(.terrain-rule,.improved-row,.terrain-value-entry){
- border:0!important;
-}
-#view .pac-reverse-accordions .pac-reverse-content .terrain-rule h3{margin:0 0 8px}
-@media(max-width:640px){
- :root{--pac-sticky-top:106px}
- #view .pac-reverse-accordions .pac-reverse-section > .pac-reverse-content{
-  margin-top:-8px!important;margin-bottom:-5px!important;
- }
- #view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel{
-  padding:25px 9%!important;
- }
-}
-
-
-/* Only the three ability sections use a compact sticky title.
-   Terrain and Terrain Marker Values remain ordinary expanding panels. */
-#view .pac-reverse-accordions > .pac-reverse-section[open] > summary.terrain-summary{
- position:relative;
- top:auto;
- z-index:1;
-}
-#view .pac-reverse-accordions > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
- position:sticky!important;
- top:var(--pac-sticky-top)!important;
- z-index:8;
- width:100%;
- height:var(--pac-open-height)!important;
- min-height:0!important;
- max-height:var(--pac-open-height)!important;
- aspect-ratio:auto!important;
- padding:0 8%!important;
- margin:0!important;
- background-size:100% 100%!important;
- transition:none!important;
- transform:none!important;
-}
-#view .pac-reverse-accordions > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary .pac-reverse-label{
- font-size:clamp(.95rem,2vw,1.2rem);
- line-height:1.1;
-}
-#view .pac-reverse-accordions > .pac-reverse-section:not(.pac-sticky-eligible)[open] > summary.terrain-summary{
- position:relative!important;
- top:auto!important;
- height:auto!important;
- max-height:none!important;
- aspect-ratio:1800/753!important;
- padding:8% 9%!important;
-}
-#view .pac-reverse-accordions > .pac-reverse-section.pac-sticky-eligible[open] > .pac-reverse-content{
- margin-top:0!important;
-}
-#view .pac-reverse-accordions > .pac-reverse-section:not(.pac-sticky-eligible)[open] > .pac-reverse-content{
- margin-top:-12px!important;
-}
-#view .pac-reverse-accordions{overflow-anchor:none}
-
-
-/* PAC sticky titles sit flush against the search area. The opaque backdrop
-   prevents other halftone cards showing through transparent image margins. */
-#view .pac-reverse-accordions > .pac-sticky-eligible[open] > summary.terrain-summary{
- background-color:#101827!important;
- isolation:isolate;
-}
-#view .pac-reverse-accordions > .pac-sticky-eligible[open] > summary.terrain-summary::before{
- content:"";
- position:absolute;
- inset:0;
- background:#101827;
- z-index:-1;
- pointer-events:none;
-}
 
 /* The PAC front uses four unmodified crops of PACCover.png as individual
    expandable category surfaces. The artwork is drawn by SVG, not regenerated. */
@@ -1736,86 +1278,6 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  #view .pac-front-accordions .pac-front-heading .pac-cover-label{font-size:clamp(.95rem,4vw,1.25rem)}
 }
 
-/* Override the generic alternating gray summary images for front-cover
-   panels: only the original cropped PAC artwork should be visible. */
-#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section > summary.terrain-summary.pac-front-summary[data-panel]{
- background-image:none!important;
-}
-
-/* Keep each PAC front title treatment inside the actual comic-panel border.
-   The supplied cover has transparent margins beyond its visible panel. */
-#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary{
- box-sizing:border-box!important;
- width:100%!important;
- max-width:100%!important;
- background-color:transparent!important;
-}
-#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{
- box-sizing:border-box!important;
- flex:0 1 auto!important;
- width:max-content!important;
- max-width:82%!important;
- min-width:0!important;
- margin:0 auto!important;
- padding:9px clamp(12px,2vw,24px)!important;
- border:1px solid #111!important;
- border-radius:4px!important;
- background:rgba(18,29,43,.91)!important;
-}
-#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading .group-symbols{
- flex-wrap:nowrap;
- min-width:0;
-}
-#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-front-heading{
- max-width:90%!important;
- padding:1px 8px!important;
-}
-@media(max-width:480px){
- #view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{
-  max-width:88%!important;
-  padding:5px 8px!important;
- }
-}
-
-
-/* Use the owner's dedicated cropped banner for expanded PAC FRONT headings.
-   The full comic-cover panel is preserved in its normal (collapsed) state. */
-#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section.pac-sticky-eligible[open] > summary.terrain-summary.pac-front-summary[data-panel]{
-  background-image:url("assets/PAC_Collapsed.png")!important;
-  background-color:#101827!important;
-  background-size:100% 100%!important;
-  background-position:center!important;
-  background-repeat:no-repeat!important;
-  aspect-ratio:1648/175!important;
-  overflow:hidden!important;
-}
-#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary::before{
-  content:none!important;
-  display:none!important;
-}
-#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-art{
-  display:none!important;
-}
-#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-front-heading{
-  width:auto!important;
-  max-width:96%!important;
-  margin:0 auto!important;
-  padding:0 6px!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-  gap:clamp(4px,1.2vw,10px)!important;
-}
-#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-cover-label{
-  color:#141414!important;
-  text-shadow:0 1px 1px rgba(255,255,255,.65)!important;
-  font-size:clamp(.95rem,2vw,1.2rem);
-}
-#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .group-symbols{
-  flex-wrap:nowrap;
-}
-
 
 /* 2026-11-06: Individual PAC artwork. Never crop, transform or force an
    aspect ratio onto these five user-supplied PNGs. */
@@ -1878,155 +1340,6 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 #view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-cover-label{
  color:#171717!important;
  text-shadow:none!important;
-}
-
-/* Back-side sticky banner is an independent user-supplied graphic, not a
-   reduced copy of the full-sized title card. Terrain remains nonsticky. */
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
- background-image:url("assets/PAC_Collapsed_Back.png")!important;
- background-size:100% 100%!important;
- background-position:center!important;
- background-repeat:no-repeat!important;
- height:var(--pac-open-height)!important;
- max-height:var(--pac-open-height)!important;
- aspect-ratio:1648/175!important;
- padding:0 7%!important;
- color:#171717!important;
-}
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-sticky-eligible[open] > summary .pac-reverse-label{
- color:#171717!important;
- text-shadow:none!important;
-}
-
-/* Individual abilities expand in place. They never become sticky and do not
-   navigate away when their heading is tapped. */
-#view .pac-front-accordions .power-group-stack > .pac-power-detail{
- display:block;
- width:min(100%,520px);
- max-width:100%;
- flex:none;
- margin:0 auto!important;
- padding:0!important;
- background:transparent!important;
- border:0!important;
- border-radius:0!important;
- overflow:visible!important;
-}
-#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row{
- display:flex!important;
- width:100%!important;
- height:auto!important;
- min-height:0!important;
- max-height:none!important;
- aspect-ratio:1800/753!important;
- margin:0!important;
- padding:8% 10%!important;
- align-items:center;
- justify-content:center;
- gap:clamp(7px,2vw,16px);
- list-style:none;
- background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
- color:#171717!important;
- border:0!important;
- border-radius:0!important;
- clip-path:none!important;
- box-shadow:none!important;
- position:relative!important;
- top:auto!important;
- transform:none!important;
-}
-#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row{
- background-image:var(--halftone-b)!important;
-}
-#view .pac-front-accordions .pac-power-detail > summary::-webkit-details-marker{display:none}
-#view .pac-front-accordions .pac-power-detail > summary:hover{
- filter:drop-shadow(0 0 4px rgba(255,255,255,.28))!important;
-}
-#view .pac-front-accordions .pac-power-detail-content{
- display:flex;
- flex-direction:column;
- align-items:center;
- width:100%;
- margin:-8px auto 2px;
- padding:0;
- background:transparent!important;
- border:0!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel{
- width:100%;
- max-width:100%;
- margin:0!important;
- padding:clamp(27px,5vw,47px) clamp(27px,6vw,52px)!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel[data-panel="0"]{
- background-image:var(--halftone-a)!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel[data-panel="1"]{
- background-image:var(--halftone-b)!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > button.entry{
- width:100%;
-}
-@media(max-width:520px){
- #view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{max-width:86%!important}
- #view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row{gap:7px;padding:9% 8%!important}
- #view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel{padding:26px 9%!important}
-}
-
-
-/* The PAC Back compressed heading uses its actual supplied PNG, rather than
-   stacking a CSS background under the former dark sticky-title treatment. */
-#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-back-sticky-art{
- display:none;
-}
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
- display:grid!important;
- grid-template-areas:"banner"!important;
- grid-template-columns:minmax(0,1fr)!important;
- align-items:center!important;
- justify-items:center!important;
- position:sticky!important;
- top:var(--pac-sticky-top)!important;
- z-index:8!important;
- width:100%!important;
- height:auto!important;
- max-height:none!important;
- min-height:0!important;
- aspect-ratio:auto!important;
- padding:0!important;
- margin:0!important;
- background:none!important;
- background-color:transparent!important;
- background-image:none!important;
- border:0!important;
- box-shadow:none!important;
- isolation:auto!important;
- overflow:visible!important;
-}
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::before,
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::after{
- content:none!important;
- display:none!important;
-}
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary > .pac-back-sticky-art{
- grid-area:banner;
- display:block!important;
- width:100%;
- height:auto;
- max-width:100%;
- object-fit:contain;
- pointer-events:none;
-}
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary > .pac-reverse-label{
- grid-area:banner;
- z-index:1;
- justify-self:center;
- align-self:center;
- color:#171717!important;
- text-shadow:none!important;
- margin:0;
- padding:0 6%;
- font-size:clamp(.95rem,2vw,1.2rem);
 }
 
 
@@ -2164,301 +1477,6 @@ body:not(.home-mode) #context{margin-top:3px}
  filter:drop-shadow(0 0 4px rgba(255,255,255,.28));
 }
 
-/* Nested Comprehensive Rules navigation: same panels, one open sibling,
-   no branching navigation or sticky headings. Lazy contents reduce DOM cost. */
-#view .rules-accordion-tree,
-#view .rules-accordion-children{
- display:flex;
- flex-direction:column;
- align-items:center;
- width:100%;
- max-width:760px;
- margin:0 auto;
- padding:0;
- gap:0;
-}
-#view .rules-accordion-tree > .rules-accordion,
-#view .rules-accordion-children > .rules-accordion{
- width:min(100%,660px);
- max-width:100%;
- display:block;
- margin:0 auto!important;
- padding:0;
- border:0!important;
- background:transparent!important;
- overflow:visible;
-}
-#view .rules-accordion > summary.rules-accordion-heading{
- width:100%;
- height:auto;
- min-height:0;
- aspect-ratio:1800/753;
- display:flex;
- justify-content:center;
- align-items:center;
- gap:clamp(8px,2vw,20px);
- margin:0!important;
- padding:7% 10%!important;
- list-style:none;
- position:relative;
- top:auto;
- border:0!important;
- border-radius:0!important;
- background:var(--halftone-a) center / 100% 100% no-repeat!important;
- color:#181818;
- box-shadow:none!important;
- cursor:pointer;
-}
-#view .rules-accordion > summary::-webkit-details-marker{display:none}
-#view .rules-accordion:nth-child(even) > summary.rules-accordion-heading{background-image:var(--halftone-b)!important}
-#view .rules-accordion > summary.rules-accordion-heading:is(:hover,:focus-visible){filter:drop-shadow(0 0 4px rgba(255,255,255,.3))!important}
-#view .rules-accordion > summary .num,
-#view .rules-accordion > summary .label{
- color:#191919!important;
- font-family:var(--display-font);
- font-size:clamp(.98rem,2.7vw,1.5rem);
- text-align:center;
- text-shadow:none!important;
- flex:0 1 auto;
- min-width:0;
-}
-#view .rules-accordion-body{
- display:flex;
- flex-direction:column;
- align-items:center;
- width:100%;
- max-width:100%;
- margin:-7px auto 0;
- padding:0;
- gap:0;
- background:transparent;
-}
-#view .rules-accordion-body > .comic-reading-panel{
- width:100%;
- max-width:100%;
- margin:0!important;
- padding:clamp(28px,5vw,48px) clamp(28px,6vw,53px)!important;
-}
-#view .rules-accordion-body > .rules-accordion-children{
- width:100%;
- max-width:100%;
- margin:0!important;
-}
-#view .rules-depth-2{width:min(100%,620px)!important}
-#view .rules-depth-3{width:min(100%,590px)!important}
-@media(max-width:540px){
- #context .pac-color-filter{gap:7px}
- #view .rules-accordion > summary.rules-accordion-heading{padding:8% 9%!important;gap:8px}
- #view .rules-accordion > summary .num,#view .rules-accordion > summary .label{font-size:clamp(.9rem,3.6vw,1.15rem)}
-}
-
-/* Comprehensive Rules: each expanded hierarchy level remains pinned
-   immediately below the active ancestor headings. */
-:root{--rules-sticky-top:60px;--rules-heading-height:52px}
-#view .rules-accordion-tree,
-#view .rules-accordion-children,
-#view .rules-accordion,
-#view .rules-accordion-body{overflow:visible!important}
-#view .rules-accordion[open] > summary.rules-accordion-heading{
-  position:sticky!important;
-  z-index:30;
-  top:var(--rules-sticky-top)!important;
-  aspect-ratio:auto!important;
-  height:var(--rules-heading-height)!important;
-  min-height:var(--rules-heading-height)!important;
-  padding:0!important;
-  margin:0!important;
-  background:var(--halftone-a) center / 100% 100% no-repeat #e4e4e4!important;
-  border-bottom:2px solid #1d293b!important;
-  box-shadow:0 3px 5px #0005!important;
-}
-#view .rules-depth-2[open] > summary.rules-accordion-heading{
-  top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;
-  z-index:20;
-}
-#view .rules-depth-3[open] > summary.rules-accordion-heading{
-  top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;
-  z-index:10;
-}
-#view .rules-accordion[open] > summary .num,
-#view .rules-accordion[open] > summary .label{
-  font-size:clamp(.82rem,2.5vw,1.08rem)!important;
-  line-height:1.2!important;
-}
-#view .rules-accordion[open] > .rules-accordion-body{
-  margin:0 auto!important;
-}
-@media(max-width:540px){
-  :root{--rules-heading-height:54px}
-  #view .rules-accordion[open] > summary.rules-accordion-heading{
-    padding:0!important;
-  }
-}
-
-/* One PAC paper tile per ability: the original header is also its rule panel. */
-#view .pac-front-accordions .pac-power-detail,
-#view .pac-filter-results .pac-power-detail{
- display:block!important;
- width:min(100%,520px)!important;
- max-width:100%!important;
- margin:0 auto 8px!important;
- padding:0!important;
- border:0!important;
- background:transparent!important;
- overflow:visible!important;
-}
-#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
- display:flex!important;
- flex-direction:column!important;
- align-items:stretch!important;
- justify-content:center!important;
- gap:0!important;
- width:100%!important;
- height:auto!important;
- min-height:0!important;
- max-height:none!important;
- margin:0!important;
- border:0!important;
- border-radius:0!important;
- box-shadow:none!important;
- color:#171717!important;
- text-align:left!important;
- background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
- position:relative!important;
- overflow:visible!important;
-}
-#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row{
- background-image:var(--halftone-b)!important;
-}
-#view .pac-front-accordions .pac-power-detail:not([open]) > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail:not([open]) > summary.entry.power.comic-paper-row{
- aspect-ratio:1800/753!important;
- padding:8% 10%!important;
-}
-#view .pac-front-accordions .pac-power-detail[open] > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail[open] > summary.entry.power.comic-paper-row{
- aspect-ratio:auto!important;
- padding:clamp(36px,6vw,55px) 10% clamp(38px,6vw,55px)!important;
- min-height:190px!important;
-}
-#view .pac-power-detail .pac-power-heading-line{
- display:flex;
- align-items:center;
- justify-content:center;
- gap:clamp(7px,2vw,16px);
- width:100%;
-}
-#view .pac-power-detail .pac-power-heading-line .power-text{
- color:#151515!important;
- font-family:var(--display-font);
- font-size:clamp(1rem,2.8vw,1.45rem);
- font-weight:800;
- text-align:center;
- line-height:1.2;
-}
-#view .pac-power-detail .pac-power-inline-rules{
- display:none;
- width:100%;
- margin-top:14px;
- color:#171717!important;
- font-family:var(--reading-font);
- font-size:clamp(15px,2.3vw,17px);
- line-height:1.55;
- text-align:left;
- overflow-wrap:break-word;
-}
-#view .pac-power-detail[open] .pac-power-inline-rules{display:block}
-#view .pac-power-detail .pac-power-inline-rules *{color:inherit}
-#view .pac-power-detail .pac-power-inline-rules a{color:#125ab0!important}
-#view .pac-power-detail .pac-power-inline-rules .verbatim{white-space:normal}
-#view .pac-filter-results{gap:8px!important}
-
-/* Search uses the same panels as the main references, not legacy list buttons. */
-#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading{
- position:relative!important;
- top:auto!important;
- z-index:auto!important;
- aspect-ratio:1800/753!important;
- height:auto!important;
- min-height:0!important;
- padding:7% 10%!important;
- border-bottom:0!important;
- box-shadow:none!important;
-}
-#view .rules-search-results > .rules-search-match > .rules-accordion-body{
- margin:-7px auto 0!important;
-}
-#view .pac-search-results .pac-power-detail{width:min(100%,520px)!important}
-#view .pac-search-reverse{margin-top:4px}
-
-/* PAC searches and dial-color filters show complete, non-collapsible cards. */
-#view .pac-filter-results .pac-static-power > summary.entry.power.comic-paper-row{
- cursor:default!important;
-}
-#view .pac-filter-results .pac-static-power > summary.entry.power.comic-paper-row:hover{
- filter:none!important;
-}
-
-/* Icon reference popups render only the standard comic rule-paper format. */
-.symbol-dialog .symbol-reference-panel.comic-reading-panel{
- display:block;
- position:relative;
- width:100%;
- max-width:680px;
- min-height:160px;
- margin:0 auto 8px;
- padding:clamp(34px,5vw,52px) clamp(28px,5.6vw,48px);
- border:0!important;
- border-radius:0!important;
- box-shadow:none!important;
- background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
- color:var(--reading-ink)!important;
- font-family:var(--reading-font);
- font-size:clamp(15px,1.5vw,17px);
- line-height:1.6;
- overflow-wrap:break-word;
-}
-.symbol-dialog .symbol-reference-panel[data-panel="1"]{
- background-image:var(--halftone-b)!important;
-}
-.symbol-dialog .symbol-reference-title{
- margin:0 0 12px;
- color:#191919!important;
- font:800 clamp(1.05rem,2.8vw,1.4rem)/1.25 var(--display-font);
- text-align:center;
-}
-.symbol-dialog .symbol-reference-text{
- margin:0;
- padding:0;
- color:var(--reading-ink)!important;
- font-family:var(--reading-font);
- font-size:inherit;
- line-height:inherit;
- white-space:normal;
- overflow-wrap:break-word;
-}
-.symbol-dialog .symbol-reference-text :is(.verbatim,.tokenized-content,.rule-paragraph){
- color:inherit;
- font-family:inherit;
- line-height:inherit;
-}
-.symbol-dialog .symbol-reference-text a,
-.symbol-dialog .symbol-reference-text a:visited{
- color:var(--reading-link)!important;
- text-decoration:underline;
-}
-.symbol-dialog .symbol-reference-panel h4{
- color:#242424!important;
- font-family:var(--display-font);
-}
-@media(max-width:620px){
- .symbol-dialog .symbol-reference-panel.comic-reading-panel{
-  padding:clamp(25px,6vw,36px) clamp(23px,6vw,33px);
-  min-height:135px;
- }
-}
 
 /* The page remains visible behind the overlay; artwork belongs to the dialog. */
 .symbol-overlay{
@@ -2483,106 +1501,38 @@ body:not(.home-mode) #context{margin-top:3px}
  filter:grayscale(1) brightness(.29) contrast(.82);
 }
 
-/* Long reference cards use a repeatable halftone surface, not a stretched PNG. */
-.symbol-dialog .symbol-reference-panel.comic-reading-panel{
- box-sizing:border-box;
- min-height:0;
- margin:0 auto 12px;
- padding:clamp(22px,4.3vw,36px) clamp(21px,4.8vw,38px);
- border:clamp(5px,0.9vw,8px) solid #090909!important;
- background-color:#ededed!important;
- background-image:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px),
-  linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%)!important;
- background-size:4px 4px,100% 100%!important;
- background-position:0 0,center!important;
- background-repeat:repeat, no-repeat!important;
-}
-.symbol-dialog .symbol-reference-panel[data-panel="1"]{
- background-image:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px),
-  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%)!important;
-}
-.symbol-dialog .improved-source-row{
- padding:0;
- border:0!important;
-}
-.symbol-dialog .improved-source-row h4{
- color:#1b1b1b!important;
- margin:0 0 8px;
- font-family:var(--display-font);
-}
-.symbol-dialog .improved-source-row h4:not(:first-child){margin-top:18px}
-.symbol-dialog .improved-source-row .tokenized-content{display:block;margin-bottom:10px}
 
-/* Seamless, alternating angled comic panels for icon reference modals.
-   Outer and inner silhouettes create a constant black edge without
-   stretching the repeating halftone or changing content height. */
-.symbol-dialog .symbol-reference-panel.comic-reading-panel{
- --comic-angle:12px;
- --comic-edge:6px;
- isolation:isolate;
- border:0!important;
- background:#090909!important;
- margin:0 auto!important;
- padding:clamp(28px,4.6vw,39px) clamp(21px,4.8vw,38px)!important;
- clip-path:polygon(0 0,100% var(--comic-angle),100% calc(100% - var(--comic-angle)),0 100%);
-}
-.symbol-dialog .symbol-reference-panel.comic-reading-panel[data-panel="1"]{
- clip-path:polygon(0 var(--comic-angle),100% 0,100% 100%,0 calc(100% - var(--comic-angle)));
-}
-.symbol-dialog .symbol-reference-panel.comic-reading-panel + .symbol-reference-panel.comic-reading-panel{
- margin-top:calc(-1 * var(--comic-angle))!important;
-}
-.symbol-dialog .symbol-reference-panel.comic-reading-panel::before{
- content:"";
- position:absolute;
- inset:var(--comic-edge);
- z-index:-1;
- pointer-events:none;
- background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%);
- clip-path:polygon(0 0,100% var(--comic-angle),100% calc(100% - var(--comic-angle)),0 100%);
-}
-.symbol-dialog .symbol-reference-panel.comic-reading-panel[data-panel="1"]::before{
- background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%);
- clip-path:polygon(0 var(--comic-angle),100% 0,100% 100%,0 calc(100% - var(--comic-angle)));
-}
-@media(max-width:620px){
- .symbol-dialog .symbol-reference-panel.comic-reading-panel{
-  --comic-angle:9px;
-  --comic-edge:5px;
-  padding:27px 23px!important;
- }
-}
-
-/* Shared nonstretch comic tiles for all references EXCEPT the PAC front,
-   PAC dial-color/search power cards and the homepage cover artwork.
-   A black outer silhouette and an inset halftone make edges scalable. */
-:root{--clix-panel-slope:12px;--clix-panel-edge:6px}
-#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *),
-#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *),
+/* ==========================================================================
+   SCALABLE COMIC PANELS
+   All rule, navigation, and PAC Back panels use one CSS-generated surface.
+   Panel artwork is reserved for the homepage and the four PAC front images.
+   ========================================================================== */
+#view .comic-reading-panel,
+#view button.entry.comic-paper-row,
 #view .rules-accordion > summary.rules-accordion-heading,
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary{
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary,
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row,
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
  position:relative!important;
  isolation:isolate!important;
  box-sizing:border-box!important;
+ background:#090909!important;
+ background-image:none!important;
  border:0!important;
  border-radius:0!important;
  box-shadow:none!important;
- background:#090909!important;
- background-image:none!important;
- background-size:auto!important;
  clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+ color:var(--reading-ink)!important;
  overflow:visible!important;
 }
-#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *)::before,
-#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *)::before,
+#view .comic-reading-panel::before,
+#view button.entry.comic-paper-row::before,
 #view .rules-accordion > summary.rules-accordion-heading::before,
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary::before{
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary::before,
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row::before,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row::before,
+.symbol-dialog .symbol-reference-panel.comic-reading-panel::before{
  content:""!important;
  display:block!important;
  position:absolute!important;
@@ -2590,262 +1540,348 @@ body:not(.home-mode) #context{margin-top:3px}
  z-index:-1!important;
  pointer-events:none!important;
  background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%)!important;
+   radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0/4px 4px repeat,
+   linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%)!important;
  clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
 }
-#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"],
-#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"],
+#view .comic-reading-panel[data-panel="1"],
+#view button.entry.comic-paper-row[data-panel="1"],
 #view .rules-accordion > summary.rules-accordion-heading[data-panel="1"],
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary[data-panel="1"]{
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary[data-panel="1"],
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
+.symbol-dialog .symbol-reference-panel[data-panel="1"]{
  clip-path:polygon(0 var(--clix-panel-slope),100% 0,100% 100%,0 calc(100% - var(--clix-panel-slope)))!important;
 }
-#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"]::before,
-#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"]::before,
+#view .comic-reading-panel[data-panel="1"]::before,
+#view button.entry.comic-paper-row[data-panel="1"]::before,
 #view .rules-accordion > summary.rules-accordion-heading[data-panel="1"]::before,
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary[data-panel="1"]::before{
- background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%)!important;
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary[data-panel="1"]::before,
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before,
+.symbol-dialog .symbol-reference-panel[data-panel="1"]::before{
  clip-path:polygon(0 var(--clix-panel-slope),100% 0,100% 100%,0 calc(100% - var(--clix-panel-slope)))!important;
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0/4px 4px repeat,
+  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%)!important;
 }
-/* Content panels grow to their text; never resize source PNG halftone. */
-#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *){
- min-height:0!important;
- height:auto!important;
- margin-bottom:0!important;
+#view .comic-reading-panel,
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ width:100%;
+ max-width:680px;
+ min-height:0;
+ height:auto;
+ margin:0 auto;
  padding:clamp(28px,4.8vw,45px) clamp(25px,6vw,50px)!important;
- color:var(--reading-ink)!important;
+ font:clamp(15px,1.5vw,17px)/1.65 var(--reading-font);
+ overflow-wrap:break-word;
 }
-#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *){
- min-height:105px!important;
- height:auto!important;
- aspect-ratio:auto!important;
- padding:clamp(26px,5vw,44px) clamp(18px,5vw,38px)!important;
- color:#171717!important;
+#view .comic-reading-panel :is(.verbatim,.structured-content,.tokenized-content,.rule-paragraph,.improved-cell,.terrain-value-source,.terrain-value-name,.terrain-value-source h3,.inherent-entry h2,.keyphrase-heading h2,.terrain-rule h3),
+.symbol-dialog .symbol-reference-panel :is(.verbatim,.tokenized-content,.rule-paragraph){
+ color:inherit!important;
+ font-family:var(--reading-font);
+ white-space:normal;
 }
-#view .rules-accordion > summary.rules-accordion-heading:not(.rules-accordion[open] > summary){
- min-height:105px!important;
- height:auto!important;
- aspect-ratio:auto!important;
- padding:clamp(24px,4vw,36px) clamp(22px,5vw,43px)!important;
+#view .comic-reading-panel a,.symbol-dialog .symbol-reference-panel a{
+ color:var(--reading-link)!important;
+ text-decoration:underline;
+ text-underline-offset:3px;
 }
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary{
+#view .comic-reading-panel :is(h2,h3,h4),
+.symbol-dialog .symbol-reference-panel :is(h2,h3,h4){
+ color:#202020!important;
+ font-family:var(--display-font);
+}
+#view .comic-reading-panel .rule-bullets{margin:.4em 0;padding-left:1.25em}
+#view .improved-row{display:flex;align-items:flex-start;gap:12px}
+#view .improved-cell{background:transparent!important;border-color:#9c9c9c!important}
+#view .improved-na{color:#575757!important}
+#view .terrain-value-source{background:transparent!important;border:0!important}
+#view .terrain-value-source + .terrain-value-source{margin-top:1rem;padding-top:1rem;border-top:1px solid #aaa}
+#view .terrain-value-entry{display:block!important}
+#view .terrain-rule h3{margin:0 0 8px}
+
+/* Shared headings: the angled ink surface, natural content height and 6px gap. */
+#view button.entry.comic-paper-row,
+#view .rules-accordion > summary.rules-accordion-heading,
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:100%;
  min-height:108px!important;
  height:auto!important;
+ max-height:none!important;
  aspect-ratio:auto!important;
- padding:clamp(28px,4.8vw,42px) clamp(22px,5vw,44px)!important;
+ margin:0!important;
+ padding:clamp(26px,4.5vw,40px) clamp(20px,5vw,42px)!important;
+ cursor:pointer;
+ gap:clamp(7px,1.6vw,16px);
+ text-align:center;
+ list-style:none;
+}
+#view button.entry.comic-paper-row :is(.label,.num,.power-text),
+#view .rules-accordion > summary :is(.label,.num),
+#view .pac-reverse-section > summary .pac-reverse-label{
  color:#171717!important;
+ font:800 clamp(.98rem,2.7vw,1.5rem)/1.2 var(--display-font);
+ text-shadow:none!important;
+ flex:0 1 auto;
 }
-/* Consecutive panels nest, with overlapping angled borders. */
-#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *) + .comic-reading-panel,
-#view .comic-paper-stack > button.entry.comic-paper-row + button.entry.comic-paper-row,
-#view .rules-accordion-tree > .rules-accordion + .rules-accordion,
-#view .rules-accordion-children > .rules-accordion + .rules-accordion,
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section + .pac-reverse-section{
- margin-top:calc(-1 * var(--clix-panel-slope))!important;
+#view :is(.rules-accordion-heading,.terrain-summary)::-webkit-details-marker{display:none}
+#view .terrain-chevron{display:none!important}
+#view button.entry.comic-paper-row:hover,
+#view .rules-accordion > summary.rules-accordion-heading:hover,
+#view .pac-reverse-section > summary.terrain-summary:hover{
+ filter:brightness(.96);
 }
-/* The PAC reverse headings retain their existing clickable and sticky behavior
-   but no longer draw a stretched image on the compressed sticky version. */
-#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-back-sticky-art{
- display:none!important;
+#view button.entry.comic-paper-row:focus-visible,
+#view .rules-accordion > summary.rules-accordion-heading:focus-visible,
+#view .pac-reverse-section > summary.terrain-summary:focus-visible{
+ outline:2px solid #ffcc65!important;
+ outline-offset:2px;
 }
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
- display:flex!important;
- position:sticky!important;
- top:var(--pac-sticky-top)!important;
- z-index:8!important;
- height:64px!important;
- min-height:64px!important;
- max-height:64px!important;
- aspect-ratio:auto!important;
- padding:0 15px!important;
+#view .comic-paper-stack,#view .stack:has(> button.entry.comic-paper-row),
+#view .power-group-stack,#view .rules-accordion-tree,#view .rules-accordion-children,
+#view .pac-reverse-accordions:not(.pac-front-accordions),
+#view .pac-reverse-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ gap:6px!important;
 }
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary .pac-reverse-label{
- color:#191919!important;
- flex:none;
+#view .comic-paper-stack > button.entry.comic-paper-row,
+#view .stack > button.entry.comic-paper-row{width:min(100%,660px)}
+#view .rules-accordion-tree,#view .rules-accordion-children{
+ max-width:760px;
+ margin:0 auto;
+ overflow:visible!important;
+ overflow-anchor:none;
 }
-/* Compact locked Comprehensive Rules headings still stack under the search
-   bar, retaining their parent/child positions and z-index ordering. */
+#view .rules-accordion-tree > .rules-accordion,
+#view .rules-accordion-children > .rules-accordion{
+ width:min(100%,660px);
+ max-width:100%;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+ background:transparent!important;
+ overflow:visible!important;
+}
+#view .rules-depth-2{width:min(100%,620px)!important}
+#view .rules-depth-3{width:min(100%,590px)!important}
+#view .rules-accordion-body{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:6px;
+ margin:6px auto 0;
+ padding:0;
+ width:100%;
+ background:transparent;
+ overflow:visible!important;
+}
+#view .rules-accordion-body > .comic-reading-panel{width:100%;max-width:100%}
+#view .rules-accordion-body > .rules-accordion-children{width:100%;max-width:100%}
 #view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading{
- height:var(--rules-heading-height)!important;
+ position:sticky!important;
+ top:var(--rules-sticky-top)!important;
+ z-index:30;
  min-height:var(--rules-heading-height)!important;
+ height:var(--rules-heading-height)!important;
  max-height:var(--rules-heading-height)!important;
  padding:0 12px!important;
  clip-path:none!important;
 }
-#view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading::before{
- clip-path:none!important;
-}
-/* Search rules open in-place as full, nonsticky angled content cards. */
+#view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading::before{clip-path:none!important}
+#view .rules-depth-2[open] > summary.rules-accordion-heading{top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;z-index:20!important}
+#view .rules-depth-3[open] > summary.rules-accordion-heading{top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;z-index:10!important}
+#view .rules-accordion[open] > summary :is(.label,.num){font-size:clamp(.82rem,2.5vw,1.08rem)!important}
 #view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading{
- position:relative!important;
- height:auto!important;
- min-height:105px!important;
- max-height:none!important;
- aspect-ratio:auto!important;
- padding:clamp(24px,4vw,36px) clamp(22px,5vw,43px)!important;
- clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
-}
-#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading::before{
- clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
-}
-@media(max-width:620px){
- :root{--clix-panel-slope:9px;--clix-panel-edge:5px}
- #view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *){padding:clamp(24px,6vw,33px) clamp(21px,6vw,34px)!important}
-}
-
-/* The original sticky PAC-back rule disabled its pseudo-elements.
-   Restore the same scalable ink surface on the compact pinned title. */
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::before{
- content:""!important;
- display:block!important;
- position:absolute!important;
- inset:var(--clix-panel-edge)!important;
- z-index:-1!important;
- background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(165deg,#fafafa,#e8e8e8)!important;
- clip-path:none!important;
-}
-
-/* Chapter-list repair: old even-row PNG backgrounds must not bleed through clipped edges. */
-#view .rules-accordion-tree > .rules-accordion > summary.rules-accordion-heading,
-#view .rules-accordion-children > .rules-accordion > summary.rules-accordion-heading,
-#view .rules-accordion-tree > .rules-accordion:nth-child(even) > summary.rules-accordion-heading,
-#view .rules-accordion-children > .rules-accordion:nth-child(even) > summary.rules-accordion-heading{
- background:#090909!important;
- background-image:none!important;
- background-color:#090909!important;
- border:0!important;
- box-shadow:none!important;
-}
-#view .rules-accordion-tree > .rules-accordion,
-#view .rules-accordion-children > .rules-accordion{
- background:none!important;
- background-image:none!important;
- border:0!important;
- box-shadow:none!important;
-}
-
-/* Leave a narrow strip of comic background between Comprehensive Rules
-   chapter/subsection cards instead of overlapping their angled borders. */
-#view .rules-accordion-tree > .rules-accordion + .rules-accordion,
-#view .rules-accordion-children > .rules-accordion + .rules-accordion{
- margin-top:6px!important;
-}
-
-/* Replaces the last PAC-front ability and filter PNG tiles with the same
-   nonstretch, angled comic surface used by reference modals.
-   The four original PAC category illustrations remain unchanged. */
-#view .pac-front-accordions .pac-power-detail,
-#view .pac-filter-results .pac-power-detail{
- --pac-card-slope:12px;
- --pac-card-edge:6px;
- margin:0 auto 8px!important;
-}
-#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
- position:relative!important;
- isolation:isolate!important;
- box-sizing:border-box!important;
- border:0!important;
- border-radius:0!important;
- box-shadow:none!important;
- background:#090909!important;
- background-image:none!important;
- overflow:visible!important;
- clip-path:polygon(0 0,100% var(--pac-card-slope),100% calc(100% - var(--pac-card-slope)),0 100%)!important;
-}
-#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row{
- background:#090909!important;
- background-image:none!important;
- clip-path:polygon(0 var(--pac-card-slope),100% 0,100% 100%,0 calc(100% - var(--pac-card-slope)))!important;
-}
-#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row::before,
-#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row::before{
- content:""!important;
- display:block!important;
- position:absolute!important;
- inset:var(--pac-card-edge)!important;
- z-index:-1!important;
- pointer-events:none!important;
- background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(165deg,#fafafa,#e9e9e9 60%,#dcdcdc)!important;
- clip-path:polygon(0 0,100% var(--pac-card-slope),100% calc(100% - var(--pac-card-slope)),0 100%)!important;
-}
-#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before,
-#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before{
- background:
-  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
-  linear-gradient(195deg,#f3f3f3,#eaeaea 58%,#d7d7d7)!important;
- clip-path:polygon(0 var(--pac-card-slope),100% 0,100% 100%,0 calc(100% - var(--pac-card-slope)))!important;
-}
-#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
- aspect-ratio:auto!important;
- min-height:105px!important;
- padding:clamp(27px,5vw,45px) 10%!important;
-}
-#view .pac-front-accordions .pac-power-detail[open] > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail[open] > summary.entry.power.comic-paper-row{
- min-height:0!important;
- padding:clamp(28px,5vw,45px) 10%!important;
-}
-@media(max-width:620px){
- #view .pac-front-accordions .pac-power-detail,
- #view .pac-filter-results .pac-power-detail{
-  --pac-card-slope:9px;
-  --pac-card-edge:5px;
- }
-}
-
-/* Accordion position is controlled after sibling collapse, not by browser
-   scroll anchoring to content removed above the newly selected section. */
-#view .rules-accordion-tree,
-#view .rules-accordion-children{
- overflow-anchor:none;
-}
-
-/* PAC back uses the same small gaps as Comprehensive Rules.
-   Keep the original PAC front category artwork and ability layout untouched. */
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section + .pac-reverse-section{
- margin-top:6px!important;
-}
-#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-content > .comic-reading-panel + .comic-reading-panel{
- margin-top:6px!important;
-}
-
-/* Open terrain/marker headings must retain the same compact size as closed.
-   The old image aspect ratio (1800/753) caused the giant blank heading. */
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section:not(.pac-sticky-eligible)[open] > summary.terrain-summary{
  position:relative!important;
  top:auto!important;
  height:auto!important;
  min-height:108px!important;
  max-height:none!important;
- aspect-ratio:auto!important;
- padding:clamp(28px,4.8vw,42px) clamp(22px,5vw,44px)!important;
+ padding:clamp(26px,4.5vw,40px) clamp(20px,5vw,42px)!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
 }
-#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section:not(.pac-sticky-eligible)[open] > .pac-reverse-content{
- margin:6px 0 0!important;
+#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading::before{
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
 }
 
-/* Printed terrain destroy symbol is white artwork. On paper, render its
-   silhouette in black without changing the other terrain icon colors. */
-#view .comic-reading-panel .inline-symbol-button img.symbol-art[src$="/terrain-values/destroy-clean.png"],
-.symbol-dialog .symbol-reference-panel .inline-symbol-button img.symbol-art[src$="/terrain-values/destroy-clean.png"]{
+/* PAC Back: no artwork, no image placeholders, and identical compact headers
+   in both open and closed states. Sticky only for the first three sections. */
+#view .pac-reverse-accordions:not(.pac-front-accordions){
+ width:100%;
+ max-width:900px;
+ margin:0 auto;
+ padding:0;
+ overflow-anchor:none;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section{
+ width:min(100%,680px);
+ max-width:100%;
+ margin:0!important;
+ padding:0!important;
+ background:none!important;
+ border:0!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary{
+ position:relative;
+ top:auto;
+ height:auto!important;
+ min-height:108px!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ background:#090909!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8!important;
+ min-height:64px!important;
+ height:64px!important;
+ max-height:64px!important;
+ padding:0 15px!important;
+ clip-path:none!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::before{clip-path:none!important}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > .pac-reverse-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:6px;
+ width:100%;
+ margin:6px 0 0!important;
+ padding:0!important;
+ background:none!important;
+ border:0!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section:not([open]) > .pac-reverse-content{display:none}
+#view .pac-reverse-subheading{
+ width:100%;
+ margin:12px auto 4px;
+ font:800 clamp(1rem,3vw,1.45rem)/1.25 var(--display-font);
+ text-align:center;
+ color:#fff;
+}
+#view .pac-reverse-section .terrain-swatch{flex:none}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-content > .comic-reading-panel{
+ width:100%;
+ max-width:100%;
+ margin:0!important;
+}
+
+/* PAC front artwork: the four category titles remain supplied graphics.
+   Their individual ability entries use the same CSS-generated paper. */
+#view .pac-front-accordions .power-group-stack{padding:0!important;background:none!important}
+#view .pac-front-accordions .pac-reverse-content{margin:0!important;padding:0!important}
+#view .pac-front-accordions .pac-power-detail,
+#view .pac-filter-results .pac-power-detail{
+ display:block;
+ width:min(100%,520px);
+ max-width:100%;
+ margin:0 auto 8px!important;
+ border:0!important;
+ background:none!important;
+ overflow:visible!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+ justify-content:center!important;
+ width:100%;
+ min-height:105px!important;
+ height:auto!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ margin:0!important;
+ padding:clamp(27px,5vw,45px) 10%!important;
+ color:#171717!important;
+ text-align:left;
+ gap:0!important;
+ list-style:none;
+}
+#view .pac-power-detail .pac-power-heading-line{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:100%;
+ gap:clamp(7px,2vw,16px);
+}
+#view .pac-power-detail .pac-power-heading-line .power-text{
+ color:#151515!important;
+ font:800 clamp(1rem,2.8vw,1.45rem)/1.2 var(--display-font);
+ text-align:center;
+}
+#view .pac-power-detail .pac-power-inline-rules{
+ display:none;
+ width:100%;
+ margin-top:14px;
+ color:#171717!important;
+ font:clamp(15px,2.3vw,17px)/1.55 var(--reading-font);
+ text-align:left;
+ overflow-wrap:break-word;
+}
+#view .pac-power-detail[open] .pac-power-inline-rules{display:block}
+#view .pac-power-detail .pac-power-inline-rules a{color:#125ab0!important}
+#view .pac-power-detail .pac-power-inline-rules .verbatim{white-space:normal}
+#view .pac-filter-results{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 auto;width:min(100%,680px)}
+#view .pac-filter-results .pac-static-power > summary{cursor:default!important}
+#view .pac-filter-results .pac-static-power > summary:hover{filter:none!important}
+#view .power-group-selected{
+ width:100%;max-width:900px;margin:auto;padding:0;
+ border:0!important;background:none!important;overflow:visible!important;
+}
+#view .power-group-selected > .power-group-heading{
+ display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;
+ max-width:680px;margin:4px auto 6px;padding:10px 12px;
+ background:none!important;border:0!important;
+}
+#view .power-group-selected .power-group-stack{padding:0!important;background:none!important}
+
+/* Symbol modal uses the same ink/paper generator as the page. */
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ margin:0 auto 0!important;
+ padding:clamp(28px,4.6vw,39px) clamp(21px,4.8vw,38px)!important;
+}
+.symbol-dialog .symbol-reference-panel.comic-reading-panel + .symbol-reference-panel.comic-reading-panel{
+ margin-top:calc(-1 * var(--clix-panel-slope))!important;
+}
+.symbol-dialog .symbol-reference-title{
+ margin:0 0 12px;color:#191919!important;
+ font:800 clamp(1.05rem,2.8vw,1.4rem)/1.25 var(--display-font);
+ text-align:center;
+}
+.symbol-dialog .symbol-reference-text{color:var(--reading-ink)!important;font-family:var(--reading-font);line-height:1.6}
+.symbol-dialog .symbol-reference-text a{color:var(--reading-link)!important;text-decoration:underline}
+
+/* Symbols on white paper use black silhouettes; retain colored PAC artwork. */
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+:is(img.tone-monochrome-art,img[src*="/inline/"],img[src*="/glyphs/"],
+    img[src*="/combat/"],img[src*="/combat-token/"],
+    img[src*="/source-icons/"][src*="_white.png"],
+    img[src*="/keyphrase/passenger-light.png"],.pac-source-heading,.pac-passenger-single){
+ filter:brightness(0)!important;opacity:1!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+:is(img[src*="/improved-abilities/"],img.pac-source-inline){filter:none!important}
+#view .comic-reading-panel img.symbol-art[src$="/terrain-values/destroy-clean.png"],
+.symbol-dialog .symbol-reference-panel img.symbol-art[src$="/terrain-values/destroy-clean.png"]{
  filter:brightness(0)!important;
- opacity:1!important;
 }
-.symbol-punctuation-group{
- display:inline-flex;
- align-items:baseline;
- white-space:nowrap;
- vertical-align:baseline;
-}
-.symbol-punctuation-group .inline-symbol-button{
- flex:none;
+.symbol-punctuation-group{display:inline-flex;align-items:baseline;white-space:nowrap}
+.symbol-punctuation-group .inline-symbol-button{flex:none}
+@media(max-width:620px){
+ :root{--clix-panel-slope:9px;--clix-panel-edge:5px}
+ #view .comic-reading-panel,.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+  padding:clamp(24px,6vw,33px) clamp(21px,6vw,34px)!important;
+ }
 }
