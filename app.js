@@ -324,7 +324,7 @@ function setHeading(title,eyebrow='',subtitle=''){
  c.append(E('p','effective-date','Effective '+date));
  if(subtitle&&!/^\s*(?:July 1, 2026|October 3, 2022)/.test(subtitle))c.append(E('p','source-caption',subtitle));
 }
-function row(num,label,fn,cls=''){const b=button('',fn,'entry '+cls);if(num)b.append(E('span','num',num));b.append(E('span','label',label),E('span','chevron','›'));return b}
+function row(num,label,fn,cls=''){const b=button('',fn,'entry comic-paper-row '+cls);if(num)b.append(E('span','num',num));b.append(E('span','label',label),E('span','chevron','›'));return b}
 function showButtons(items,container){for(const it of items)container.append(it)}
 function pageSnapshot(){return {mode,path:[...path]}}
 function samePage(a,b){return a.mode===b.mode&&JSON.stringify(a.path)===JSON.stringify(b.path)}
@@ -422,7 +422,7 @@ function specialRuleText(s){
  });return root;
 }
 
-function cardPower(p){const b=button(' ',()=>move(['power:'+p.id]),'entry power');b.textContent='';const icon=powerSymbol(p);const t=E('span','power-text',p.name);b.append(icon,t,E('span','chevron','›'));return b}
+function cardPower(p){const b=button(' ',()=>move(['power:'+p.id]),'entry power comic-paper-row');b.textContent='';const icon=powerSymbol(p);const t=E('span','power-text',p.name);b.append(icon,t,E('span','chevron','›'));return b}
 const pacCombatIcons={
  Speed:[['speed/run.png','Standard speed'],['speed/flight.png','Flight'],['speed/swim.png','Swim']],
  Attack:[['attack/fist.png','Standard attack'],['attack/autonomous.png','Autonomous']],
@@ -548,7 +548,7 @@ function showBackIndex(){setHeading('PAC · Reverse Side');const v=$('view');con
 function terrainRows(){
  const stack=E('div','terrain-accordions');
  for(const [title,id,color] of db.terrain){
-  const details=E('details','terrain-detail');const summary=E('summary','terrain-summary');
+  const details=E('details','terrain-detail');const summary=E('summary','terrain-summary comic-paper-row');
   const sw=E('span','terrain-swatch');sw.style.background=color;if(title==='Walls')sw.classList.add('terrain-swatch-wall');summary.append(sw,E('span','',title),E('span','terrain-chevron','⌄'));
   details.append(summary);const content=E('div','terrain-content');
   const root=byId(id);const descendants=db.sections.filter(s=>s.id.startsWith(id+'.')||s.id.startsWith(id)&&id==='17'&&s.id!=='17');
@@ -650,13 +650,7 @@ function family(s){return db.sections.filter(x=>x.id.startsWith(s.id)&&x.id!==s.
 function showRule(s){setHeading(s.id+' '+s.title,'Comprehensive Rules','July 1, 2026 · source page '+Math.max(1,s.page-17));const v=$('view');const body=E('article','rule-paper');body.append(universalRuleText(s));v.append(body);const children=family(s);if(children.length){v.append(E('h2','group-head','SUBSECTIONS'));const stack=E('div','stack');children.forEach(c=>stack.append(row(c.id,c.title,()=>enter(c))));v.append(stack)}const tools=E('div','rule-tools');tools.append(button('Copy link',()=>navigator.clipboard?.writeText(location.href),'small-action'));v.append(tools)}
 function enter(s){if(s.level===1)move(['chapter:'+s.id]);else if(s.level===2)move(['chapter:'+s.chapter,'section:'+s.id]);else move(['chapter:'+s.chapter,'section:'+s.id.match(/^\d+\.\d+/)?.[0],'rule:'+s.id])}
 function decorateRulePanels(stack){
- const entries=[...stack.children].filter(node=>node.classList.contains('entry'));
- if(!entries.length)return stack;
- stack.classList.add('comic-rule-stack');
- entries.forEach((entry,index)=>{
-  const tile=index===0?'top':index===entries.length-1?'bottom':index%2===1?'mid1':'mid2';
-  entry.classList.add('comic-rule-entry','comic-rule-'+tile);
- });
+ stack.classList.add('comic-paper-stack');
  return stack;
 }
 function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(decorateRulePanels(stack))}
