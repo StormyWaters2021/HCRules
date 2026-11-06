@@ -2558,3 +2558,139 @@ body:not(.home-mode) #context{margin-top:3px}
   padding:27px 23px!important;
  }
 }
+
+/* Shared nonstretch comic tiles for all references EXCEPT the PAC front,
+   PAC dial-color/search power cards and the homepage cover artwork.
+   A black outer silhouette and an inset halftone make edges scalable. */
+:root{--clix-panel-slope:12px;--clix-panel-edge:6px}
+#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *),
+#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *),
+#view .rules-accordion > summary.rules-accordion-heading,
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary{
+ position:relative!important;
+ isolation:isolate!important;
+ box-sizing:border-box!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ background:#090909!important;
+ background-image:none!important;
+ background-size:auto!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+ overflow:visible!important;
+}
+#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *)::before,
+#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *)::before,
+#view .rules-accordion > summary.rules-accordion-heading::before,
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary::before{
+ content:""!important;
+ display:block!important;
+ position:absolute!important;
+ inset:var(--clix-panel-edge)!important;
+ z-index:-1!important;
+ pointer-events:none!important;
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
+  linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%)!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+}
+#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"],
+#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"],
+#view .rules-accordion > summary.rules-accordion-heading[data-panel="1"],
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary[data-panel="1"]{
+ clip-path:polygon(0 var(--clix-panel-slope),100% 0,100% 100%,0 calc(100% - var(--clix-panel-slope)))!important;
+}
+#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"]::before,
+#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *)[data-panel="1"]::before,
+#view .rules-accordion > summary.rules-accordion-heading[data-panel="1"]::before,
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary[data-panel="1"]::before{
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
+  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%)!important;
+ clip-path:polygon(0 var(--clix-panel-slope),100% 0,100% 100%,0 calc(100% - var(--clix-panel-slope)))!important;
+}
+/* Content panels grow to their text; never resize source PNG halftone. */
+#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *){
+ min-height:0!important;
+ height:auto!important;
+ margin-bottom:0!important;
+ padding:clamp(28px,4.8vw,45px) clamp(25px,6vw,50px)!important;
+ color:var(--reading-ink)!important;
+}
+#view button.entry.comic-paper-row:not(.pac-front-accordions *):not(.pac-filter-results *){
+ min-height:105px!important;
+ height:auto!important;
+ aspect-ratio:auto!important;
+ padding:clamp(26px,5vw,44px) clamp(18px,5vw,38px)!important;
+ color:#171717!important;
+}
+#view .rules-accordion > summary.rules-accordion-heading:not(.rules-accordion[open] > summary){
+ min-height:105px!important;
+ height:auto!important;
+ aspect-ratio:auto!important;
+ padding:clamp(24px,4vw,36px) clamp(22px,5vw,43px)!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section > summary.terrain-summary{
+ min-height:108px!important;
+ height:auto!important;
+ aspect-ratio:auto!important;
+ padding:clamp(28px,4.8vw,42px) clamp(22px,5vw,44px)!important;
+ color:#171717!important;
+}
+/* Consecutive panels nest, with overlapping angled borders. */
+#view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *) + .comic-reading-panel,
+#view .comic-paper-stack > button.entry.comic-paper-row + button.entry.comic-paper-row,
+#view .rules-accordion-tree > .rules-accordion + .rules-accordion,
+#view .rules-accordion-children > .rules-accordion + .rules-accordion,
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section + .pac-reverse-section{
+ margin-top:calc(-1 * var(--clix-panel-slope))!important;
+}
+/* The PAC reverse headings retain their existing clickable and sticky behavior
+   but no longer draw a stretched image on the compressed sticky version. */
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-back-sticky-art{
+ display:none!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
+ display:flex!important;
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8!important;
+ height:64px!important;
+ min-height:64px!important;
+ max-height:64px!important;
+ aspect-ratio:auto!important;
+ padding:0 15px!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary .pac-reverse-label{
+ color:#191919!important;
+ flex:none;
+}
+/* Compact locked Comprehensive Rules headings still stack under the search
+   bar, retaining their parent/child positions and z-index ordering. */
+#view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading{
+ height:var(--rules-heading-height)!important;
+ min-height:var(--rules-heading-height)!important;
+ max-height:var(--rules-heading-height)!important;
+ padding:0 12px!important;
+ clip-path:none!important;
+}
+#view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading::before{
+ clip-path:none!important;
+}
+/* Search rules open in-place as full, nonsticky angled content cards. */
+#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading{
+ position:relative!important;
+ height:auto!important;
+ min-height:105px!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ padding:clamp(24px,4vw,36px) clamp(22px,5vw,43px)!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+}
+#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading::before{
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+}
+@media(max-width:620px){
+ :root{--clix-panel-slope:9px;--clix-panel-edge:5px}
+ #view .comic-reading-panel:not(.pac-front-accordions *):not(.pac-filter-results *){padding:clamp(24px,6vw,33px) clamp(21px,6vw,34px)!important}
+}
