@@ -757,3 +757,38 @@ body.home-mode .view{max-width:520px}
 @media(prefers-reduced-motion:reduce){
   .comic-cover-hitarea{transition:none}
 }
+
+
+/* Supplied halftone artwork only behind the illustrated navigation screens. */
+body.home-mode,body.pac-comic-mode{
+  background-color:#a51f13;
+  background-image:url("assets/comic-background.webp");
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+body.home-mode .home-artwork{
+  max-width:650px;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.6));
+}
+body.home-mode .comic-home-fallback,
+body.pac-comic-mode .comic-pac{
+  background:transparent;
+  gap:7px;
+}
+body.pac-comic-mode .comic-pac{
+  padding:8px;
+  border:5px solid #111;
+  outline:1px solid rgba(255,255,255,.15);
+}
+body.pac-comic-mode .comic-pac .comic-panel{
+  background:#fff8e9;
+}
+body.pac-comic-mode .comic-pac .comic-panel:hover{
+  background:#fff0c7;
+}
+@media(max-width:600px){
+  body.home-mode,body.pac-comic-mode{background-attachment:scroll}
+  body.pac-comic-mode .comic-pac{border-width:3px;gap:5px;padding:5px}
+}
