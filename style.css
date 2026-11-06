@@ -2459,3 +2459,22 @@ body:not(.home-mode) #context{margin-top:3px}
   min-height:135px;
  }
 }
+
+/* Match the main site's grayscale comic backdrop inside symbol-reference modals. */
+.symbol-overlay{
+ background:#101827!important;
+ isolation:isolate;
+}
+.symbol-overlay::before{
+ content:"";
+ position:fixed;
+ inset:0;
+ z-index:-1;
+ pointer-events:none;
+ background:url("assets/comic-background.webp") center center / cover no-repeat;
+ filter:grayscale(1) brightness(.29) contrast(.82);
+}
+.symbol-overlay > .symbol-dialog{
+ position:relative;
+ z-index:1;
+}
