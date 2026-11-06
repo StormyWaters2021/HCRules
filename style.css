@@ -1797,3 +1797,42 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
   padding:5px 8px!important;
  }
 }
+
+
+/* Use the owner's dedicated cropped banner for expanded PAC FRONT headings.
+   The full comic-cover panel is preserved in its normal (collapsed) state. */
+#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section.pac-sticky-eligible[open] > summary.terrain-summary.pac-front-summary[data-panel]{
+  background-image:url("assets/PAC_Collapsed.png")!important;
+  background-color:#101827!important;
+  background-size:100% 100%!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  aspect-ratio:1648/175!important;
+  overflow:hidden!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary::before{
+  content:none!important;
+  display:none!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-art{
+  display:none!important;
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-front-heading{
+  width:auto!important;
+  max-width:96%!important;
+  margin:0 auto!important;
+  padding:0 6px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  gap:clamp(4px,1.2vw,10px)!important;
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-cover-label{
+  color:#141414!important;
+  text-shadow:0 1px 1px rgba(255,255,255,.65)!important;
+  font-size:clamp(.95rem,2vw,1.2rem);
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .group-symbols{
+  flex-wrap:nowrap;
+}
