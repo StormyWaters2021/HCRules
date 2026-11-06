@@ -428,7 +428,7 @@ function cardPower(p,index=0){
  const body=E('div','pac-power-detail-content');
  const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));
  appendReadingPanels(body,pieces,'pac-power-rule');
- for(const [i,panel] of [...body.children].entries())panel.dataset.panel=String((index+i+1)%2);
+ for(const [i,panel] of [...body.children].entries())panel.dataset.panel=String(index%2);
  const matchingRule=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));
  if(matchingRule)body.append(row('§'+matchingRule.id,matchingRule.title,()=>goTarget('rule',matchingRule.id)));
  details.append(body);
@@ -534,10 +534,10 @@ function showPacFilteredAbilities(){
  for(const group of groups){
   const power=db.pac.find(p=>p.group===group&&p.color===pacColorFilter);
   if(!power)continue;
-  const label=E('h2','pac-filter-group',group);
-  wrapper.append(label);
   const details=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power));
   details.open=true;
+  details.classList.add('pac-expanded-by-group');
+  details.setAttribute('aria-label',group+': '+power.name);
   wrapper.append(details);
  }
  $('view').append(wrapper);
@@ -557,7 +557,12 @@ function showPowerList(){
   for(const [index,group] of groups.entries()){
    const details=makePacAccordion(group,index,content=>{
     const stack=E('div','stack power-group-stack');
-    db.pac.filter(p=>p.group===group).forEach((p,i)=>stack.append(cardPower(p,i)));
+    db.pac.filter(p=>p.group===group).forEach((p,i)=>{
+     const card=cardPower(p,i);
+     card.open=true;
+     card.classList.add('pac-expanded-by-group');
+     stack.append(card);
+    });
     content.append(stack);
    },null,true);
    details.classList.add('pac-front-section');
@@ -839,6 +844,22 @@ function decorateRulePanels(stack){
 }
 function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text)appendRulePanels(v,s,'chapter-intro');db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(decorateRulePanels(stack))}
 function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text)appendRulePanels(v,s,'section-intro');db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(decorateRulePanels(stack));else if(!s.text)showRule(s)}
+let rulesStickyCleanup=()=>{};
+function updateRulesStickyOffset(){
+ const bar=document.querySelector('.search-area');
+ const offset=Math.max(0,Math.round(bar?.getBoundingClientRect().bottom||0));
+ document.documentElement.style.setProperty('--rules-sticky-top',offset+'px');
+ return offset;
+}
+function watchRulesStickyHeadings(){
+ rulesStickyCleanup();
+ const controller=new AbortController();
+ const refresh=()=>updateRulesStickyOffset();
+ window.addEventListener('resize',refresh,{passive:true,signal:controller.signal});
+ window.addEventListener('scroll',refresh,{passive:true,signal:controller.signal});
+ refresh();
+ rulesStickyCleanup=()=>controller.abort();
+}
 function makeRulesAccordion(rule,index=0){
  const details=E('details','rules-accordion rules-depth-'+rule.level);
  const summary=E('summary','entry comic-paper-row rules-accordion-heading');
@@ -855,6 +876,17 @@ function makeRulesAccordion(rule,index=0){
   for(const other of details.parentElement.querySelectorAll(':scope > details.rules-accordion')){
    if(other!==details&&other.open)other.open=false;
   }
+  updateRulesStickyOffset();
+  requestAnimationFrame(()=>{
+   if(!details.open||!details.isConnected)return;
+   const stickyTop=updateRulesStickyOffset();
+   const ancestors=[];
+   let ancestor=details.parentElement.closest('.rules-accordion');
+   while(ancestor){ancestors.unshift(ancestor);ancestor=ancestor.parentElement.closest('.rules-accordion')}
+   const headerHeight=ancestors.reduce((total,item)=>total+(item.querySelector(':scope > summary')?.getBoundingClientRect().height||0),0);
+   const target=summary.getBoundingClientRect().top+window.scrollY-stickyTop-headerHeight;
+   window.scrollTo({top:Math.max(0,target),behavior:'instant'});
+  });
   if(populated)return;
   populated=true;
   if(rule.text)appendRulePanels(contents,rule);
@@ -875,6 +907,7 @@ function showChapters(){
  const root=E('div','rules-accordion-tree');
  db.sections.filter(x=>x.level===1).forEach((s,i)=>root.append(makeRulesAccordion(s,i)));
  $('view').append(root);
+ watchRulesStickyHeadings();
 }
 function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
 
