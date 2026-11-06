@@ -1137,11 +1137,12 @@ body:not(.home-mode) .navigation-bar{max-width:900px}
 
 /* Use the existing home-page background, desaturated and dimmed independently
    of all text and artwork. Never grayscale the content or its icons. */
-body:not(.home-mode):not(.pac-comic-mode){
+body:not(.home-mode){
   background:#101827;
+  background-image:none;
   isolation:isolate;
 }
-body:not(.home-mode):not(.pac-comic-mode)::before{
+body:not(.home-mode)::before{
   content:"";
   position:fixed;
   inset:0;
@@ -1205,3 +1206,6 @@ body:not(.home-mode) .group-head{
   body:not(.home-mode) .desktop-layout{padding:0 10px 28px}
   body:not(.home-mode) :is(.view,.context,.navigation-bar){max-width:100%}
 }
+
+/* The PAC cover is also a secondary page; only Home remains saturated. */
+body.pac-comic-mode{background:#101827!important;background-image:none!important}
