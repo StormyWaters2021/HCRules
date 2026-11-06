@@ -1206,7 +1206,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  min-height:0!important;
  aspect-ratio:auto!important;
  padding:0!important;
- background-color:#101827!important;
+ background-color:transparent!important;
  z-index:8;
 }
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-front-heading{
@@ -1267,7 +1267,9 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  position:sticky!important;
  top:var(--pac-sticky-top)!important;
  z-index:8!important;
- background:#101827!important;
+ background:transparent!important;
+ background-image:none!important;
+ box-shadow:none!important;
 }
 #view .pac-front-accordions .pac-front-original-art,
 #view .pac-front-accordions .pac-front-sticky-art{
@@ -1794,4 +1796,45 @@ body:not(.home-mode) #context{margin-top:3px}
 }
 #view > .rule-paper.comic-reading-panel + .rule-paper.comic-reading-panel{
  margin-top:6px!important;
+}
+
+/* The PAC front artwork supplies the entire heading surface. On expansion,
+   show only the cropped banner; don't paint a blue terrain container behind it. */
+#view .pac-front-accordions > .pac-front-section,
+#view .pac-front-accordions > .pac-front-section[open],
+#view .pac-front-accordions > .pac-front-section > .pac-reverse-content,
+#view .pac-front-accordions > .pac-front-section > .terrain-content{
+ background:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary,
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary{
+ background:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+ isolation:auto!important;
+ clip-path:none!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-sticky-art{
+ display:block;
+ width:100%;
+ height:auto;
+ object-fit:contain;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-heading{
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > .pac-reverse-content{
+ margin:6px 0 0!important;
+ padding:0!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] .power-group-stack{
+ margin:0 auto!important;
+ padding:0!important;
+ background:transparent!important;
 }
