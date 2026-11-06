@@ -672,7 +672,9 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
    const offset=updatePacStickyOffset();
-   const target=summary.getBoundingClientRect().top+window.scrollY-offset;
+   // A sticky summary's viewport position is not its layout position.
+   // The details box remains at the section's actual document position.
+   const target=details.getBoundingClientRect().top+window.scrollY-offset;
    window.scrollTo({top:Math.max(0,target),behavior:'instant'});
   }));
  });
@@ -946,7 +948,9 @@ function makeRulesAccordion(rule,index=0,searchResult=false){
    let ancestor=details.parentElement.closest('.rules-accordion');
    while(ancestor){ancestors.unshift(ancestor);ancestor=ancestor.parentElement.closest('.rules-accordion')}
    const headerHeight=ancestors.reduce((total,item)=>total+(item.querySelector(':scope > summary')?.getBoundingClientRect().height||0),0);
-   const target=summary.getBoundingClientRect().top+window.scrollY-stickyTop-headerHeight;
+   // Use the accordion's normal-flow position rather than its sticky
+   // summary; a pinned summary otherwise reports the wrong target.
+   const target=details.getBoundingClientRect().top+window.scrollY-stickyTop-headerHeight;
    window.scrollTo({top:Math.max(0,target),behavior:'instant'});
   }));
   }
