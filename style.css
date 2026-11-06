@@ -963,3 +963,27 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
  .comic-rule-stack .comic-rule-entry .num{font-size:clamp(.92rem,3.7vw,1.1rem)}
  .comic-rule-stack .comic-rule-entry .label{font-size:clamp(.9rem,3.6vw,1.18rem)}
 }
+
+
+/* Precisely overlap the source tiles at their transparent margins.
+   The percentage offsets scale with the width of the button stack. */
+.comic-rule-stack > .comic-rule-entry + .comic-rule-entry{
+  margin-top:-8.2%;
+}
+.comic-rule-stack > .comic-rule-entry:nth-child(2){
+  margin-top:-11.1%;
+}
+/* Clicks outside each visible black-bordered panel pass through instead
+   of activating its full transparent PNG rectangle. */
+.comic-rule-stack .comic-rule-top{
+  clip-path:polygon(4.2% 5.7%,95.8% 5.7%,95.8% 91.7%,4.2% 75.4%);
+}
+.comic-rule-stack .comic-rule-mid1{
+  clip-path:polygon(4.2% 2.2%,95.8% 17.1%,95.8% 83.5%,4.2% 98.4%);
+}
+.comic-rule-stack .comic-rule-mid2{
+  clip-path:polygon(4.2% 16.4%,95.8% 1.3%,95.8% 99%,4.2% 84.1%);
+}
+.comic-rule-stack .comic-rule-bottom{
+  clip-path:polygon(4.2% 4.9%,95.8% 21.3%,95.8% 96.4%,4.2% 96.4%);
+}
