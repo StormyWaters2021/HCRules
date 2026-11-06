@@ -431,7 +431,8 @@ function cardPower(p,index=0){
  const body=E('div','pac-power-detail-content');
  const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));
  appendReadingPanels(body,pieces,'pac-power-rule');
- const matchingRule=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\\s*\\([^)]*\\)\\s*$/,''))===low(p.name));
+ for(const [i,panel] of [...body.children].entries())panel.dataset.panel=String((index+i+1)%2);
+ const matchingRule=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));
  if(matchingRule)body.append(row('§'+matchingRule.id,matchingRule.title,()=>goTarget('rule',matchingRule.id)));
  details.append(body);
  details.addEventListener('toggle',()=>{
