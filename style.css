@@ -524,7 +524,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .search-area{
   position:sticky;
   top:0;
-  z-index:15;
+  z-index:100;
   padding:10px max(12px,env(safe-area-inset-left)) 10px;
   background:#0e1725;
   border-bottom:1px solid #35485f;
