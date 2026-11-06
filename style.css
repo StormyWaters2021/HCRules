@@ -263,18 +263,38 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .shared-terrain-values .symbol-art{max-width:none}
 
 
-/* Editorial refresh: comic-book navigation, quiet reference typography.
-   Back Issues is only used if licensed and installed on the visitor's device.
-   No third-party font file is redistributed by this website. */
+/* Comic Book by Pixel Sagas. Font files are supplied separately by the site owner.
+   The regular, bold, italic and bold italic faces use the original file names. */
 @font-face{
-  font-family:"Back Issues Local";
-  src:local("Back Issues BB"),local("BackIssuesBB Regular"),local("BackIssuesBB_reg");
+  font-family:"Comic Book Site";
+  src:local("Comic Book"),url("assets/fonts/Comic Book.otf") format("opentype");
   font-style:normal;
-  font-weight:400 900;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Comic Book Site";
+  src:local("Comic Book Bold"),url("assets/fonts/Comic Book Bold.otf") format("opentype");
+  font-style:normal;
+  font-weight:700 900;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Comic Book Site";
+  src:local("Comic Book Italic"),url("assets/fonts/Comic Book Italic.otf") format("opentype");
+  font-style:italic;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Comic Book Site";
+  src:local("Comic Book Bold Italic"),url("assets/fonts/Comic Book Bold Italic.otf") format("opentype");
+  font-style:italic;
+  font-weight:700 900;
   font-display:swap;
 }
 :root{
-  --display-font:"Back Issues Local","Trebuchet MS",Verdana,sans-serif;
+  --display-font:"Comic Book Site","Trebuchet MS",Verdana,sans-serif;
   --reading-font:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   --ink:#0e1725;
   --panel:#1a293b;
