@@ -2708,3 +2708,22 @@ body:not(.home-mode) #context{margin-top:3px}
   linear-gradient(165deg,#fafafa,#e8e8e8)!important;
  clip-path:none!important;
 }
+
+/* Chapter-list repair: old even-row PNG backgrounds must not bleed through clipped edges. */
+#view .rules-accordion-tree > .rules-accordion > summary.rules-accordion-heading,
+#view .rules-accordion-children > .rules-accordion > summary.rules-accordion-heading,
+#view .rules-accordion-tree > .rules-accordion:nth-child(even) > summary.rules-accordion-heading,
+#view .rules-accordion-children > .rules-accordion:nth-child(even) > summary.rules-accordion-heading{
+ background:#090909!important;
+ background-image:none!important;
+ background-color:#090909!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+#view .rules-accordion-tree > .rules-accordion,
+#view .rules-accordion-children > .rules-accordion{
+ background:none!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+}
