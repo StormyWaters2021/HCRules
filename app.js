@@ -576,7 +576,7 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   if(!sticky)return;
   const width=summary.getBoundingClientRect().width;
   const ratio=details.classList.contains('pac-front-section')?(175/1648):(753/1800);
-  summary.style.setProperty('--pac-open-height',(width*ratio*.2).toFixed(2)+'px');
+  summary.style.setProperty('--pac-open-height',(width*ratio*(details.classList.contains('pac-front-section')?1:.2)).toFixed(2)+'px');
   requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
    const offset=updatePacStickyOffset();
