@@ -147,7 +147,7 @@ function tokenContent(value,source){
   // Treat an icon, its colon, and the following value as one token.
   // This avoids breaks either before the colon or between ":" and "4".
   const suffix=String(value).slice(re.lastIndex);
-  const colonValue=suffix.match(/^[ \t]*:[ \t\r\n]*[^\s,;]+/);
+  const colonValue=suffix.match(/^[ \t]*:[ \t\r\n]*[0-9+\-][^\s,;]*/);
   const punctuation=suffix.match(/^[ \t]*[:;,]/);
   if(colonValue||punctuation){
    const matched=colonValue||punctuation;
