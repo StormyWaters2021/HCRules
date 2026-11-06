@@ -1111,3 +1111,97 @@ summary.terrain-summary.comic-paper-row .terrain-chevron{
  #view .improved-row{gap:7px}
  .symbol-ref-content.comic-reading-panel{padding:27px 25px}
 }
+
+
+/* Stable full-width reading layout: no sidebar and no filter/clip hover compositing. */
+@media (min-width: 1050px){
+  body:not(.home-mode) .desktop-layout{
+    display:block;
+    grid-template-columns:none;
+    max-width:1120px;
+    margin:0 auto;
+    padding:18px 24px 65px;
+  }
+}
+body:not(.home-mode) .desktop-sidebar{display:none!important}
+body:not(.home-mode) .desktop-layout{
+  width:100%;
+  display:block;
+  grid-template-columns:none;
+  max-width:1120px;
+  margin:0 auto;
+}
+body:not(.home-mode) main{width:100%;max-width:none;margin:0 auto}
+body:not(.home-mode) :is(.view,.context,.navigation-bar){max-width:900px;margin-left:auto;margin-right:auto}
+body:not(.home-mode) .navigation-bar{max-width:900px}
+
+/* Use the existing home-page background, desaturated and dimmed independently
+   of all text and artwork. Never grayscale the content or its icons. */
+body:not(.home-mode):not(.pac-comic-mode){
+  background:#101827;
+  isolation:isolate;
+}
+body:not(.home-mode):not(.pac-comic-mode)::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:url("assets/comic-background.webp") center center / cover no-repeat;
+  filter:grayscale(1) brightness(.29) contrast(.82);
+}
+
+/* Fix disappearing tiles and shifting hover states. Keep layout and image
+   unchanged on hover; use only a simple static edge highlight. */
+button.entry.comic-paper-row,
+summary.terrain-summary.comic-paper-row,
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row,
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row{
+  clip-path:none!important;
+  transform:none!important;
+  translate:none!important;
+  filter:none!important;
+  transition:none!important;
+  animation:none!important;
+  outline:0 solid transparent;
+  outline-offset:-6px;
+  box-shadow:none!important;
+  background-color:transparent!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+}
+button.entry.comic-paper-row:hover,
+summary.terrain-summary.comic-paper-row:hover,
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:hover,
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:hover{
+  clip-path:none!important;
+  transform:none!important;
+  filter:none!important;
+  background-color:transparent!important;
+  box-shadow:none!important;
+  outline:2px solid rgba(242,246,250,.65)!important;
+}
+button.entry.comic-paper-row:focus-visible,
+summary.terrain-summary.comic-paper-row:focus-visible{
+  clip-path:none!important;
+  transform:none!important;
+  filter:none!important;
+  outline:2px solid #ffe4a5!important;
+  box-shadow:none!important;
+}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
+  margin-top:0!important;
+}
+.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:0!important}
+
+/* Keep the artwork readable even over a textured backdrop. */
+body:not(.home-mode) .context h1,
+body:not(.home-mode) .effective-date,
+body:not(.home-mode) .group-head{
+  text-shadow:0 1px 3px rgba(0,0,0,.6);
+}
+@media(max-width:620px){
+  body:not(.home-mode) .desktop-layout{padding:0 10px 28px}
+  body:not(.home-mode) :is(.view,.context,.navigation-bar){max-width:100%}
+}
