@@ -2273,57 +2273,6 @@ body:not(.home-mode) #context{margin-top:3px}
  #view .rules-accordion > summary .num,#view .rules-accordion > summary .label{font-size:clamp(.9rem,3.6vw,1.15rem)}
 }
 
-/* PAC abilities: icon, title and rule text share one continuous panel. */
-#view .pac-front-accordions .pac-power-detail,
-#view .pac-filter-results .pac-power-detail{
-  background:var(--halftone-a) center top / 100% 100% no-repeat!important;
-  margin:5px auto 9px!important;
-  overflow:visible!important;
-  border:0!important;
-  padding:0 0 14px!important;
-}
-#view .pac-front-accordions .pac-power-detail:nth-child(even),
-#view .pac-filter-results .pac-power-detail:nth-child(even){
-  background-image:var(--halftone-b)!important;
-}
-#view .pac-front-accordions .pac-power-detail[open] > summary.entry.power.comic-paper-row,
-#view .pac-filter-results .pac-power-detail[open] > summary.entry{
-  aspect-ratio:auto!important;
-  min-height:88px!important;
-  padding:24px 9% 7px!important;
-  background:none!important;
-  border:0!important;
-  box-shadow:none!important;
-}
-#view .pac-front-accordions .pac-power-detail[open] > .pac-power-detail-content,
-#view .pac-filter-results .pac-power-detail[open] > .pac-power-detail-content{
-  margin:0 auto!important;
-  padding:0 8% 14px!important;
-  background:none!important;
-  gap:0!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel,
-#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel{
-  padding:8px 3% 10px!important;
-  margin:0!important;
-  background:none!important;
-  background-image:none!important;
-  border:0!important;
-  box-shadow:none!important;
-  clip-path:none!important;
-  min-height:0!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel[data-panel],
-#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel[data-panel]{
-  background:none!important;
-  background-image:none!important;
-}
-#view .pac-front-accordions .pac-power-detail-content > button.entry,
-#view .pac-filter-results .pac-power-detail-content > button.entry{
-  margin:12px auto 3px!important;
-}
-#view .pac-filter-results{gap:8px!important}
-
 /* Comprehensive Rules: each expanded hierarchy level remains pinned
    immediately below the active ancestor headings. */
 :root{--rules-sticky-top:60px;--rules-heading-height:52px}
@@ -2365,3 +2314,83 @@ body:not(.home-mode) #context{margin-top:3px}
     padding:5px 9px!important;
   }
 }
+
+/* One PAC paper tile per ability: the original header is also its rule panel. */
+#view .pac-front-accordions .pac-power-detail,
+#view .pac-filter-results .pac-power-detail{
+ display:block!important;
+ width:min(100%,520px)!important;
+ max-width:100%!important;
+ margin:0 auto 8px!important;
+ padding:0!important;
+ border:0!important;
+ background:transparent!important;
+ overflow:visible!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+ justify-content:center!important;
+ gap:0!important;
+ width:100%!important;
+ height:auto!important;
+ min-height:0!important;
+ max-height:none!important;
+ margin:0!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ color:#171717!important;
+ text-align:left!important;
+ background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
+ position:relative!important;
+ overflow:visible!important;
+}
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row{
+ background-image:var(--halftone-b)!important;
+}
+#view .pac-front-accordions .pac-power-detail:not([open]) > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail:not([open]) > summary.entry.power.comic-paper-row{
+ aspect-ratio:1800/753!important;
+ padding:8% 10%!important;
+}
+#view .pac-front-accordions .pac-power-detail[open] > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail[open] > summary.entry.power.comic-paper-row{
+ aspect-ratio:auto!important;
+ padding:clamp(36px,6vw,55px) 10% clamp(38px,6vw,55px)!important;
+ min-height:190px!important;
+}
+#view .pac-power-detail .pac-power-heading-line{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:clamp(7px,2vw,16px);
+ width:100%;
+}
+#view .pac-power-detail .pac-power-heading-line .power-text{
+ color:#151515!important;
+ font-family:var(--display-font);
+ font-size:clamp(1rem,2.8vw,1.45rem);
+ font-weight:800;
+ text-align:center;
+ line-height:1.2;
+}
+#view .pac-power-detail .pac-power-inline-rules{
+ display:none;
+ width:100%;
+ margin-top:14px;
+ color:#171717!important;
+ font-family:var(--reading-font);
+ font-size:clamp(15px,2.3vw,17px);
+ line-height:1.55;
+ text-align:left;
+ overflow-wrap:break-word;
+}
+#view .pac-power-detail[open] .pac-power-inline-rules{display:block}
+#view .pac-power-detail .pac-power-inline-rules *{color:inherit}
+#view .pac-power-detail .pac-power-inline-rules a{color:#125ab0!important}
+#view .pac-power-detail .pac-power-inline-rules .verbatim{white-space:normal}
+#view .pac-filter-results{gap:8px!important}
