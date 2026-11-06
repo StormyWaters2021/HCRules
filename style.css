@@ -2282,7 +2282,7 @@ body:not(.home-mode) #context{margin-top:3px}
 #view .rules-accordion-body{overflow:visible!important}
 #view .rules-accordion[open] > summary.rules-accordion-heading{
   position:sticky!important;
-  z-index:8;
+  z-index:30;
   top:var(--rules-sticky-top)!important;
   aspect-ratio:auto!important;
   height:var(--rules-heading-height)!important;
@@ -2295,7 +2295,7 @@ body:not(.home-mode) #context{margin-top:3px}
 }
 #view .rules-depth-2[open] > summary.rules-accordion-heading{
   top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;
-  z-index:9;
+  z-index:20;
 }
 #view .rules-depth-3[open] > summary.rules-accordion-heading{
   top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;
