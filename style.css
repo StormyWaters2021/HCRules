@@ -870,3 +870,96 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
  .pac-cover-panel .combat-icon-circle{width:clamp(25px,8vw,34px);height:clamp(25px,8vw,34px)}
  .pac-cover-panel .group-symbols{gap:3px}
 }
+
+
+/* Unmodified source-art comic tiles for rule navigation at every TOC level.
+   First=Top, middle alternates Mid1/Mid2, final=Bottom. */
+.comic-rule-stack{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:0;
+ width:100%;
+ max-width:660px;
+ margin:0 auto;
+}
+.comic-rule-stack .comic-rule-entry,
+.comic-rule-stack .comic-rule-entry.chapter{
+ position:relative;
+ display:flex;
+ flex:0 0 auto;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ width:100%;
+ min-height:0;
+ height:auto;
+ padding:15px 11% 19px;
+ margin:0;
+ border:0;
+ border-radius:0;
+ box-shadow:none;
+ color:#111;
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-size:100% 100%;
+ background-position:center;
+ aspect-ratio:1800 / 821;
+}
+.comic-rule-stack .comic-rule-top{
+ aspect-ratio:1800 / 753;
+ background-image:url("assets/rule-panels/Top.png");
+}
+.comic-rule-stack .comic-rule-mid1{
+ background-image:url("assets/rule-panels/Mid1.png");
+}
+.comic-rule-stack .comic-rule-mid2{
+ background-image:url("assets/rule-panels/Mid2.png");
+}
+.comic-rule-stack .comic-rule-bottom{
+ aspect-ratio:1800 / 753;
+ background-image:url("assets/rule-panels/Bottom.png");
+}
+.comic-rule-stack .comic-rule-entry .num,
+.comic-rule-stack .comic-rule-entry .label{
+ position:relative;
+ z-index:1;
+ flex:none;
+ color:#121212;
+ font-family:var(--display-font);
+ font-weight:800;
+ text-shadow:1px 1px 0 #fff8e7, -1px -1px 0 #fff8e7;
+}
+.comic-rule-stack .comic-rule-entry .num{
+ min-width:0;
+ padding:0;
+ font-size:clamp(1.1rem,3.4vw,1.7rem);
+ white-space:nowrap;
+}
+.comic-rule-stack .comic-rule-entry .label{
+ flex:0 1 auto;
+ max-width:88%;
+ font-size:clamp(1.02rem,3.2vw,1.6rem);
+ line-height:1.22;
+ overflow-wrap:anywhere;
+}
+.comic-rule-stack .comic-rule-entry .chevron{display:none}
+.comic-rule-stack .comic-rule-entry:hover{
+ background-color:rgba(250,241,208,.12);
+ filter:brightness(1.09);
+ outline:none;
+}
+.comic-rule-stack .comic-rule-entry:focus-visible{
+ outline:3px solid #ffde65;
+ outline-offset:-9px;
+ filter:brightness(1.08);
+}
+@media(max-width:470px){
+ .comic-rule-stack .comic-rule-entry,
+ .comic-rule-stack .comic-rule-entry.chapter{
+  gap:6px;
+  padding:8px 10% 12px;
+ }
+ .comic-rule-stack .comic-rule-entry .num{font-size:clamp(.92rem,3.7vw,1.1rem)}
+ .comic-rule-stack .comic-rule-entry .label{font-size:clamp(.9rem,3.6vw,1.18rem)}
+}
