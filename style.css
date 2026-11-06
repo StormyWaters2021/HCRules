@@ -2049,3 +2049,226 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  padding:0 6%;
  font-size:clamp(.95rem,2vw,1.2rem);
 }
+
+
+/* 2026-11-06 unified interface controls: HOME belongs to Search, and the
+   PAC side selector is centered above the page title, not beside Back. */
+.search-controls .home-search-button{
+ flex:none;
+ align-self:center;
+ padding:8px 11px;
+ height:40px;
+ border:1px solid #596779;
+ border-radius:5px;
+ background:#26364b;
+ color:#f6f6f7;
+ font:700 clamp(12px,1.4vw,15px)/1 var(--display-font);
+ cursor:pointer;
+ white-space:nowrap;
+}
+.search-controls .home-search-button:hover,
+.search-controls .home-search-button:focus-visible{
+ outline:2px solid #d1d7e2;
+ outline-offset:1px;
+}
+.search-controls .home-search-button[hidden]{display:none!important}
+.pac-title-switch:not([hidden]){
+ display:flex!important;
+ width:max-content!important;
+ min-width:180px!important;
+ max-width:230px!important;
+ margin:8px auto 4px!important;
+ align-self:center!important;
+}
+.pac-title-switch:not([hidden]) button{min-width:80px}
+body:not(.home-mode) #context{margin-top:3px}
+@media(max-width:460px){
+ .search-controls .home-search-button{padding:7px;font-size:11px;height:36px}
+ .search-controls{gap:5px}
+ .search-controls .search-frame{min-width:0}
+}
+
+/* The colors are the actual 12 shared PAC dial colors, not approximations.
+   Selected colors gain a visible ring that also works for dark/gray dots. */
+#context .pac-color-filter{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:clamp(7px,1.2vw,12px);
+ width:min(100%,760px);
+ margin:12px auto 13px;
+ padding:6px;
+}
+#context .pac-filter-dot{
+ width:clamp(25px,3.8vw,34px);
+ height:clamp(25px,3.8vw,34px);
+ flex:none;
+ border-radius:50%;
+ border:2px solid rgba(250,250,250,.78);
+ background:var(--filter-color);
+ box-shadow:0 1px 4px #0008;
+ outline:none;
+ cursor:pointer;
+ transition:none!important;
+}
+#context .pac-filter-dot:hover,
+#context .pac-filter-dot:focus-visible{
+ box-shadow:0 0 0 2px #fff8,0 1px 4px #000!important;
+}
+#context .pac-filter-dot.active{
+ outline:3px solid #fff3d7!important;
+ outline-offset:3px!important;
+ box-shadow:0 0 0 5px #111a26,0 1px 3px #000!important;
+}
+#view .pac-filter-results{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:0;
+ margin:0 auto;
+ width:min(100%,680px);
+}
+#view .pac-filter-results .pac-filter-group{
+ width:min(100%,520px);
+ text-align:center;
+ margin:12px auto 0;
+ font:800 clamp(1.1rem,3vw,1.45rem)/1.2 var(--display-font);
+ color:#f8fafc;
+}
+#view .pac-filter-results .pac-power-detail{
+ display:block;
+ width:min(100%,520px);
+ max-width:100%;
+ margin:0 auto;
+ padding:0;
+ background:transparent;
+ border:0;
+}
+#view .pac-filter-results .pac-power-detail > summary.entry{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:100%;
+ aspect-ratio:1800/753;
+ height:auto;
+ min-height:0;
+ margin:0;
+ padding:8% 9%;
+ border:0!important;
+ border-radius:0!important;
+ background:var(--halftone-a) center / 100% 100% no-repeat!important;
+ color:#171717!important;
+ gap:12px;
+ cursor:pointer;
+}
+#view .pac-filter-results .pac-power-detail:nth-of-type(even) > summary.entry{
+ background-image:var(--halftone-b)!important;
+}
+#view .pac-filter-results .pac-power-detail-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ margin:-10px auto 0;
+ padding:0;
+}
+#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel{
+ width:100%;
+ max-width:100%;
+ margin:0!important;
+ padding:clamp(27px,5vw,47px) clamp(28px,6vw,52px)!important;
+}
+#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel[data-panel="0"]{background-image:var(--halftone-a)!important}
+#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel[data-panel="1"]{background-image:var(--halftone-b)!important}
+#view .pac-filter-results .pac-power-detail > summary:hover{
+ filter:drop-shadow(0 0 4px rgba(255,255,255,.28));
+}
+
+/* Nested Comprehensive Rules navigation: same panels, one open sibling,
+   no branching navigation or sticky headings. Lazy contents reduce DOM cost. */
+#view .rules-accordion-tree,
+#view .rules-accordion-children{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ max-width:760px;
+ margin:0 auto;
+ padding:0;
+ gap:0;
+}
+#view .rules-accordion-tree > .rules-accordion,
+#view .rules-accordion-children > .rules-accordion{
+ width:min(100%,660px);
+ max-width:100%;
+ display:block;
+ margin:0 auto!important;
+ padding:0;
+ border:0!important;
+ background:transparent!important;
+ overflow:visible;
+}
+#view .rules-accordion > summary.rules-accordion-heading{
+ width:100%;
+ height:auto;
+ min-height:0;
+ aspect-ratio:1800/753;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:clamp(8px,2vw,20px);
+ margin:0!important;
+ padding:7% 10%!important;
+ list-style:none;
+ position:relative;
+ top:auto;
+ border:0!important;
+ border-radius:0!important;
+ background:var(--halftone-a) center / 100% 100% no-repeat!important;
+ color:#181818;
+ box-shadow:none!important;
+ cursor:pointer;
+}
+#view .rules-accordion > summary::-webkit-details-marker{display:none}
+#view .rules-accordion:nth-child(even) > summary.rules-accordion-heading{background-image:var(--halftone-b)!important}
+#view .rules-accordion > summary.rules-accordion-heading:is(:hover,:focus-visible){filter:drop-shadow(0 0 4px rgba(255,255,255,.3))!important}
+#view .rules-accordion > summary .num,
+#view .rules-accordion > summary .label{
+ color:#191919!important;
+ font-family:var(--display-font);
+ font-size:clamp(.98rem,2.7vw,1.5rem);
+ text-align:center;
+ text-shadow:none!important;
+ flex:0 1 auto;
+ min-width:0;
+}
+#view .rules-accordion-body{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ max-width:100%;
+ margin:-7px auto 0;
+ padding:0;
+ gap:0;
+ background:transparent;
+}
+#view .rules-accordion-body > .comic-reading-panel{
+ width:100%;
+ max-width:100%;
+ margin:0!important;
+ padding:clamp(28px,5vw,48px) clamp(28px,6vw,53px)!important;
+}
+#view .rules-accordion-body > .rules-accordion-children{
+ width:100%;
+ max-width:100%;
+ margin:0!important;
+}
+#view .rules-depth-2{width:min(100%,620px)!important}
+#view .rules-depth-3{width:min(100%,590px)!important}
+@media(max-width:540px){
+ #context .pac-color-filter{gap:7px}
+ #view .rules-accordion > summary.rules-accordion-heading{padding:8% 9%!important;gap:8px}
+ #view .rules-accordion > summary .num,#view .rules-accordion > summary .label{font-size:clamp(.9rem,3.6vw,1.15rem)}
+}
