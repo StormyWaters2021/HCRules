@@ -2395,3 +2395,21 @@ body:not(.home-mode) #context{margin-top:3px}
 #view .pac-power-detail .pac-power-inline-rules a{color:#125ab0!important}
 #view .pac-power-detail .pac-power-inline-rules .verbatim{white-space:normal}
 #view .pac-filter-results{gap:8px!important}
+
+/* Search uses the same panels as the main references, not legacy list buttons. */
+#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading{
+ position:relative!important;
+ top:auto!important;
+ z-index:auto!important;
+ aspect-ratio:1800/753!important;
+ height:auto!important;
+ min-height:0!important;
+ padding:7% 10%!important;
+ border-bottom:0!important;
+ box-shadow:none!important;
+}
+#view .rules-search-results > .rules-search-match > .rules-accordion-body{
+ margin:-7px auto 0!important;
+}
+#view .pac-search-results .pac-power-detail{width:min(100%,520px)!important}
+#view .pac-search-reverse{margin-top:4px}
