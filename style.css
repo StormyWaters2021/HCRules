@@ -1357,6 +1357,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
     img[src*="/inline/"],
     img[src*="/glyphs/"],
     img[src*="/combat/"],
+    img[src*="/combat-token/"],
     img[src*="/source-icons/"][src*="_white.png"],
     img[src*="/keyphrase/passenger-light.png"],
     img[src*="/keyphrase/flight-wing.png"],
@@ -1379,7 +1380,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 /* Full-color icon art remains true to the supplied assets in every context.
    Explicitly exclude colored tokens from monochrome filters. */
 :is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
-:is(img[src*="/combat-token/"],img[src*="/improved-abilities/"],
+:is(img[src*="/improved-abilities/"],
     img[src*="/terrain-values/"],img.pac-source-inline){
   filter:none!important;
   opacity:1!important;
