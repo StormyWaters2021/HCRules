@@ -1152,50 +1152,60 @@ body:not(.home-mode)::before{
   filter:grayscale(1) brightness(.29) contrast(.82);
 }
 
-/* Fix disappearing tiles and shifting hover states. Keep layout and image
-   unchanged on hover; use only a simple static edge highlight. */
+/* Navigation artwork is immutable across normal, hover and focus states.
+   Earlier .chapter.entry:hover and .power.entry:hover background shorthands
+   were clearing the image; these rules explicitly retain it. */
 button.entry.comic-paper-row,
-summary.terrain-summary.comic-paper-row,
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row,
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row{
+summary.terrain-summary.comic-paper-row{
+  background-image:var(--halftone-a)!important;
+  background-color:transparent!important;
+  background-position:center!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
   clip-path:none!important;
   transform:none!important;
   translate:none!important;
   filter:none!important;
+  box-shadow:none!important;
+  outline:none!important;
+  border:0!important;
   transition:none!important;
   animation:none!important;
-  outline:0 solid transparent;
-  outline-offset:-6px;
-  box-shadow:none!important;
-  background-color:transparent!important;
-  background-size:contain!important;
-  background-repeat:no-repeat!important;
-  background-position:center!important;
 }
-button.entry.comic-paper-row:hover,
-summary.terrain-summary.comic-paper-row:hover,
-:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:hover,
-.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:hover{
-  clip-path:none!important;
-  transform:none!important;
-  filter:none!important;
-  background-color:transparent!important;
-  box-shadow:none!important;
-  outline:2px solid rgba(242,246,250,.65)!important;
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:nth-child(even),
+.terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
+  background-image:var(--halftone-b)!important;
 }
-button.entry.comic-paper-row:focus-visible,
-summary.terrain-summary.comic-paper-row:focus-visible{
-  clip-path:none!important;
-  transform:none!important;
+button.entry.comic-paper-row:is(:hover,:focus-visible),
+summary.terrain-summary.comic-paper-row:is(:hover,:focus-visible){
+  background-color:transparent!important;
   filter:none!important;
-  outline:2px solid #ffe4a5!important;
   box-shadow:none!important;
+  outline:none!important;
+}
+button.entry.comic-paper-row:is(:hover,:focus-visible) :is(.label,.num,.power-text),
+summary.terrain-summary.comic-paper-row:is(:hover,:focus-visible) > span:not(.terrain-swatch){
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:4px;
 }
 :is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
-  margin-top:0!important;
+  margin-top:-2.5%!important;
 }
-.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:0!important}
-
+.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-2.5%!important}
+/* The original black panel borders provide their own shape; no rectangular
+   focus outline over transparent image margins. Keyboard focus underlines text. */
+body:not(.home-mode) .context{
+  width:100%;
+  max-width:900px;
+  text-align:center;
+  padding-inline:12px;
+  box-sizing:border-box;
+}
+body:not(.home-mode) .context h1{
+  overflow-wrap:break-word;
+  max-width:100%;
+}
 /* Keep the artwork readable even over a textured backdrop. */
 body:not(.home-mode) .context h1,
 body:not(.home-mode) .effective-date,
