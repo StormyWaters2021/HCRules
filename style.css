@@ -2272,3 +2272,96 @@ body:not(.home-mode) #context{margin-top:3px}
  #view .rules-accordion > summary.rules-accordion-heading{padding:8% 9%!important;gap:8px}
  #view .rules-accordion > summary .num,#view .rules-accordion > summary .label{font-size:clamp(.9rem,3.6vw,1.15rem)}
 }
+
+/* PAC abilities: icon, title and rule text share one continuous panel. */
+#view .pac-front-accordions .pac-power-detail,
+#view .pac-filter-results .pac-power-detail{
+  background:var(--halftone-a) center top / 100% 100% no-repeat!important;
+  margin:5px auto 9px!important;
+  overflow:visible!important;
+  border:0!important;
+  padding:0 0 14px!important;
+}
+#view .pac-front-accordions .pac-power-detail:nth-child(even),
+#view .pac-filter-results .pac-power-detail:nth-child(even){
+  background-image:var(--halftone-b)!important;
+}
+#view .pac-front-accordions .pac-power-detail[open] > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail[open] > summary.entry{
+  aspect-ratio:auto!important;
+  min-height:88px!important;
+  padding:24px 9% 7px!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#view .pac-front-accordions .pac-power-detail[open] > .pac-power-detail-content,
+#view .pac-filter-results .pac-power-detail[open] > .pac-power-detail-content{
+  margin:0 auto!important;
+  padding:0 8% 14px!important;
+  background:none!important;
+  gap:0!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel,
+#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel{
+  padding:8px 3% 10px!important;
+  margin:0!important;
+  background:none!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  clip-path:none!important;
+  min-height:0!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel[data-panel],
+#view .pac-filter-results .pac-power-detail-content > .comic-reading-panel[data-panel]{
+  background:none!important;
+  background-image:none!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > button.entry,
+#view .pac-filter-results .pac-power-detail-content > button.entry{
+  margin:12px auto 3px!important;
+}
+#view .pac-filter-results{gap:8px!important}
+
+/* Comprehensive Rules: each expanded hierarchy level remains pinned
+   immediately below the active ancestor headings. */
+:root{--rules-sticky-top:60px;--rules-heading-height:52px}
+#view .rules-accordion-tree,
+#view .rules-accordion-children,
+#view .rules-accordion,
+#view .rules-accordion-body{overflow:visible!important}
+#view .rules-accordion[open] > summary.rules-accordion-heading{
+  position:sticky!important;
+  z-index:8;
+  top:var(--rules-sticky-top)!important;
+  aspect-ratio:auto!important;
+  height:var(--rules-heading-height)!important;
+  min-height:var(--rules-heading-height)!important;
+  padding:7px 15px!important;
+  background:var(--halftone-a) center / 100% 100% no-repeat!important;
+  border-bottom:2px solid #1d293b!important;
+  box-shadow:0 3px 5px #0005!important;
+}
+#view .rules-depth-2[open] > summary.rules-accordion-heading{
+  top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;
+  z-index:9;
+}
+#view .rules-depth-3[open] > summary.rules-accordion-heading{
+  top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;
+  z-index:10;
+}
+#view .rules-accordion[open] > summary .num,
+#view .rules-accordion[open] > summary .label{
+  font-size:clamp(.82rem,2.5vw,1.08rem)!important;
+  line-height:1.2!important;
+}
+#view .rules-accordion[open] > .rules-accordion-body{
+  margin:0 auto!important;
+}
+@media(max-width:540px){
+  :root{--rules-heading-height:54px}
+  #view .rules-accordion[open] > summary.rules-accordion-heading{
+    padding:5px 9px!important;
+  }
+}
