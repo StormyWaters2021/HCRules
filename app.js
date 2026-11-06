@@ -842,7 +842,40 @@ function decorateRulePanels(stack){
 }
 function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text)appendRulePanels(v,s,'chapter-intro');db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(decorateRulePanels(stack))}
 function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text)appendRulePanels(v,s,'section-intro');db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(decorateRulePanels(stack));else if(!s.text)showRule(s)}
-function showChapters(){setHeading('Comprehensive Rules');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(decorateRulePanels(stack))}
+function makeRulesAccordion(rule,index=0){
+ const details=E('details','rules-accordion rules-depth-'+rule.level);
+ const summary=E('summary','entry comic-paper-row rules-accordion-heading');
+ summary.dataset.panel=String(index%2);
+ if(rule.id)summary.append(E('span','num',rule.id));
+ summary.append(E('span','label',rule.title));
+ details.append(summary);
+ const contents=E('div','rules-accordion-body');
+ details.append(contents);
+ let populated=false;
+ details.addEventListener('toggle',()=>{
+  if(!details.open)return;
+  // Only one sibling is expanded at a time, same as PAC abilities.
+  for(const other of details.parentElement.querySelectorAll(':scope > details.rules-accordion')){
+   if(other!==details&&other.open)other.open=false;
+  }
+  if(populated)return;
+  populated=true;
+  if(rule.text)appendRulePanels(contents,rule);
+  const descendants=family(rule);
+  if(descendants.length){
+   const children=E('div','rules-accordion-children');
+   descendants.forEach((child,i)=>children.append(makeRulesAccordion(child,i)));
+   contents.append(children);
+  }
+ });
+ return details;
+}
+function showChapters(){
+ setHeading('Comprehensive Rules');
+ const root=E('div','rules-accordion-tree');
+ db.sections.filter(x=>x.level===1).forEach((s,i)=>root.append(makeRulesAccordion(s,i)));
+ $('view').append(root);
+}
 function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
 
 function sidebarRow(label,fn,depth=0,selected=false){
