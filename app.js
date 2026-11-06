@@ -547,13 +547,22 @@ function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');con
 function showBackIndex(){setHeading('PAC · Reverse Side');const v=$('view');const stack=E('div','stack');db.back.filter(b=>b.id!=='back-terrain-values').forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows());const terrainValues=db.back.find(b=>b.id==='back-terrain-values');if(terrainValues)v.append(row('',terrainValues.name,()=>move(['back:'+terrainValues.id])))}
 function terrainRows(){
  const stack=E('div','terrain-accordions');
- for(const [title,id,color] of db.terrain){
+ for(const [index,[title,id,color]] of db.terrain.entries()){
   const details=E('details','terrain-detail');const summary=E('summary','terrain-summary comic-paper-row');
   const sw=E('span','terrain-swatch');sw.style.background=color;if(title==='Walls')sw.classList.add('terrain-swatch-wall');summary.append(sw,E('span','',title),E('span','terrain-chevron','⌄'));
   details.append(summary);const content=E('div','terrain-content');
+  // The first expanded panel uses the opposite artwork from its summary.
+  // Subsequent rule panels alternate without repeating or modifying rule data.
+  let part=0;
+  const addRule=s=>{
+   const sub=E('section','terrain-rule comic-reading-panel');
+   sub.dataset.panel=String((index+part+1)%2);part++;
+   sub.append(E('h3','',s.id+' '+s.title),universalRuleText(s));
+   content.append(sub);
+  };
   const root=byId(id);const descendants=db.sections.filter(s=>s.id.startsWith(id+'.')||s.id.startsWith(id)&&id==='17'&&s.id!=='17');
-  if(root){const sub=E('section','terrain-rule comic-reading-panel');sub.append(E('h3','',root.id+' '+root.title));sub.append(universalRuleText(root));content.append(sub)}
-  for(const s of descendants){if(!s.text)continue;const sub=E('section','terrain-rule comic-reading-panel');sub.append(E('h3','',s.id+' '+s.title));sub.append(universalRuleText(s));content.append(sub)}
+  if(root)addRule(root);
+  for(const s of descendants)if(s.text)addRule(s);
   details.append(content);stack.append(details);
  }
  return stack;
