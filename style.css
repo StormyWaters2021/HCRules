@@ -1836,3 +1836,160 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .group-symbols{
   flex-wrap:nowrap;
 }
+
+
+/* 2026-11-06: Individual PAC artwork. Never crop, transform or force an
+   aspect ratio onto these five user-supplied PNGs. */
+#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section > summary.terrain-summary.pac-front-summary,
+#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section.pac-sticky-eligible[open] > summary.terrain-summary.pac-front-summary[data-panel]{
+ display:grid!important;
+ grid-template-areas:"cover"!important;
+ place-items:center!important;
+ position:relative;
+ width:100%!important;
+ height:auto!important;
+ min-height:0!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ padding:0!important;
+ margin:0!important;
+ background:transparent!important;
+ border:0!important;
+ overflow:visible!important;
+ box-shadow:none!important;
+}
+#view .pac-reverse-accordions.pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8!important;
+ background:#101827!important;
+}
+#view .pac-front-accordions .pac-front-original-art,
+#view .pac-front-accordions .pac-front-sticky-art{
+ grid-area:cover;
+ width:100%;
+ height:auto;
+ max-width:100%;
+ display:block;
+ pointer-events:none;
+ object-fit:contain;
+}
+#view .pac-front-accordions .pac-front-sticky-art{display:none}
+#view .pac-front-accordions > .pac-front-section[open] > summary .pac-front-original-art{display:none}
+#view .pac-front-accordions > .pac-front-section[open] > summary .pac-front-sticky-art{display:block}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{
+ grid-area:cover!important;
+ justify-self:center;
+ align-self:center;
+ position:relative;
+ z-index:2;
+ width:max-content!important;
+ max-width:82%!important;
+ margin:0 auto!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-heading{
+ width:max-content!important;
+ max-width:95%!important;
+ margin:0 auto!important;
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+ padding:0 8px!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-cover-label{
+ color:#171717!important;
+ text-shadow:none!important;
+}
+
+/* Back-side sticky banner is an independent user-supplied graphic, not a
+   reduced copy of the full-sized title card. Terrain remains nonsticky. */
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
+ background-image:url("assets/PAC_Collapsed_Back.png")!important;
+ background-size:100% 100%!important;
+ background-position:center!important;
+ background-repeat:no-repeat!important;
+ height:var(--pac-open-height)!important;
+ max-height:var(--pac-open-height)!important;
+ aspect-ratio:1648/175!important;
+ padding:0 7%!important;
+ color:#171717!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-sticky-eligible[open] > summary .pac-reverse-label{
+ color:#171717!important;
+ text-shadow:none!important;
+}
+
+/* Individual abilities expand in place. They never become sticky and do not
+   navigate away when their heading is tapped. */
+#view .pac-front-accordions .power-group-stack > .pac-power-detail{
+ display:block;
+ width:min(100%,520px);
+ max-width:100%;
+ flex:none;
+ margin:0 auto!important;
+ padding:0!important;
+ background:transparent!important;
+ border:0!important;
+ border-radius:0!important;
+ overflow:visible!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row{
+ display:flex!important;
+ width:100%!important;
+ height:auto!important;
+ min-height:0!important;
+ max-height:none!important;
+ aspect-ratio:1800/753!important;
+ margin:0!important;
+ padding:8% 10%!important;
+ align-items:center;
+ justify-content:center;
+ gap:clamp(7px,2vw,16px);
+ list-style:none;
+ background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
+ color:#171717!important;
+ border:0!important;
+ border-radius:0!important;
+ clip-path:none!important;
+ box-shadow:none!important;
+ position:relative!important;
+ top:auto!important;
+ transform:none!important;
+}
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row{
+ background-image:var(--halftone-b)!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary::-webkit-details-marker{display:none}
+#view .pac-front-accordions .pac-power-detail > summary:hover{
+ filter:drop-shadow(0 0 4px rgba(255,255,255,.28))!important;
+}
+#view .pac-front-accordions .pac-power-detail-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ margin:-8px auto 2px;
+ padding:0;
+ background:transparent!important;
+ border:0!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel{
+ width:100%;
+ max-width:100%;
+ margin:0!important;
+ padding:clamp(27px,5vw,47px) clamp(27px,6vw,52px)!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel[data-panel="0"]{
+ background-image:var(--halftone-a)!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel[data-panel="1"]{
+ background-image:var(--halftone-b)!important;
+}
+#view .pac-front-accordions .pac-power-detail-content > button.entry{
+ width:100%;
+}
+@media(max-width:520px){
+ #view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{max-width:86%!important}
+ #view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row{gap:7px;padding:9% 8%!important}
+ #view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel{padding:26px 9%!important}
+}
