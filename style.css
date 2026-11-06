@@ -173,21 +173,52 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .combat-stat-icon{width:27px;height:27px;display:block;object-fit:contain;background:transparent}
 .power-group-heading .group-count{margin-left:auto}
 @media(max-width:460px){.combat-icon-circle{width:33px;height:33px}.combat-stat-icon{width:24px;height:24px}.group-symbols{gap:4px}.crumb-trail{font-size:12px;padding:8px}}
-/* Shared inline reference system: the browser decides wrapping, never PDF coordinates. */
-.inline-symbol-button{display:inline-flex;align-items:center;justify-content:center;vertical-align:-.22em;margin:0 .14em;padding:2px;min-width:1.45em;height:1.55em;max-width:2.4em;border:1px solid #617890;border-radius:5px;background:#dfe9f2;color:#111923;cursor:pointer;white-space:nowrap;line-height:1}
-.inline-symbol-button:focus-visible,.combat-icon-circle:focus-visible,.pac-source-heading:focus-visible{outline:3px solid #f7b75e;outline-offset:2px}
-.symbol-art{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
+/* Inline glyphs size relative to text, without legacy button dimensions. */
+.inline-symbol-button{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ width:auto;
+ height:1.44em;
+ min-width:0;
+ max-width:none;
+ padding:0;
+ margin:0 .10em;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ box-shadow:none;
+ color:inherit;
+ line-height:1;
+ white-space:nowrap;
+ vertical-align:-.31em;
+ cursor:pointer;
+}
+.inline-symbol-button .symbol-art{
+ display:block;
+ width:auto;
+ height:1.35em;
+ max-width:2.1em;
+ object-fit:contain;
+ object-position:center;
+ background:transparent;
+}
+.inline-symbol-button.improved-symbol .symbol-art{height:1.43em}
+.inline-symbol-button.combat-symbol .symbol-art{height:1.34em}
+.inline-symbol-button:focus-visible,.combat-icon-circle:focus-visible,
+.pac-source-heading:focus-visible{outline:2px solid #f7b75e;outline-offset:2px}
 .symbol-text-fallback{font-size:.62em;font-weight:bold;line-height:1.05}
 .unknown-symbol{color:#ffb0b0;background:#5d2533;border-radius:4px;padding:2px}
 .structured-content .rule-paragraph{margin:0 0 .7em}
 .structured-content .rule-bullets{margin:.5em 0;padding-inline-start:1.5em;list-style-type:square}
 .structured-content .rule-bullets li{margin:.55em 0;white-space:normal}
 .symbol-overlay{position:fixed;inset:0;z-index:200;background:#050a13c9;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
-.symbol-dialog{background:#223246;color:#edf4ff;border:1px solid #647d97;border-radius:16px;width:min(100%,640px);max-height:min(90dvh,900px);overflow:auto;padding:18px;box-shadow:0 18px 50px #000b}
+.symbol-dialog{position:relative;isolation:isolate;background:#101010;color:#edf4ff;border:1px solid #777;border-radius:7px;width:min(100%,640px);max-height:min(90dvh,900px);overflow:auto;padding:18px;box-shadow:0 18px 50px #000b}
+.symbol-dialog::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url("assets/comic-background.webp") center center/cover no-repeat;filter:grayscale(1) brightness(.29) contrast(.82)}
 .symbol-dialog-header{display:flex;align-items:center;gap:15px;margin-bottom:17px}
 .dialog-symbol{width:55px;height:55px;object-fit:contain;background:#f2f6fa;border-radius:9px;padding:8px}
 .symbol-dialog-header h2{margin:0;font-size:clamp(19px,4vw,25px);line-height:1.25;flex:1}
-.symbol-close{background:#364c64;color:#fff;font-weight:bold;border:1px solid #637b94;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:16px}
+.symbol-close{background:#252525;color:#fff;font-weight:bold;border:1px solid #858585;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:16px}
 .symbol-empty{color:#bfd2e5}
 /* Narrow, content aligned PAC toggle. */
 .pac-side-switch,.pac-side-switch:not([hidden]){width:174px!important;max-width:174px!important;min-width:0!important;flex:none!important;margin-left:max(0px,calc((100% - 660px)/2))!important;margin-right:0!important}
@@ -196,42 +227,10 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .improved-source-row:last-child{border-bottom:0}
 .improved-source-row h4{margin:7px 0 3px;font-size:15px;color:#ffd2d4}
 
-/* 2026-11-05: rule-symbol artwork stays inline without a white box. */
-.inline-symbol-button{background:transparent;border:0;border-radius:0;padding:0;margin:0 .12em;min-width:1.48em;height:1.65em;max-width:none;vertical-align:-.36em;box-shadow:none;color:inherit}
-.inline-symbol-button .symbol-art{width:1.48em;height:1.48em;max-width:none;object-fit:contain}
-.inline-symbol-button.monochrome-symbol .symbol-art{filter:brightness(0) invert(1)}
-.inline-symbol-button.improved-symbol .symbol-art{width:1.62em;height:1.62em}
-.inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:2px;border-radius:4px}
-
-/* Icon token behavior is independent from artwork display.
-   Never apply brightness/invert to original colored icons. */
-.inline-symbol-button,
-.inline-symbol-button.monochrome-symbol,
-.inline-symbol-button.improved-symbol,
-.inline-symbol-button.combat-symbol,
-.inline-symbol-button.default-symbol{
-  display:inline-flex;align-items:center;justify-content:center;
-  vertical-align:-.38em;line-height:1;padding:0;margin:0 .11em;
-  border:0;background:transparent;border-radius:0;
-  min-width:0;max-width:none;height:auto;box-shadow:none;
-  white-space:nowrap;cursor:pointer;
-}
-.inline-symbol-button .symbol-art,
-.inline-symbol-button.monochrome-symbol .symbol-art,
-.inline-symbol-button.improved-symbol .symbol-art,
-.inline-symbol-button.combat-symbol .symbol-art{
-  display:block;width:auto;height:1.82em;max-width:2.35em;
-  object-fit:contain;background:transparent;
-  filter:none!important;
-}
-.inline-symbol-button.improved-symbol .symbol-art{height:2.08em;max-width:2.15em}
-.inline-symbol-button.combat-symbol .symbol-art{height:1.78em;max-width:2.2em}
-.inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:3px;border-radius:3px}
-
 /* Symbol reference previews: show light glyphs on a dark panel, not a pale tile. */
 .symbol-dialog .dialog-symbol{
-  background:#172536;
-  border:1px solid #435c76;
+  background:#181818;
+  border:1px solid #777;
   padding:8px;
   width:64px;
   height:64px;
@@ -1748,4 +1747,31 @@ body:not(.home-mode) #context{margin-top:3px}
  #view .comic-reading-panel,.symbol-dialog .symbol-reference-panel.comic-reading-panel{
   padding:clamp(24px,6vw,33px) clamp(21px,6vw,34px)!important;
  }
+}
+
+/* Standalone rule references retain a comfortable width and size to their
+   actual text, with no inherited paper-card image ratio or fixed height. */
+#view > .rule-paper.comic-reading-panel{
+ display:block!important;
+ width:min(100%,680px)!important;
+ min-height:0!important;
+ max-height:none!important;
+ height:auto!important;
+ aspect-ratio:auto!important;
+ margin:0 auto 6px!important;
+ padding:clamp(23px,3.7vw,34px) clamp(24px,5vw,46px)!important;
+ font-size:clamp(15px,1.5vw,17px)!important;
+ line-height:1.6!important;
+}
+#view > .rule-paper.comic-reading-panel .verbatim,
+#view > .rule-paper.comic-reading-panel .tokenized-content{
+ display:inline;
+ white-space:normal;
+ overflow-wrap:break-word;
+}
+#view > .rule-paper.comic-reading-panel .structured-content{
+ display:block;
+}
+#view > .rule-paper.comic-reading-panel + .rule-paper.comic-reading-panel{
+ margin-top:6px!important;
 }
