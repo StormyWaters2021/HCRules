@@ -2482,3 +2482,35 @@ body:not(.home-mode) #context{margin-top:3px}
  background:url("assets/comic-background.webp") center center / cover no-repeat;
  filter:grayscale(1) brightness(.29) contrast(.82);
 }
+
+/* Long reference cards use a repeatable halftone surface, not a stretched PNG. */
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ box-sizing:border-box;
+ min-height:0;
+ margin:0 auto 12px;
+ padding:clamp(22px,4.3vw,36px) clamp(21px,4.8vw,38px);
+ border:clamp(5px,0.9vw,8px) solid #090909!important;
+ background-color:#ededed!important;
+ background-image:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px),
+  linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%)!important;
+ background-size:4px 4px,100% 100%!important;
+ background-position:0 0,center!important;
+ background-repeat:repeat, no-repeat!important;
+}
+.symbol-dialog .symbol-reference-panel[data-panel="1"]{
+ background-image:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px),
+  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%)!important;
+}
+.symbol-dialog .improved-source-row{
+ padding:0;
+ border:0!important;
+}
+.symbol-dialog .improved-source-row h4{
+ color:#1b1b1b!important;
+ margin:0 0 8px;
+ font-family:var(--display-font);
+}
+.symbol-dialog .improved-source-row h4:not(:first-child){margin-top:18px}
+.symbol-dialog .improved-source-row .tokenized-content{display:block;margin-bottom:10px}
