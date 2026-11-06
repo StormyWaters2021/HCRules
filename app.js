@@ -368,7 +368,7 @@ function breadcrumbSteps(){
  }else{
   steps.push({label:'PAC',path:[]});
   const last=path.at(-1)||'';
-  if(last==='back-index'||last.startsWith('back:'))steps.push({label:'Reverse Side',path:['back-index']});
+  if(last==='back-index'||last.startsWith('back:'))steps.push({label:'PAC - Back',path:['back-index']});
   else if(last.startsWith('power:')){
    const ability=findPac(last.slice(6));
    if(ability)steps.push({label:ability.group,path:[],group:ability.group});
@@ -724,7 +724,7 @@ function watchPacReverseSections(host){
  pacReverseTeardown=()=>{controller.abort();pacReverseTeardown=()=>{}};
 }
 function showBackIndex(){
- setHeading('PAC · Reverse Side');
+ setHeading('PAC - Back');
  $('context').append(pacColorSelector());
  const view=$('view'),accordion=E('div','pac-reverse-accordions');
  let index=0;
@@ -785,7 +785,7 @@ function keyphraseText(e,b){
  return div;
 }
 function showBack(b,host=null){
- if(!host)setHeading(b.name,'PAC · Reverse Side');const v=host||$('view');
+ if(!host)setHeading(b.name,'PAC - Back');const v=host||$('view');
  if(b.id==='back-0'&&Array.isArray(b.entries)){
   for(const e of b.entries){const parts=textContentPieces(e.text,{type:'back',id:b.id});parts.forEach((part,i)=>{const article=E('section','rule-paper comic-reading-panel inherent-entry');article.dataset.panel=String(i%2);if(i===0)article.append(E('h2','',e.name));article.append(part);v.append(article)})}
  }else if(b.id==='back-1'&&Array.isArray(b.entries)){
