@@ -629,6 +629,16 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   if(panel.classList.contains('comic-reading-panel'))panel.dataset.panel=String((index+i+1)%2);
  }
  details.append(content);
+ // Preserve the selected reverse-side panel after its content is removed.
+ summary.addEventListener('click',()=>{
+  if(!details.open||!sticky||details.classList.contains('pac-front-section'))return;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   if(!details.isConnected||details.open)return;
+   const offset=updatePacStickyOffset();
+   const top=summary.getBoundingClientRect().top+window.scrollY-offset;
+   window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+  }));
+ });
  details.addEventListener('toggle',()=>{
   if(!details.open)return;
   const all=details.closest('.pac-reverse-accordions');
