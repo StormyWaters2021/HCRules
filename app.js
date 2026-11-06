@@ -423,15 +423,14 @@ function cardPower(p,index=0){
  const details=E('details','pac-power-detail');
  const heading=E('summary','entry power comic-paper-row');
  heading.dataset.panel=String(index%2);
- heading.append(powerSymbol(p),E('span','power-text',p.name));
- details.append(heading);
- const body=E('div','pac-power-detail-content');
+ const headingLine=E('div','pac-power-heading-line');
+ headingLine.append(powerSymbol(p),E('span','power-text',p.name));
+ heading.append(headingLine);
+ const ruleText=E('div','pac-power-inline-rules');
  const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));
- appendReadingPanels(body,pieces,'pac-power-rule');
- for(const [i,panel] of [...body.children].entries())panel.dataset.panel=String(index%2);
- const matchingRule=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));
- if(matchingRule)body.append(row('§'+matchingRule.id,matchingRule.title,()=>goTarget('rule',matchingRule.id)));
- details.append(body);
+ pieces.forEach(piece=>ruleText.append(piece));
+ heading.append(ruleText);
+ details.append(heading);
  details.addEventListener('toggle',()=>{
   if(!details.open||details.classList.contains('pac-expanded-by-group')||details.closest('.pac-filter-results'))return;
   for(const other of details.parentElement.querySelectorAll(':scope > details.pac-power-detail')){
