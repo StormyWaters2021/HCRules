@@ -639,13 +639,6 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   if(name==='Walls')swatch.classList.add('terrain-swatch-wall');
   summary.append(swatch);
  }
- if(sticky){
-  const banner=E('img','pac-back-sticky-art');
-  banner.src='assets/PAC_Collapsed_Back.png';
-  banner.alt='';
-  banner.decoding='async';
-  summary.append(banner);
- }
  summary.append(E('span','pac-reverse-label',name));
  details.append(summary);
  const content=E('div','terrain-content pac-reverse-content');
