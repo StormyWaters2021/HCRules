@@ -576,6 +576,13 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   if(name==='Walls')swatch.classList.add('terrain-swatch-wall');
   summary.append(swatch);
  }
+ if(sticky){
+  const banner=E('img','pac-back-sticky-art');
+  banner.src='assets/PAC_Collapsed_Back.png';
+  banner.alt='';
+  banner.decoding='async';
+  summary.append(banner);
+ }
  summary.append(E('span','pac-reverse-label',name));
  details.append(summary);
  const content=E('div','terrain-content pac-reverse-content');
@@ -592,9 +599,12 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
    if(other!==details&&other.open)other.open=false;
   }
   if(!sticky)return;
-  const width=summary.getBoundingClientRect().width;
-  const ratio=175/1648;
-  summary.style.setProperty('--pac-open-height',(width*ratio).toFixed(2)+'px');
+  if(details.classList.contains('pac-front-section')){
+   const width=summary.getBoundingClientRect().width;
+   summary.style.setProperty('--pac-open-height',(width*175/1648).toFixed(2)+'px');
+  }else{
+   summary.style.removeProperty('--pac-open-height');
+  }
   requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
    const offset=updatePacStickyOffset();
