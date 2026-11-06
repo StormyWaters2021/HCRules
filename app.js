@@ -234,9 +234,13 @@ function showSymbolDialog(key){
    .replace(/\s+/g,' ').trim().normalize('NFKC');
   if(normalizedText && seenDefinitions.has(normalizedText))continue;
   if(normalizedText)seenDefinitions.add(normalizedText);
-  const det=E('details','symbol-ref-detail');det.open=true;
-  const summary=E('summary','symbol-ref-title',result.title);det.append(summary);
-  const contents=E('div','symbol-ref-content comic-reading-panel');contents.append(result.node);det.append(contents);panel.append(det);
+  const paper=E('article','symbol-reference-panel comic-reading-panel');
+  paper.dataset.panel=String(panel.querySelectorAll('.symbol-reference-panel').length%2);
+  paper.append(E('h3','symbol-reference-title',result.title));
+  const contents=E('div','symbol-reference-text symbol-ref-content');
+  contents.append(result.node);
+  paper.append(contents);
+  panel.append(paper);
  }
  overlay.append(panel);overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
  document.body.append(overlay);close.focus();activeSymbol=key;
