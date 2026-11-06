@@ -2394,27 +2394,3 @@ body:not(.home-mode) #context{margin-top:3px}
 #view .pac-power-detail .pac-power-inline-rules a{color:#125ab0!important}
 #view .pac-power-detail .pac-power-inline-rules .verbatim{white-space:normal}
 #view .pac-filter-results{gap:8px!important}
-
-/* Opaque full-width backing for every sticky Rules heading.
-   Covers exposed margins between the differently sized paper panels. */
-#view .rules-accordion[open] > summary.rules-accordion-heading{
- isolation:isolate!important;
- background-color:#101827!important;
- overflow:visible!important;
-}
-#view .rules-accordion[open] > summary.rules-accordion-heading::before{
- content:"";
- display:block;
- position:absolute;
- left:50%;
- top:0;
- width:100vw;
- height:100%;
- transform:translateX(-50%);
- background:#101827;
- z-index:-1;
- pointer-events:none;
-}
-#view .rules-accordion[open] > summary.rules-accordion-heading::after{
- content:none!important;
-}
