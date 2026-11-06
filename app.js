@@ -667,11 +667,14 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   }else{
    summary.style.removeProperty('--pac-open-height');
   }
-  requestAnimationFrame(()=>{
+  // Wait until the old section has fully collapsed before positioning the
+  // newly opened heading; otherwise the browser preserves the old scroll anchor.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
    const offset=updatePacStickyOffset();
-   window.scrollTo({top:Math.max(0,summary.getBoundingClientRect().top+window.scrollY-offset),behavior:'instant'});
-  });
+   const target=summary.getBoundingClientRect().top+window.scrollY-offset;
+   window.scrollTo({top:Math.max(0,target),behavior:'instant'});
+  }));
  });
  return details;
 }
@@ -935,7 +938,8 @@ function makeRulesAccordion(rule,index=0,searchResult=false){
   }
   if(!searchResult){
   updateRulesStickyOffset();
-  requestAnimationFrame(()=>{
+  // Let sibling collapse and newly populated rule content settle first.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
    if(!details.open||!details.isConnected)return;
    const stickyTop=updateRulesStickyOffset();
    const ancestors=[];
@@ -944,7 +948,7 @@ function makeRulesAccordion(rule,index=0,searchResult=false){
    const headerHeight=ancestors.reduce((total,item)=>total+(item.querySelector(':scope > summary')?.getBoundingClientRect().height||0),0);
    const target=summary.getBoundingClientRect().top+window.scrollY-stickyTop-headerHeight;
    window.scrollTo({top:Math.max(0,target),behavior:'instant'});
-  });
+  }));
   }
   if(populated)return;
   populated=true;
