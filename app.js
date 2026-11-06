@@ -861,7 +861,7 @@ function makeRulesAccordion(rule,index=0){
   const descendants=db.sections.filter(child=>
    child.level===rule.level+1 &&
    (rule.level===1?child.chapter===rule.id:
-    rule.level===2?child.id.match(/^\\d+\\.\\d+/)?.[0]===rule.id:false));
+    rule.level===2?child.id.match(/^\d+\.\d+/)?.[0]===rule.id:false));
   if(descendants.length){
    const children=E('div','rules-accordion-children');
    descendants.forEach((child,i)=>children.append(makeRulesAccordion(child,i)));
