@@ -703,3 +703,57 @@ body.home-mode .view{max-width:520px}
 @media(prefers-reduced-motion:reduce){
   .comic-panel{transition:none}
 }
+
+
+/* Exact uploaded home artwork with scaled, irregular hit regions. */
+.home-artwork{
+  display:block;
+  width:100%;
+  max-width:650px;
+  margin:0 auto;
+}
+.comic-cover{
+  position:relative;
+  width:100%;
+  margin:0 auto;
+  line-height:0;
+}
+.comic-cover[hidden],.comic-home-fallback[hidden]{display:none!important}
+.comic-cover-image{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  object-fit:contain;
+  user-select:none;
+}
+.comic-cover-map{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.comic-cover-hitarea{
+  fill:transparent;
+  stroke:transparent;
+  stroke-width:0;
+  cursor:pointer;
+  pointer-events:all;
+  transition:fill .13s ease;
+}
+.comic-cover-hitarea:hover{fill:rgba(255,255,255,.10)}
+.comic-cover-hitarea:focus-visible{
+  fill:rgba(255,219,105,.20);
+  stroke:#ffcf5a;
+  stroke-width:9;
+  outline:none;
+}
+.home-artwork .comic-home-fallback{max-width:510px}
+@media(min-width:1050px){
+  body.home-mode .view{max-width:650px}
+}
+@media(prefers-reduced-motion:reduce){
+  .comic-cover-hitarea{transition:none}
+}
