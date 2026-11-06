@@ -1225,3 +1225,23 @@ body:not(.home-mode) .group-head{
 
 /* The PAC cover is also a secondary page; only Home remains saturated. */
 body.pac-comic-mode{background:#101827!important;background-image:none!important}
+
+
+/* PDF-extracted combat symbols are monochrome. On gray/white rule art,
+   render their silhouettes dark instead of inheriting the old light style.
+   Other full-color symbols and the PAC's dark cover icons are untouched. */
+#view .comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
+#view .comic-reading-panel img.rule-glyph[src*="/inline/"],
+#view .comic-reading-panel img.rule-glyph[src*="/glyphs/"],
+.symbol-ref-content.comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
+.symbol-ref-content.comic-reading-panel img.rule-glyph[src*="/inline/"],
+.symbol-ref-content.comic-reading-panel img.rule-glyph[src*="/glyphs/"],
+#view .rule-paper .inline-symbol-button .symbol-art[src*="/inline/"]{
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+#view .comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]),
+.symbol-ref-content.comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]){
+  background:transparent!important;
+  border:0!important;
+}
