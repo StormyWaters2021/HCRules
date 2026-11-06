@@ -1346,3 +1346,56 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
     padding:7px 5px;
   }
 }
+
+
+/* Unified icon contrast policy:
+   Light halftone reading surfaces use BLACK for monochrome source art.
+   Colored ability/combat tokens are never recolored.
+   Dark popup headers and PAC navigation preserve their light originals. */
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(img.tone-monochrome-art,
+    img[src*="/inline/"],
+    img[src*="/glyphs/"],
+    img[src*="/combat/"],
+    img[src*="/source-icons/"][src*="_white.png"],
+    img[src*="/keyphrase/passenger-light.png"],
+    img[src*="/keyphrase/flight-wing.png"],
+    img[src*="/keyphrase/giant-reach-symbol.png"],
+    img[src*="/keyphrase/great-size-symbol.png"],
+    img[src*="/keyphrase/swim-symbol.png"],
+    img[src*="/keyphrase/tiny-symbol.png"],
+    .pac-source-heading,
+    .pac-passenger-single){
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(svg.tone-monochrome-vector,svg.pac-vector-inline,svg.pac-vector-heading){
+  color:#111!important;
+  fill:currentColor;
+  opacity:1!important;
+  filter:none!important;
+}
+/* Full-color icon art remains true to the supplied assets in every context.
+   Explicitly exclude colored tokens from monochrome filters. */
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(img[src*="/combat-token/"],img[src*="/improved-abilities/"],
+    img[src*="/terrain-values/"],img.pac-source-inline){
+  filter:none!important;
+  opacity:1!important;
+}
+/* Keep the symbol glyph itself inline, without a pale box around it. */
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+.inline-symbol-button{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+.inline-symbol-button .symbol-art{
+  vertical-align:middle;
+}
+/* Header artwork sits on dark blue, not on the white paper. */
+.symbol-dialog-header .dialog-symbol{
+  filter:none!important;
+}
