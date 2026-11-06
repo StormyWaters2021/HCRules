@@ -964,3 +964,150 @@ summary.terrain-summary.comic-paper-row:focus-visible{
  }
  button.entry.comic-paper-row.power .power-symbol{flex-basis:39px;width:39px;height:39px}
 }
+
+
+/* Unified source-art navigation and reading panels. The custom Home and PAC
+   cover images remain untouched. All art is from the repository PNGs. */
+:root{
+ --reading-ink:#191919;
+ --reading-link:#075583;
+}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row,
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row{
+ transition:none!important;
+ filter:none!important;
+ box-shadow:none!important;
+ color:var(--reading-ink)!important;
+ text-shadow:none!important;
+}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:hover,
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:hover{
+ filter:none!important;
+ background-color:transparent!important;
+ box-shadow:inset 0 0 0 2px #f1d48b!important;
+}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:focus-visible,
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:focus-visible{
+ filter:none!important;
+ background-color:transparent!important;
+ box-shadow:inset 0 0 0 2px #f3bd57!important;
+ outline:2px solid #f3bd57;
+ outline-offset:-10px;
+}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row :is(.num,.label,.power-text),
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row>span{
+ color:#171717!important;
+ text-shadow:none!important;
+}
+button.entry.comic-paper-row .chevron,
+summary.terrain-summary.comic-paper-row .terrain-chevron{
+ display:none!important;
+}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
+ margin-top:-6.2%;
+}
+.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-6.2%}
+
+/* Actual rule descriptions, PAC abilities, keyphrases, improved abilities,
+   source terrain entries and icon-popup references use the same two tiles. */
+#view .rule-paper,
+#view .improved-row,
+#view .terrain-value-entry,
+#view .terrain-rule,
+.symbol-ref-content.comic-reading-panel{
+ position:relative;
+ width:min(100%,680px);
+ max-width:680px;
+ min-height:185px;
+ height:auto;
+ margin:0 auto 4px;
+ padding:clamp(34px,5.5vw,56px) clamp(32px,6.7vw,65px);
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
+ color:var(--reading-ink)!important;
+ font-family:var(--reading-font);
+ font-size:clamp(15px,1.5vw,17px);
+ line-height:1.65;
+ overflow-wrap:break-word;
+}
+#view .rule-paper:nth-of-type(even),
+#view .improved-row:nth-of-type(even),
+#view .terrain-value-entry:nth-of-type(even),
+#view .terrain-rule:nth-of-type(even),
+#view .comic-reading-panel[data-panel="1"],
+.symbol-ref-detail:nth-of-type(even) .symbol-ref-content.comic-reading-panel{
+ background-image:var(--halftone-b)!important;
+}
+#view :is(.rule-paper,.improved-row,.terrain-value-entry,.terrain-rule) + :is(.rule-paper,.improved-row,.terrain-value-entry,.terrain-rule){
+ margin-top:-15px;
+}
+#view .comic-reading-panel :is(.verbatim,.structured-content,.tokenized-content,.rule-paragraph,.improved-cell,.terrain-value-source,.terrain-value-name,.terrain-value-source h3,.inherent-entry h2,.keyphrase-heading h2,.improved-cell h2,.terrain-rule h3),
+.symbol-ref-content.comic-reading-panel{
+ color:var(--reading-ink)!important;
+}
+#view .comic-reading-panel a,
+#view .comic-reading-panel a:visited,
+.symbol-ref-content.comic-reading-panel a,
+.symbol-ref-content.comic-reading-panel a:visited{
+ color:var(--reading-link)!important;
+ text-decoration:underline;
+ text-decoration-thickness:1px;
+ text-decoration-color:currentColor;
+ text-underline-offset:3px;
+}
+#view .comic-reading-panel a:hover,
+.symbol-ref-content.comic-reading-panel a:hover{color:#003958!important}
+#view .comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content),
+.symbol-ref-content.comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content){
+ font-family:var(--reading-font);
+ font-size:inherit;
+ line-height:1.6;
+}
+#view .comic-reading-panel .rule-bullets{margin:.4em 0;padding-left:1.25em}
+#view .comic-reading-panel :is(.inherent-entry h2,.keyphrase-heading h2,.improved-cell h2,.terrain-rule h3,.terrain-value-name){
+ color:#232323!important;
+ font-family:var(--display-font);
+}
+/* The improved two-column structure and interactive icons remain unchanged. */
+#view .improved-row{display:flex;align-items:flex-start;gap:12px}
+#view .improved-cell{background:transparent!important;border-color:#9c9c9c!important}
+#view .improved-na{color:#575757!important}
+#view .terrain-value-source{background:transparent!important;border:0!important}
+#view .terrain-content{background:transparent!important;border:0!important;padding:8px 0}
+#view .terrain-rule{padding-top:32px;padding-bottom:32px}
+#view .terrain-rule h3{margin-top:0}
+/* The modal itself remains dark; its rule references now use source panels. */
+.symbol-ref-detail{border:0!important;background:transparent!important;overflow:visible!important}
+.symbol-ref-title{
+ background:#253448;color:#eff5ff;
+ border:1px solid #52677a;border-radius:3px;
+ padding:12px 16px;
+}
+.symbol-ref-content.comic-reading-panel{
+ width:100%;min-height:130px;
+ margin:0 auto 7px;
+ padding:34px 37px;
+}
+.symbol-ref-content.comic-reading-panel :is(h2,h3,h4){color:#242424!important}
+/* Breadcrumbs are navigation, not separate dark content cards. */
+.crumb-trail{
+ box-shadow:none!important;
+ border:0!important;
+ border-bottom:1px solid #40536a!important;
+ border-radius:0!important;
+ background:transparent!important;
+}
+@media(max-width:620px){
+ #view .rule-paper,
+ #view .improved-row,
+ #view .terrain-value-entry,
+ #view .terrain-rule{
+  min-height:135px;
+  padding:clamp(25px,7vw,39px) clamp(27px,7.5vw,48px);
+  font-size:15px;
+ }
+ #view .improved-row{gap:7px}
+ .symbol-ref-content.comic-reading-panel{padding:27px 25px}
+}
