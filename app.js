@@ -495,42 +495,38 @@ function showPowerList(){
  const selected=current.startsWith('group:')?current.slice(6):null;
  if(!selected){
   setHeading('Powers & Abilities');
-  const host=E('div','pac-cover-host');
-  const art=E('div','pac-cover');
-  art.hidden=true;
-  const img=E('img','pac-cover-image');
-  img.src='assets/PACCover.png';
-  img.alt='Four comic panels representing Speed, Attack, Defense and Damage';
-  img.decoding='async';
-  art.append(img);
-  const overlay=E('div','pac-cover-overlay');
-  for(const group of groups){
-   const panel=E('div','pac-cover-panel pac-cover-'+low(group));
-   panel.setAttribute('role','button');
-   panel.setAttribute('tabindex','0');
-   panel.setAttribute('aria-label','Open '+group+' powers');
-   panel.onclick=()=>move(['group:'+group]);
-   panel.onkeydown=e=>{
-    if(e.target===panel&&(e.key==='Enter'||e.key===' ')){
-     e.preventDefault();move(['group:'+group]);
-    }
-   };
-   const face=E('span','pac-cover-content');
-   face.append(E('span','pac-cover-label',group),pacGroupIcons(group));
-   panel.append(face);
-   overlay.append(panel);
+  const host=E('div','pac-front-accordions pac-reverse-accordions');
+  const crops=[
+   [58,450],[508,470],[978,510],[1488,505]
+  ];
+  for(const [index,group] of groups.entries()){
+   const details=makePacAccordion(group,index,content=>{
+    const stack=E('div','stack power-group-stack');
+    for(const p of db.pac.filter(p=>p.group===group))stack.append(cardPower(p));
+    content.append(stack);
+   },null,true);
+   details.classList.add('pac-front-section');
+   const summary=details.querySelector('summary');
+   summary.classList.add('pac-front-summary');
+   summary.replaceChildren();
+   const ns='http://www.w3.org/2000/svg';
+   const art=document.createElementNS(ns,'svg');
+   art.setAttribute('class','pac-front-art');
+   art.setAttribute('viewBox',`0 ${crops[index][0]} 1420 ${crops[index][1]}`);
+   art.setAttribute('preserveAspectRatio','none');
+   art.setAttribute('aria-hidden','true');
+   const image=document.createElementNS(ns,'image');
+   image.setAttribute('href','assets/PACCover.png');
+   image.setAttribute('x','0');image.setAttribute('y','0');
+   image.setAttribute('width','1420');image.setAttribute('height','2048');
+   art.append(image);
+   const label=E('span','pac-front-heading');
+   label.append(E('span','pac-cover-label',group),pacGroupIcons(group));
+   summary.append(art,label);
+   host.append(details);
   }
-  art.append(overlay);
-  const fallback=E('div','comic-pac pac-cover-fallback');
-  for(const group of groups){
-   const panel=E('div','pac-fallback-panel');
-   const label=button(group,()=>move(['group:'+group]),'comic-panel comic-panel-stat-'+low(group));
-   panel.append(label,pacGroupIcons(group));fallback.append(panel);
-  }
-  img.onload=()=>{art.hidden=false;fallback.hidden=true};
-  img.onerror=()=>{art.hidden=true;fallback.hidden=false};
-  host.append(art,fallback);
   $('view').append(host);
+  watchPacReverseSections(host);
   return;
  }
  setHeading(selected);
@@ -549,7 +545,7 @@ let pacReverseTeardown=()=>{};
 function updatePacStickyOffset(){
  const bar=document.querySelector('.search-area');
  const bottom=bar?bar.getBoundingClientRect().bottom:0;
- const offset=Math.max(0,Math.round(bottom))+2;
+ const offset=Math.max(0,Math.round(bottom));
  document.documentElement.style.setProperty('--pac-sticky-top',offset+'px');
  return offset;
 }
@@ -579,7 +575,8 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   }
   if(!sticky)return;
   const width=summary.getBoundingClientRect().width;
-  summary.style.setProperty('--pac-open-height',(width*753/1800*.2).toFixed(2)+'px');
+  const ratio=details.classList.contains('pac-front-section')?(480/1420):(753/1800);
+  summary.style.setProperty('--pac-open-height',(width*ratio*.2).toFixed(2)+'px');
   requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
    const offset=updatePacStickyOffset();
