@@ -873,100 +873,94 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
 
 
 
-/* Two original halftone tiles for standard navigation surfaces.
-   Do not apply these to custom Home/PAC cover panels or rule text. */
+
+/* Alternating original gray halftone tiles. Keep the PNGs' native
+   1800:753 aspect ratio rather than stretching to a wide, short card. */
 :root{
- --halftone-a:url("assets/rule-panels/Halftone-A.png");
- --halftone-b:url("assets/rule-panels/Halftone-B.png");
+ --halftone-a:url("assets/rule-panels/GrayHalftone-A.png");
+ --halftone-b:url("assets/rule-panels/GrayHalftone-B.png");
+}
+:is(.stack,.comic-paper-stack,.power-group-stack):has(> button.entry.comic-paper-row){
+ gap:0;
+ align-items:center;
 }
 button.entry.comic-paper-row,
 summary.terrain-summary.comic-paper-row{
+ position:relative;
  display:flex;
+ flex:0 0 auto;
  align-items:center;
  justify-content:center;
- gap:clamp(7px,1.7vw,14px);
- width:100%;
- height:clamp(100px,15vw,142px);
+ gap:clamp(5px,1.4vw,12px);
+ width:min(100%,520px);
+ height:auto;
  min-height:0;
  max-height:none;
- margin:0;
- padding:14px 9% 17px;
- color:#141414;
+ aspect-ratio:1800 / 753;
+ padding:9% 10%;
+ margin:0 auto;
  border:0;
  border-radius:0;
  box-shadow:none;
- background:transparent var(--halftone-a) center / 100% 100% no-repeat;
+ background:transparent var(--halftone-a) center / contain no-repeat;
+ color:#171717;
  text-align:center;
- overflow:hidden;
- position:relative;
- isolation:isolate;
+ overflow:visible;
+ cursor:pointer;
+ transition:none!important;
+ clip-path:polygon(2% 3.7%,98% 5%,98% 96.3%,2% 96.3%);
 }
 button.entry.comic-paper-row .label,
 button.entry.comic-paper-row .num,
 button.entry.comic-paper-row .power-text,
 summary.terrain-summary.comic-paper-row>span:not(.terrain-swatch):not(.terrain-chevron){
- color:#161616;
+ color:#151515;
  font-family:var(--display-font);
- font-size:clamp(1rem,2.8vw,1.55rem);
+ font-size:clamp(.98rem,2.65vw,1.4rem);
  font-weight:800;
- letter-spacing:.01em;
- text-shadow:0 1px 0 #fff8e6;
  line-height:1.2;
+ letter-spacing:.01em;
+ text-shadow:0 1px 0 #fff8;
 }
-button.entry.comic-paper-row .num{flex:0 0 auto;white-space:nowrap}
+button.entry.comic-paper-row .num{flex:none;white-space:nowrap}
 button.entry.comic-paper-row .label,
 button.entry.comic-paper-row .power-text{flex:0 1 auto;overflow-wrap:anywhere}
 button.entry.comic-paper-row .chevron,
 summary.terrain-summary.comic-paper-row .terrain-chevron{
- color:#1d1d1d;
- font-weight:900;
- margin-left:0;
- font-size:1.3rem;
+ margin:0;color:#242424;font-size:1.2rem;font-weight:800;
 }
-button.entry.comic-paper-row.power .power-symbol{flex:0 0 52px}
+button.entry.comic-paper-row.power .power-symbol{flex:0 0 48px;width:48px;height:48px}
 :is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:nth-child(even),
 .terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
  background-image:var(--halftone-b);
+ clip-path:polygon(2% 6.2%,98% 3.7%,98% 96.3%,2% 96.3%);
 }
 :is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
- margin-top:-9px;
+ margin-top:-3.3%;
 }
-.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-9px}
+.terrain-accordions{display:flex;flex-direction:column;align-items:center;gap:0}
+.terrain-accordions > .terrain-detail{width:min(100%,520px);background:transparent;border:0;overflow:visible;margin:0}
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row{width:100%}
+.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-3.3%}
+.terrain-detail[open] .terrain-content{background:#223146;border:1px solid #41566b;border-radius:4px}
 button.entry.comic-paper-row:hover,
 summary.terrain-summary.comic-paper-row:hover{
- background-color:transparent;
- filter:brightness(.93);
+ background-color:transparent!important;
+ filter:drop-shadow(0 0 6px rgba(240,245,255,.65));
 }
 button.entry.comic-paper-row:focus-visible,
 summary.terrain-summary.comic-paper-row:focus-visible{
- outline:3px solid #ffc64a;
- outline-offset:-8px;
- filter:brightness(.95);
+ outline:2px solid #ffe09a;outline-offset:-9px;
+ filter:drop-shadow(0 0 6px rgba(255,224,154,.75));
 }
-button.entry.comic-paper-row:is(:first-child,:nth-child(odd)),
-.terrain-accordions > .terrain-detail:nth-child(odd) > summary.terrain-summary.comic-paper-row{
- clip-path:polygon(2.1% 3.8%,97.9% 5.3%,97.9% 95.3%,2.1% 95.3%);
-}
-button.entry.comic-paper-row:nth-child(even),
-.terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
- clip-path:polygon(2.1% 7.2%,97.9% 3.8%,97.9% 95.3%,2.1% 95.3%);
-}
-/* Expanded terrain rules retain dark reading panels; only headings use art. */
-.terrain-detail{overflow:visible;border:0;background:transparent}
-.terrain-detail[open] .terrain-content{background:#223146;border:1px solid #41566b;border-radius:4px}
-.terrain-accordions{display:flex;flex-direction:column;gap:0}
 @media(max-width:480px){
  button.entry.comic-paper-row,
- summary.terrain-summary.comic-paper-row{
-  height:clamp(96px,26vw,116px);
-  padding:12px 9% 16px;
-  gap:7px;
- }
+ summary.terrain-summary.comic-paper-row{padding:9% 8%;gap:5px}
  button.entry.comic-paper-row .label,
  button.entry.comic-paper-row .num,
  button.entry.comic-paper-row .power-text,
  summary.terrain-summary.comic-paper-row>span:not(.terrain-swatch):not(.terrain-chevron){
-  font-size:clamp(.98rem,3.8vw,1.18rem);
+  font-size:clamp(.88rem,3.6vw,1.12rem);
  }
- button.entry.comic-paper-row.power .power-symbol{flex-basis:42px;width:42px;height:42px}
+ button.entry.comic-paper-row.power .power-symbol{flex-basis:39px;width:39px;height:39px}
 }
