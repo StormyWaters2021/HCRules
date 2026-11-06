@@ -872,118 +872,101 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
 }
 
 
-/* Unmodified source-art comic tiles for rule navigation at every TOC level.
-   First=Top, middle alternates Mid1/Mid2, final=Bottom. */
-.comic-rule-stack{
- display:flex;
- flex-direction:column;
- align-items:center;
- gap:0;
- width:100%;
- max-width:660px;
- margin:0 auto;
+
+/* Two original halftone tiles for standard navigation surfaces.
+   Do not apply these to custom Home/PAC cover panels or rule text. */
+:root{
+ --halftone-a:url("assets/rule-panels/Halftone-A.png");
+ --halftone-b:url("assets/rule-panels/Halftone-B.png");
 }
-.comic-rule-stack .comic-rule-entry,
-.comic-rule-stack .comic-rule-entry.chapter{
- position:relative;
+button.entry.comic-paper-row,
+summary.terrain-summary.comic-paper-row{
  display:flex;
- flex:0 0 auto;
  align-items:center;
  justify-content:center;
- text-align:center;
+ gap:clamp(7px,1.7vw,14px);
  width:100%;
+ height:clamp(100px,15vw,142px);
  min-height:0;
- height:auto;
- padding:15px 11% 19px;
+ max-height:none;
  margin:0;
+ padding:14px 9% 17px;
+ color:#141414;
  border:0;
  border-radius:0;
  box-shadow:none;
- color:#111;
- background-color:transparent;
- background-repeat:no-repeat;
- background-size:100% 100%;
- background-position:center;
- aspect-ratio:1800 / 821;
-}
-.comic-rule-stack .comic-rule-top{
- aspect-ratio:1800 / 753;
- background-image:url("assets/rule-panels/Top.png");
-}
-.comic-rule-stack .comic-rule-mid1{
- background-image:url("assets/rule-panels/Mid1.png");
-}
-.comic-rule-stack .comic-rule-mid2{
- background-image:url("assets/rule-panels/Mid2.png");
-}
-.comic-rule-stack .comic-rule-bottom{
- aspect-ratio:1800 / 753;
- background-image:url("assets/rule-panels/Bottom.png");
-}
-.comic-rule-stack .comic-rule-entry .num,
-.comic-rule-stack .comic-rule-entry .label{
+ background:transparent var(--halftone-a) center / 100% 100% no-repeat;
+ text-align:center;
+ overflow:hidden;
  position:relative;
- z-index:1;
- flex:none;
- color:#121212;
+ isolation:isolate;
+}
+button.entry.comic-paper-row .label,
+button.entry.comic-paper-row .num,
+button.entry.comic-paper-row .power-text,
+summary.terrain-summary.comic-paper-row>span:not(.terrain-swatch):not(.terrain-chevron){
+ color:#161616;
  font-family:var(--display-font);
+ font-size:clamp(1rem,2.8vw,1.55rem);
  font-weight:800;
- text-shadow:1px 1px 0 #fff8e7, -1px -1px 0 #fff8e7;
+ letter-spacing:.01em;
+ text-shadow:0 1px 0 #fff8e6;
+ line-height:1.2;
 }
-.comic-rule-stack .comic-rule-entry .num{
- min-width:0;
- padding:0;
- font-size:clamp(1.1rem,3.4vw,1.7rem);
- white-space:nowrap;
+button.entry.comic-paper-row .num{flex:0 0 auto;white-space:nowrap}
+button.entry.comic-paper-row .label,
+button.entry.comic-paper-row .power-text{flex:0 1 auto;overflow-wrap:anywhere}
+button.entry.comic-paper-row .chevron,
+summary.terrain-summary.comic-paper-row .terrain-chevron{
+ color:#1d1d1d;
+ font-weight:900;
+ margin-left:0;
+ font-size:1.3rem;
 }
-.comic-rule-stack .comic-rule-entry .label{
- flex:0 1 auto;
- max-width:88%;
- font-size:clamp(1.02rem,3.2vw,1.6rem);
- line-height:1.22;
- overflow-wrap:anywhere;
+button.entry.comic-paper-row.power .power-symbol{flex:0 0 52px}
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:nth-child(even),
+.terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
+ background-image:var(--halftone-b);
 }
-.comic-rule-stack .comic-rule-entry .chevron{display:none}
-.comic-rule-stack .comic-rule-entry:hover{
- background-color:rgba(250,241,208,.12);
- filter:brightness(1.09);
- outline:none;
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
+ margin-top:-9px;
 }
-.comic-rule-stack .comic-rule-entry:focus-visible{
- outline:3px solid #ffde65;
- outline-offset:-9px;
- filter:brightness(1.08);
+.terrain-accordions > .terrain-detail + .terrain-detail{margin-top:-9px}
+button.entry.comic-paper-row:hover,
+summary.terrain-summary.comic-paper-row:hover{
+ background-color:transparent;
+ filter:brightness(.93);
 }
-@media(max-width:470px){
- .comic-rule-stack .comic-rule-entry,
- .comic-rule-stack .comic-rule-entry.chapter{
-  gap:6px;
-  padding:8px 10% 12px;
+button.entry.comic-paper-row:focus-visible,
+summary.terrain-summary.comic-paper-row:focus-visible{
+ outline:3px solid #ffc64a;
+ outline-offset:-8px;
+ filter:brightness(.95);
+}
+button.entry.comic-paper-row:is(:first-child,:nth-child(odd)),
+.terrain-accordions > .terrain-detail:nth-child(odd) > summary.terrain-summary.comic-paper-row{
+ clip-path:polygon(2.1% 3.8%,97.9% 5.3%,97.9% 95.3%,2.1% 95.3%);
+}
+button.entry.comic-paper-row:nth-child(even),
+.terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
+ clip-path:polygon(2.1% 7.2%,97.9% 3.8%,97.9% 95.3%,2.1% 95.3%);
+}
+/* Expanded terrain rules retain dark reading panels; only headings use art. */
+.terrain-detail{overflow:visible;border:0;background:transparent}
+.terrain-detail[open] .terrain-content{background:#223146;border:1px solid #41566b;border-radius:4px}
+.terrain-accordions{display:flex;flex-direction:column;gap:0}
+@media(max-width:480px){
+ button.entry.comic-paper-row,
+ summary.terrain-summary.comic-paper-row{
+  height:clamp(96px,26vw,116px);
+  padding:12px 9% 16px;
+  gap:7px;
  }
- .comic-rule-stack .comic-rule-entry .num{font-size:clamp(.92rem,3.7vw,1.1rem)}
- .comic-rule-stack .comic-rule-entry .label{font-size:clamp(.9rem,3.6vw,1.18rem)}
-}
-
-
-/* Precisely overlap the source tiles at their transparent margins.
-   The percentage offsets scale with the width of the button stack. */
-.comic-rule-stack > .comic-rule-entry + .comic-rule-entry{
-  margin-top:-8.2%;
-}
-.comic-rule-stack > .comic-rule-entry:nth-child(2){
-  margin-top:-11.1%;
-}
-/* Clicks outside each visible black-bordered panel pass through instead
-   of activating its full transparent PNG rectangle. */
-.comic-rule-stack .comic-rule-top{
-  clip-path:polygon(4.2% 5.7%,95.8% 5.7%,95.8% 91.7%,4.2% 75.4%);
-}
-.comic-rule-stack .comic-rule-mid1{
-  clip-path:polygon(4.2% 2.2%,95.8% 17.1%,95.8% 83.5%,4.2% 98.4%);
-}
-.comic-rule-stack .comic-rule-mid2{
-  clip-path:polygon(4.2% 16.4%,95.8% 1.3%,95.8% 99%,4.2% 84.1%);
-}
-.comic-rule-stack .comic-rule-bottom{
-  clip-path:polygon(4.2% 4.9%,95.8% 21.3%,95.8% 96.4%,4.2% 96.4%);
+ button.entry.comic-paper-row .label,
+ button.entry.comic-paper-row .num,
+ button.entry.comic-paper-row .power-text,
+ summary.terrain-summary.comic-paper-row>span:not(.terrain-swatch):not(.terrain-chevron){
+  font-size:clamp(.98rem,3.8vw,1.18rem);
+ }
+ button.entry.comic-paper-row.power .power-symbol{flex-basis:42px;width:42px;height:42px}
 }
