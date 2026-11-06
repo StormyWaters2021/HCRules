@@ -433,7 +433,7 @@ function cardPower(p,index=0){
  if(matchingRule)body.append(row('§'+matchingRule.id,matchingRule.title,()=>goTarget('rule',matchingRule.id)));
  details.append(body);
  details.addEventListener('toggle',()=>{
-  if(!details.open||details.closest('.pac-filter-results'))return;
+  if(!details.open||details.classList.contains('pac-expanded-by-group')||details.closest('.pac-filter-results'))return;
   for(const other of details.parentElement.querySelectorAll(':scope > details.pac-power-detail')){
    if(other!==details&&other.open)other.open=false;
   }
