@@ -544,8 +544,17 @@ function showPowerList(){
  section.append(stack);content.append(section);
 }
 function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));const fragment=E('div','pac-reading-stack');pieces.forEach((part,i)=>{const paper=E('div','rule-paper comic-reading-panel');paper.dataset.panel=String(i%2);if(i===0)paper.append(header);paper.append(part);fragment.append(paper)});article.append(fragment);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
-function makePacAccordion(name,index,renderContent,color=null){
- const details=E('details','pac-reverse-section terrain-detail');
+// Reverse-side stickiness is confined to the three ability sections.
+let pacReverseTeardown=()=>{};
+function updatePacStickyOffset(){
+ const bar=document.querySelector('.search-area');
+ const bottom=bar?bar.getBoundingClientRect().bottom:0;
+ const offset=Math.max(0,Math.round(bottom))+2;
+ document.documentElement.style.setProperty('--pac-sticky-top',offset+'px');
+ return offset;
+}
+function makePacAccordion(name,index,renderContent,color=null,sticky=false){
+ const details=E('details','pac-reverse-section terrain-detail'+(sticky?' pac-sticky-eligible':''));
  const summary=E('summary','terrain-summary comic-paper-row');
  summary.dataset.panel=String(index%2);
  if(color!==null){
@@ -568,21 +577,66 @@ function makePacAccordion(name,index,renderContent,color=null){
   for(const other of all.querySelectorAll('details.pac-reverse-section')){
    if(other!==details&&other.open)other.open=false;
   }
+  if(!sticky)return;
+  const width=summary.getBoundingClientRect().width;
+  summary.style.setProperty('--pac-open-height',(width*753/1800*.2).toFixed(2)+'px');
   requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
-   const offset=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pac-sticky-top'))||0;
-   const top=summary.getBoundingClientRect().top+window.scrollY-offset;
-   window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+   const offset=updatePacStickyOffset();
+   window.scrollTo({top:Math.max(0,summary.getBoundingClientRect().top+window.scrollY-offset),behavior:'instant'});
   });
  });
  return details;
+}
+function watchPacReverseSections(host){
+ pacReverseTeardown();
+ const controller=new AbortController();
+ let lastY=window.scrollY,queued=false;
+ const findVisibleNext=section=>{
+  let sibling=section.nextElementSibling;
+  while(sibling&&!sibling.getClientRects().length)sibling=sibling.nextElementSibling;
+  return sibling;
+ };
+ const onScroll=()=>{
+  if(queued)return;
+  queued=true;
+  requestAnimationFrame(()=>{
+   queued=false;
+   if(!host.isConnected)return;
+   const currentY=window.scrollY;
+   const goingDown=currentY>lastY+0.5;
+   lastY=currentY;
+   if(!goingDown)return;
+   const offset=updatePacStickyOffset();
+   for(const section of host.querySelectorAll('.pac-sticky-eligible[open]')){
+    const title=section.querySelector(':scope > summary');
+    if(!title||title.getBoundingClientRect().bottom>offset-2)continue;
+    const next=findVisibleNext(section);
+    const before=next?.getBoundingClientRect().top;
+    section.open=false;
+    // Keep the next visible panel at the same screen coordinate when the
+    // preceding expanded rules are removed. Do not jump to the old heading.
+    if(next&&before!==undefined){
+     const after=next.getBoundingClientRect().top;
+     window.scrollBy({top:after-before,behavior:'instant'});
+    }
+    lastY=window.scrollY;
+    break;
+   }
+  });
+ };
+ const onResize=()=>updatePacStickyOffset();
+ window.addEventListener('scroll',onScroll,{passive:true,signal:controller.signal});
+ window.addEventListener('resize',onResize,{passive:true,signal:controller.signal});
+ updatePacStickyOffset();
+ pacReverseTeardown=()=>{controller.abort();pacReverseTeardown=()=>{}};
 }
 function showBackIndex(){
  setHeading('PAC · Reverse Side');
  const view=$('view'),accordion=E('div','pac-reverse-accordions');
  let index=0;
  for(const back of db.back.filter(b=>b.id!=='back-terrain-values')){
-  accordion.append(makePacAccordion(back.name,index++,content=>showBack(back,content)));
+  accordion.append(makePacAccordion(back.name,index++,content=>showBack(back,content),null,true));
  }
  accordion.append(E('h2','pac-reverse-subheading','MAP TERRAIN'));
  for(const [title,id,color] of db.terrain){
@@ -591,6 +645,7 @@ function showBackIndex(){
  const values=db.back.find(b=>b.id==='back-terrain-values');
  if(values)accordion.append(makePacAccordion(values.name,index++,content=>showBack(values,content)));
  view.append(accordion);
+ watchPacReverseSections(accordion);
 }
 function appendTerrainRules(content,id){
  const root=byId(id);
@@ -775,7 +830,7 @@ function sidebar(){
  }
 }
 
-function render(){lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
+function render(){pacReverseTeardown();lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
  const key=path.at(-1)||'';if(key.startsWith('rule:'))showRule(byId(key.slice(5)));else if(key.startsWith('section:'))showSection(key.slice(8));else if(key.startsWith('chapter:'))showChapter(key.slice(8));else showChapters()}
 async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
 
