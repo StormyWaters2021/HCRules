@@ -2801,3 +2801,10 @@ body:not(.home-mode) #context{margin-top:3px}
   --pac-card-edge:5px;
  }
 }
+
+/* Accordion position is controlled after sibling collapse, not by browser
+   scroll anchoring to content removed above the newly selected section. */
+#view .rules-accordion-tree,
+#view .rules-accordion-children{
+ overflow-anchor:none;
+}
