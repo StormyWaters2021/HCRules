@@ -649,9 +649,19 @@ function showBack(b){
 function family(s){return db.sections.filter(x=>x.id.startsWith(s.id)&&x.id!==s.id&&x.level===s.level+1)}
 function showRule(s){setHeading(s.id+' '+s.title,'Comprehensive Rules','July 1, 2026 · source page '+Math.max(1,s.page-17));const v=$('view');const body=E('article','rule-paper');body.append(universalRuleText(s));v.append(body);const children=family(s);if(children.length){v.append(E('h2','group-head','SUBSECTIONS'));const stack=E('div','stack');children.forEach(c=>stack.append(row(c.id,c.title,()=>enter(c))));v.append(stack)}const tools=E('div','rule-tools');tools.append(button('Copy link',()=>navigator.clipboard?.writeText(location.href),'small-action'));v.append(tools)}
 function enter(s){if(s.level===1)move(['chapter:'+s.id]);else if(s.level===2)move(['chapter:'+s.chapter,'section:'+s.id]);else move(['chapter:'+s.chapter,'section:'+s.id.match(/^\d+\.\d+/)?.[0],'rule:'+s.id])}
-function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(stack)}
-function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper section-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(stack);else if(!s.text)showRule(s)}
-function showChapters(){setHeading('Comprehensive Rules');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(stack)}
+function decorateRulePanels(stack){
+ const entries=[...stack.children].filter(node=>node.classList.contains('entry'));
+ if(!entries.length)return stack;
+ stack.classList.add('comic-rule-stack');
+ entries.forEach((entry,index)=>{
+  const tile=index===0?'top':index===entries.length-1?'bottom':index%2===1?'mid1':'mid2';
+  entry.classList.add('comic-rule-entry','comic-rule-'+tile);
+ });
+ return stack;
+}
+function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(decorateRulePanels(stack))}
+function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper section-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(decorateRulePanels(stack));else if(!s.text)showRule(s)}
+function showChapters(){setHeading('Comprehensive Rules');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(decorateRulePanels(stack))}
 function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
 
 function sidebarRow(label,fn,depth=0,selected=false){
