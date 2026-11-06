@@ -792,3 +792,81 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
   body.home-mode,body.pac-comic-mode{background-attachment:scroll}
   body.pac-comic-mode .comic-pac{border-width:3px;gap:5px;padding:5px}
 }
+
+
+/* Supplied PAC cover: an exact image with independently clickable icon references.
+   Panel geometry is defined as percentages of the original 1420 x 2048 artwork. */
+.pac-cover-host{width:100%;max-width:690px;margin:0 auto 22px}
+.pac-cover{position:relative;width:100%;line-height:0;filter:drop-shadow(0 8px 16px #0008)}
+.pac-cover[hidden],.pac-cover-fallback[hidden]{display:none!important}
+.pac-cover-image{display:block;width:100%;height:auto;object-fit:contain;user-select:none}
+.pac-cover-overlay{position:absolute;inset:0}
+.pac-cover-panel{
+ position:absolute;left:4.05%;width:91.9%;
+ display:flex;align-items:center;justify-content:center;
+ cursor:pointer;outline:none;
+}
+.pac-cover-speed{
+ top:3.05%;height:21.65%;
+ clip-path:polygon(0 0,100% 0,100% 100%,0 86%);
+}
+.pac-cover-attack{
+ top:24.75%;height:22.9%;
+ clip-path:polygon(0 0,100% 14%,100% 87%,0 100%);
+}
+.pac-cover-defense{
+ top:47.8%;height:24.8%;
+ clip-path:polygon(0 0,100% 0,100% 100%,0 90%);
+}
+.pac-cover-damage{
+ top:72.7%;height:24%;
+ clip-path:polygon(0 10%,100% 0,100% 100%,0 100%);
+}
+.pac-cover-panel:hover{background:rgba(255,245,174,.13)}
+.pac-cover-panel:focus-visible{background:rgba(255,228,104,.22);outline:3px solid #ffda53;outline-offset:-4px}
+.pac-cover-content{
+ display:inline-flex;align-items:center;justify-content:center;
+ flex-wrap:wrap;gap:clamp(5px,1.2vw,14px);
+ max-width:93%;padding:12px 14px;
+ border:2px solid rgba(0,0,0,.65);border-radius:6px;
+ background:rgba(18,29,43,.88);
+ box-shadow:3px 4px 0 #090909ad;
+ line-height:1.2;
+}
+.pac-cover-label{
+ font:800 clamp(1.35rem,4.2vw,2.3rem)/1 var(--display-font);
+ color:#f9f8f3;letter-spacing:.025em;
+ text-shadow:1px 2px 0 #070707;
+ white-space:nowrap;
+}
+.pac-cover-panel .group-symbols{
+ display:inline-flex;align-items:center;justify-content:center;
+ gap:clamp(3px,.6vw,8px);margin:0;
+}
+.pac-cover-panel .combat-icon-circle{
+ width:clamp(30px,3.8vw,44px);height:clamp(30px,3.8vw,44px);
+ background:#fff;box-shadow:0 1px 3px #0009;cursor:pointer;
+}
+.pac-cover-panel .combat-stat-icon{
+ width:74%;height:74%;object-fit:contain;
+}
+.pac-cover-panel .combat-icon-circle:hover,
+.pac-cover-panel .combat-icon-circle:focus-visible{
+ outline:3px solid #ffe38b;outline-offset:2px;
+}
+.pac-cover-fallback{
+ border:0!important;outline:0!important;gap:6px!important;
+ padding:6px!important;background:transparent!important;
+}
+.pac-fallback-panel{position:relative}
+.pac-fallback-panel>.group-symbols{
+ position:absolute;top:50%;right:9%;transform:translateY(-50%);
+ z-index:2;
+}
+.pac-fallback-panel>.comic-panel{padding-right:45%}
+@media(max-width:480px){
+ .pac-cover-content{gap:5px;padding:7px 6px;border-width:1px;box-shadow:2px 3px 0 #0009}
+ .pac-cover-label{font-size:clamp(1rem,4.7vw,1.5rem)}
+ .pac-cover-panel .combat-icon-circle{width:clamp(25px,8vw,34px);height:clamp(25px,8vw,34px)}
+ .pac-cover-panel .group-symbols{gap:3px}
+}
