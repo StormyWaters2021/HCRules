@@ -1558,8 +1558,16 @@ body:not(.home-mode) #context{margin-top:3px}
  clip-path:none!important;
 }
 #view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading::before{clip-path:none!important}
-#view .rules-depth-2[open] > summary.rules-accordion-heading{top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;z-index:20!important}
-#view .rules-depth-3[open] > summary.rules-accordion-heading{top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;z-index:10!important}
+/* Equal-or-higher specificity than the generic expanded heading is required
+   so child headings stack beneath their open ancestors. */
+#view .rules-accordion.rules-depth-2[open]:not(.rules-search-match) > summary.rules-accordion-heading{
+ top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;
+ z-index:20!important;
+}
+#view .rules-accordion.rules-depth-3[open]:not(.rules-search-match) > summary.rules-accordion-heading{
+ top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;
+ z-index:10!important;
+}
 #view .rules-accordion[open] > summary :is(.label,.num){font-size:clamp(.82rem,2.5vw,1.08rem)!important}
 #view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading{
  position:relative!important;
