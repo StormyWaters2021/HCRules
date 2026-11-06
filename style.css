@@ -1245,3 +1245,84 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
   background:transparent!important;
   border:0!important;
 }
+
+
+/* PAC light-tile cleanup: remove category card remnants and darken monochrome icons. */
+#view .power-group-selected{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  padding:0;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+#view .power-group-selected > .power-group-heading{
+  position:relative;
+  display:flex;
+  width:min(100%,680px);
+  min-height:0;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:4px auto 6px;
+  padding:10px 12px;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  color:#f6f6f6;
+}
+#view .power-group-selected > .power-group-heading::before,
+#view .power-group-selected > .power-group-heading::after{
+  display:none!important;
+  content:none!important;
+}
+#view .power-group-selected .power-group-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  max-width:900px;
+  gap:0;
+  margin:0 auto;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#view .power-group-selected .power-group-stack > .entry{
+  margin-inline:auto;
+}
+#view .comic-reading-panel .pac-source-heading,
+#view .comic-reading-panel .keyphrase-heading > img.pac-source-heading{
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+#view .comic-reading-panel .pac-passenger-single,
+#view .comic-reading-panel .pac-vector-inline,
+#view .comic-reading-panel .keyphrase-inline{
+  color:#181818!important;
+  fill:currentColor;
+}
+#view .comic-reading-panel img.pac-passenger-single,
+#view .comic-reading-panel img.keyphrase-inline[src*="passenger-light"],
+#view .comic-reading-panel img.pac-vector-inline[src*="passenger-light"]{
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+/* PAC improved movement/targeting art retains its original red, brown,
+   green and gray colors, including icons inline within Flight. */
+#view .comic-reading-panel .pac-source-inline{
+  filter:none!important;
+  opacity:1!important;
+}
+@media(max-width:620px){
+  #view .power-group-selected > .power-group-heading{
+    gap:7px;
+    padding:7px 5px;
+  }
+}
