@@ -1764,7 +1764,14 @@ body:not(.home-mode) #context{margin-top:3px}
 .symbol-dialog .symbol-reference-panel img.symbol-art[src$="/terrain-values/destroy-clean.png"]{
  filter:brightness(0)!important;
 }
-.symbol-punctuation-group{display:inline-flex;align-items:baseline;white-space:nowrap}
+/* Keep icon plus punctuation/value on one line while letting the text,
+   not a separate flex box, determine the normal text baseline. */
+.symbol-punctuation-group{
+ display:inline-block;
+ white-space:nowrap;
+ vertical-align:baseline;
+ line-height:inherit;
+}
 .symbol-punctuation-group .inline-symbol-button{flex:none}
 @media(max-width:620px){
  :root{--clix-panel-slope:9px;--clix-panel-edge:5px}
@@ -1860,13 +1867,7 @@ body:not(.home-mode) #context{margin-top:3px}
  vertical-align:-.48em;
  object-fit:contain;
 }
-.symbol-punctuation-group{
- display:inline-flex;
- align-items:center;
- vertical-align:-.48em;
- white-space:nowrap;
- line-height:1;
-}
+
 
 /* Cropped inline icon data URLs retain their original source path as metadata.
    The visual PNG is cropped, while the source's contrast rules still apply. */
