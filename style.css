@@ -2832,3 +2832,20 @@ body:not(.home-mode) #context{margin-top:3px}
 #view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section:not(.pac-sticky-eligible)[open] > .pac-reverse-content{
  margin:6px 0 0!important;
 }
+
+/* Printed terrain destroy symbol is white artwork. On paper, render its
+   silhouette in black without changing the other terrain icon colors. */
+#view .comic-reading-panel .inline-symbol-button img.symbol-art[src$="/terrain-values/destroy-clean.png"],
+.symbol-dialog .symbol-reference-panel .inline-symbol-button img.symbol-art[src$="/terrain-values/destroy-clean.png"]{
+ filter:brightness(0)!important;
+ opacity:1!important;
+}
+.symbol-punctuation-group{
+ display:inline-flex;
+ align-items:baseline;
+ white-space:nowrap;
+ vertical-align:baseline;
+}
+.symbol-punctuation-group .inline-symbol-button{
+ flex:none;
+}
