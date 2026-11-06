@@ -237,7 +237,7 @@ function showSymbolDialog(key){
   const paper=E('article','symbol-reference-panel comic-reading-panel');
   paper.dataset.panel=String(panel.querySelectorAll('.symbol-reference-panel').length%2);
   paper.append(E('h3','symbol-reference-title',result.title));
-  const contents=E('div','symbol-reference-text symbol-ref-content');
+  const contents=E('div','symbol-reference-text');
   contents.append(result.node);
   paper.append(contents);
   panel.append(paper);
