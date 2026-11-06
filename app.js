@@ -5,7 +5,7 @@ function pacSymbol(src,cl="pac-vector-inline",alt="PAC symbol"){
  }
  const item=pacVectorGlyphs[src.split('/').pop()];if(!item)return null;
  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
- svg.setAttribute('class',cl);svg.setAttribute('viewBox',`0 0 ${item[0]} 1000`);
+ svg.setAttribute('class',cl+' tone-monochrome-vector');svg.setAttribute('viewBox',`0 0 ${item[0]} 1000`);
  svg.setAttribute('role','img');svg.setAttribute('aria-label',alt);
  svg.setAttribute('preserveAspectRatio','xMidYMid meet');
  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
@@ -103,7 +103,7 @@ function linkedLine(t,source){
 function glyph(src,alt='Combat symbol'){
  const key=Object.keys(symbolRegistry).find(k=>symbolRegistry[k].image===src);
  if(key)return symbolButton(key);
- const c=glyphMap[src];const im=E('img','rule-glyph');
+ const c=glyphMap[src];const im=E('img','rule-glyph tone-monochrome-art');
  im.src=c?'assets/glyphs/'+c.codePointAt(0).toString(16)+'.png':src;
  im.alt=alt;im.decoding='async';return im;
 }
@@ -133,9 +133,9 @@ function verifiedSymbolText(s){
 function symbolButton(key){
  const item=symbolRegistry[key];
  if(!item){const warning=E('span','unknown-symbol','[['+key+']]');warning.title='Unknown symbol token';return warning}
- const b=E('button','inline-symbol-button'+(item.image?.includes('/improved-abilities/')?' improved-symbol':item.image?.includes('/combat-token/')?' combat-symbol':' default-symbol'));b.type='button';b.title=item.name;
+ const isMonochrome=Boolean(item.image&&(/\/inline\//.test(item.image)||/\/glyphs\//.test(item.image)||/\/combat\//.test(item.image)||/\/source-icons\/(?:speed|attack|defense|damage)\/[^/]*_white\.png$/.test(item.image)||/\/keyphrase\/(?:passenger-light|flight-wing|giant-reach-symbol|great-size-symbol|swim-symbol|tiny-symbol)\.png$/.test(item.image)));const b=E('button','inline-symbol-button'+(item.image?.includes('/improved-abilities/')?' improved-symbol':item.image?.includes('/combat-token/')?' combat-symbol':' default-symbol')+(isMonochrome?' tone-monochrome':''));b.type='button';b.title=item.name;
  b.setAttribute('aria-label','Explain '+item.name);
- if(item.image){const im=E('img','symbol-art');im.src=item.image;im.alt='';im.loading='lazy';b.append(im)}
+ if(item.image){const im=E('img','symbol-art'+(isMonochrome?' tone-monochrome-art':''));im.src=item.image;im.alt='';im.loading='lazy';b.append(im)}
  else b.append(E('span','symbol-text-fallback',item.name));
  b.onclick=()=>showSymbolDialog(key);return b;
 }
