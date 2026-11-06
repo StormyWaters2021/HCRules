@@ -234,13 +234,19 @@ function showSymbolDialog(key){
    .replace(/\s+/g,' ').trim().normalize('NFKC');
   if(normalizedText && seenDefinitions.has(normalizedText))continue;
   if(normalizedText)seenDefinitions.add(normalizedText);
-  const paper=E('article','symbol-reference-panel comic-reading-panel');
-  paper.dataset.panel=String(panel.querySelectorAll('.symbol-reference-panel').length%2);
-  paper.append(E('h3','symbol-reference-title',result.title));
-  const contents=E('div','symbol-reference-text');
-  contents.append(result.node);
-  paper.append(contents);
-  panel.append(paper);
+  // Split collections into readable cards instead of stretching one artwork tile
+  // across an arbitrarily long reference list.
+  const isCollection=result.node.classList?.contains('improved-source-list');
+  const parts=isCollection?[...result.node.children]:[result.node];
+  for(const [partIndex,part] of parts.entries()){
+   const paper=E('article','symbol-reference-panel comic-reading-panel');
+   paper.dataset.panel=String(panel.querySelectorAll('.symbol-reference-panel').length%2);
+   if(!isCollection||partIndex===0)paper.append(E('h3','symbol-reference-title',result.title));
+   const contents=E('div','symbol-reference-text');
+   contents.append(part);
+   paper.append(contents);
+   panel.append(paper);
+  }
  }
  overlay.append(panel);overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
  document.body.append(overlay);close.focus();activeSymbol=key;
