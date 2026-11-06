@@ -143,7 +143,18 @@ function tokenContent(value,source){
  const node=E('span','tokenized-content');const re=/\[\[([^\]]+)\]\]/g;
  let prev=0,m;
  while((m=re.exec(String(value||'')))){
-  node.append(linkedLine(value.slice(prev,m.index),source));node.append(symbolButton(m[1]));prev=re.lastIndex;
+  node.append(linkedLine(value.slice(prev,m.index),source));
+  // Keep punctuation attached to its preceding inline symbol so a colon
+  // cannot wrap onto the next line by itself.
+  const suffix=String(value).slice(re.lastIndex);
+  const punctuation=suffix.match(/^([ \t]*)([:;,])/);
+  if(punctuation){
+   const group=E('span','symbol-punctuation-group');
+   group.append(symbolButton(m[1]),document.createTextNode(punctuation[1]+punctuation[2]));
+   node.append(group);
+   re.lastIndex+=punctuation[0].length;
+  }else node.append(symbolButton(m[1]));
+  prev=re.lastIndex;
  }
  node.append(linkedLine(value.slice(prev),source));return node;
 }
