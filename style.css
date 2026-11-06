@@ -1756,3 +1756,9 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  #view .pac-front-accordions .combat-icon-circle{width:25px;height:25px}
  #view .pac-front-accordions .pac-front-heading .pac-cover-label{font-size:clamp(.95rem,4vw,1.25rem)}
 }
+
+/* Override the generic alternating gray summary images for front-cover
+   panels: only the original cropped PAC artwork should be visible. */
+#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section > summary.terrain-summary.pac-front-summary[data-panel]{
+ background-image:none!important;
+}
