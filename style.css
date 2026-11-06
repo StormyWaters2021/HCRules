@@ -2413,3 +2413,11 @@ body:not(.home-mode) #context{margin-top:3px}
 }
 #view .pac-search-results .pac-power-detail{width:min(100%,520px)!important}
 #view .pac-search-reverse{margin-top:4px}
+
+/* PAC searches and dial-color filters show complete, non-collapsible cards. */
+#view .pac-filter-results .pac-static-power > summary.entry.power.comic-paper-row{
+ cursor:default!important;
+}
+#view .pac-filter-results .pac-static-power > summary.entry.power.comic-paper-row:hover{
+ filter:none!important;
+}
