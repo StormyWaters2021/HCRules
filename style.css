@@ -2808,3 +2808,12 @@ body:not(.home-mode) #context{margin-top:3px}
 #view .rules-accordion-children{
  overflow-anchor:none;
 }
+
+/* PAC back uses the same small gaps as Comprehensive Rules.
+   Keep the original PAC front category artwork and ability layout untouched. */
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section + .pac-reverse-section{
+ margin-top:6px!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-content > .comic-reading-panel + .comic-reading-panel{
+ margin-top:6px!important;
+}
