@@ -863,9 +863,43 @@ function updateRulesStickyOffset(){
 function watchRulesStickyHeadings(){
  rulesStickyCleanup();
  const controller=new AbortController();
+ const root=document.querySelector('#view .rules-accordion-tree');
+ let lastY=window.scrollY,queued=false;
  const refresh=()=>updateRulesStickyOffset();
+ const onScroll=()=>{
+  if(queued)return;
+  queued=true;
+  requestAnimationFrame(()=>{
+   queued=false;
+   if(!root?.isConnected)return;
+   const currentY=window.scrollY;
+   const goingDown=currentY>lastY+0.5;
+   lastY=currentY;
+   if(!goingDown)return;
+   const top=updateRulesStickyOffset();
+   const headingHeight=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--rules-heading-height'))||52;
+   // Deepest first: a parent remains open as long as any child is visible.
+   const open=[...root.querySelectorAll('details.rules-accordion[open]')].reverse();
+   for(const details of open){
+    const depth=Number(details.className.match(/rules-depth-(\d+)/)?.[1]||1);
+    const threshold=top+(depth-1)*headingHeight;
+    if(details.getBoundingClientRect().bottom>threshold+2)continue;
+    const next=details.nextElementSibling;
+    const before=next?.getBoundingClientRect().top;
+    details.querySelectorAll('details.rules-accordion[open]').forEach(child=>{child.open=false});
+    details.open=false;
+    // Keep the following panel at its previous viewport position.
+    if(next&&before!==undefined){
+     const after=next.getBoundingClientRect().top;
+     window.scrollBy({top:after-before,behavior:'instant'});
+    }
+    lastY=window.scrollY;
+    break;
+   }
+  });
+ };
  window.addEventListener('resize',refresh,{passive:true,signal:controller.signal});
- window.addEventListener('scroll',refresh,{passive:true,signal:controller.signal});
+ window.addEventListener('scroll',onScroll,{passive:true,signal:controller.signal});
  refresh();
  rulesStickyCleanup=()=>controller.abort();
 }
