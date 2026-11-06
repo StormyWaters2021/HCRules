@@ -227,7 +227,7 @@ function showSymbolDialog(key){
  overlay=E('div','symbol-overlay');overlay.id='symbolOverlay';
  const panel=E('section','symbol-dialog');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label',item.name);
  const top=E('div','symbol-dialog-header');
- if(item.image){const img=E('img','dialog-symbol');img.style.cssText='background:#172536;border:1px solid #435c76;padding:8px;width:64px;height:64px;object-fit:contain;filter:none';img.src=item.image;img.alt='';top.append(img)}
+ if(item.image){const img=E('img','dialog-symbol');img.src=item.image;img.alt='';top.append(img)}
  top.append(E('h2','',item.name));
  const close=button('✕',()=>overlay.remove(),'symbol-close');close.setAttribute('aria-label','Close symbol reference');top.append(close);panel.append(top);
  const refs=canonicalSymbolReferences(Array.isArray(item.references)?item.references:[]);
