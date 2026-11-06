@@ -133,7 +133,7 @@ function verifiedSymbolText(s){
 function symbolButton(key){
  const item=symbolRegistry[key];
  if(!item){const warning=E('span','unknown-symbol','[['+key+']]');warning.title='Unknown symbol token';return warning}
- const isMonochrome=Boolean(item.image&&(/\/inline\//.test(item.image)||/\/glyphs\//.test(item.image)||/\/combat\//.test(item.image)||/\/source-icons\/(?:speed|attack|defense|damage)\/[^/]*_white\.png$/.test(item.image)||/\/keyphrase\/(?:passenger-light|flight-wing|giant-reach-symbol|great-size-symbol|swim-symbol|tiny-symbol)\.png$/.test(item.image)));const b=E('button','inline-symbol-button'+(item.image?.includes('/improved-abilities/')?' improved-symbol':item.image?.includes('/combat-token/')?' combat-symbol':' default-symbol')+(isMonochrome?' tone-monochrome':''));b.type='button';b.title=item.name;
+ const isMonochrome=Boolean(item.image&&(/\/inline\//.test(item.image)||/\/glyphs\//.test(item.image)||/\/combat\//.test(item.image)||/\/combat-token\//.test(item.image)||/\/source-icons\/(?:speed|attack|defense|damage)\/[^/]*_white\.png$/.test(item.image)||/\/keyphrase\/(?:passenger-light|flight-wing|giant-reach-symbol|great-size-symbol|swim-symbol|tiny-symbol)\.png$/.test(item.image)));const b=E('button','inline-symbol-button'+(item.image?.includes('/improved-abilities/')?' improved-symbol':item.image?.includes('/combat-token/')?' combat-symbol':' default-symbol')+(isMonochrome?' tone-monochrome':''));b.type='button';b.title=item.name;
  b.setAttribute('aria-label','Explain '+item.name);
  if(item.image){const im=E('img','symbol-art'+(isMonochrome?' tone-monochrome-art':''));im.src=item.image;im.alt='';im.loading='lazy';b.append(im)}
  else b.append(E('span','symbol-text-fallback',item.name));
