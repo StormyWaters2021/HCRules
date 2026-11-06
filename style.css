@@ -1400,3 +1400,48 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 .symbol-dialog-header .dialog-symbol{
   filter:none!important;
 }
+
+
+/* PAC terrain accordion: each opened rule starts with the opposite tile
+   from its heading and alternates for additional source-rule sections. */
+#view .terrain-accordions{
+  gap:0;
+}
+#view .terrain-accordions > .terrain-detail{
+  padding:0;
+  margin-bottom:0;
+  overflow:visible;
+}
+#view .terrain-accordions .terrain-content{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  width:100%;
+  margin:0;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+#view .terrain-accordions .terrain-rule.comic-reading-panel{
+  width:100%;
+  max-width:100%;
+  margin:0!important;
+  padding-top:clamp(30px,5.5vw,50px);
+  padding-bottom:clamp(30px,5.5vw,50px);
+  border:0!important;
+  border-radius:0!important;
+}
+#view .terrain-accordions .terrain-rule.comic-reading-panel[data-panel="0"]{
+  background-image:var(--halftone-a)!important;
+}
+#view .terrain-accordions .terrain-rule.comic-reading-panel[data-panel="1"]{
+  background-image:var(--halftone-b)!important;
+}
+#view .terrain-accordions .terrain-detail[open] > .terrain-summary{
+  margin-bottom:0;
+  border-bottom:0!important;
+}
+#view .terrain-accordions .terrain-detail[open] > .terrain-content > :last-child{
+  margin-bottom:0!important;
+}
