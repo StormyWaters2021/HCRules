@@ -2514,3 +2514,47 @@ body:not(.home-mode) #context{margin-top:3px}
 }
 .symbol-dialog .improved-source-row h4:not(:first-child){margin-top:18px}
 .symbol-dialog .improved-source-row .tokenized-content{display:block;margin-bottom:10px}
+
+/* Seamless, alternating angled comic panels for icon reference modals.
+   Outer and inner silhouettes create a constant black edge without
+   stretching the repeating halftone or changing content height. */
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ --comic-angle:12px;
+ --comic-edge:6px;
+ isolation:isolate;
+ border:0!important;
+ background:#090909!important;
+ margin:0 auto!important;
+ padding:clamp(28px,4.6vw,39px) clamp(21px,4.8vw,38px)!important;
+ clip-path:polygon(0 0,100% var(--comic-angle),100% calc(100% - var(--comic-angle)),0 100%);
+}
+.symbol-dialog .symbol-reference-panel.comic-reading-panel[data-panel="1"]{
+ clip-path:polygon(0 var(--comic-angle),100% 0,100% 100%,0 calc(100% - var(--comic-angle)));
+}
+.symbol-dialog .symbol-reference-panel.comic-reading-panel + .symbol-reference-panel.comic-reading-panel{
+ margin-top:calc(-1 * var(--comic-angle))!important;
+}
+.symbol-dialog .symbol-reference-panel.comic-reading-panel::before{
+ content:"";
+ position:absolute;
+ inset:var(--comic-edge);
+ z-index:-1;
+ pointer-events:none;
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
+  linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%);
+ clip-path:polygon(0 0,100% var(--comic-angle),100% calc(100% - var(--comic-angle)),0 100%);
+}
+.symbol-dialog .symbol-reference-panel.comic-reading-panel[data-panel="1"]::before{
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
+  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%);
+ clip-path:polygon(0 var(--comic-angle),100% 0,100% 100%,0 calc(100% - var(--comic-angle)));
+}
+@media(max-width:620px){
+ .symbol-dialog .symbol-reference-panel.comic-reading-panel{
+  --comic-angle:9px;
+  --comic-edge:5px;
+  padding:27px 23px!important;
+ }
+}
