@@ -419,7 +419,7 @@ function specialRuleText(s){
  });return root;
 }
 
-function cardPower(p,index=0){
+function cardPower(p,index=0,alwaysExpanded=false){
  const details=E('details','pac-power-detail');
  const heading=E('summary','entry power comic-paper-row');
  heading.dataset.panel=String(index%2);
@@ -431,6 +431,12 @@ function cardPower(p,index=0){
  pieces.forEach(piece=>ruleText.append(piece));
  heading.append(ruleText);
  details.append(heading);
+ if(alwaysExpanded){
+  details.open=true;
+  details.classList.add('pac-expanded-by-group','pac-static-power');
+  heading.tabIndex=-1;
+  heading.addEventListener('click',event=>event.preventDefault());
+ }
  details.addEventListener('toggle',()=>{
   if(!details.open||details.classList.contains('pac-expanded-by-group')||details.closest('.pac-filter-results'))return;
   for(const other of details.parentElement.querySelectorAll(':scope > details.pac-power-detail')){
@@ -533,9 +539,7 @@ function showPacFilteredAbilities(){
  for(const group of groups){
   const power=db.pac.find(p=>p.group===group&&p.color===pacColorFilter);
   if(!power)continue;
-  const details=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power));
-  details.open=true;
-  details.classList.add('pac-expanded-by-group');
+  const details=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power),true);
   details.setAttribute('aria-label',group+': '+power.name);
   wrapper.append(details);
  }
@@ -970,8 +974,8 @@ function showSearch(){
  for(const group of groups){
   const matches=db.pac.filter(power=>power.group===group&&searchText(power));
   for(const power of matches){
-   const card=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power));
-   // Search results use the same expandable single-panel ability card as the PAC.
+   const card=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power),true);
+   // Search shows the complete ability card without a collapsible name-only state.
    powers.append(card);
    count++;
   }
