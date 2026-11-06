@@ -890,8 +890,8 @@ body.pac-comic-mode .comic-pac .comic-panel:hover{
 /* Alternating original gray halftone tiles. Keep the PNGs' native
    1800:753 aspect ratio rather than stretching to a wide, short card. */
 :root{
- --halftone-a:url("assets/rule-panels/GrayHalftone-A.png");
- --halftone-b:url("assets/rule-panels/GrayHalftone-B.png");
+ --halftone-a:radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px);
+ --halftone-b:radial-gradient(circle,rgba(0,0,0,.09) .65px,transparent .9px);
 }
 :is(.stack,.comic-paper-stack,.power-group-stack):has(> button.entry.comic-paper-row){
  gap:0;
@@ -2733,4 +2733,71 @@ body:not(.home-mode) #context{margin-top:3px}
 #view .rules-accordion-tree > .rules-accordion + .rules-accordion,
 #view .rules-accordion-children > .rules-accordion + .rules-accordion{
  margin-top:6px!important;
+}
+
+/* Replaces the last PAC-front ability and filter PNG tiles with the same
+   nonstretch, angled comic surface used by reference modals.
+   The four original PAC category illustrations remain unchanged. */
+#view .pac-front-accordions .pac-power-detail,
+#view .pac-filter-results .pac-power-detail{
+ --pac-card-slope:12px;
+ --pac-card-edge:6px;
+ margin:0 auto 8px!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
+ position:relative!important;
+ isolation:isolate!important;
+ box-sizing:border-box!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ background:#090909!important;
+ background-image:none!important;
+ overflow:visible!important;
+ clip-path:polygon(0 0,100% var(--pac-card-slope),100% calc(100% - var(--pac-card-slope)),0 100%)!important;
+}
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row{
+ background:#090909!important;
+ background-image:none!important;
+ clip-path:polygon(0 var(--pac-card-slope),100% 0,100% 100%,0 calc(100% - var(--pac-card-slope)))!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row::before,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row::before{
+ content:""!important;
+ display:block!important;
+ position:absolute!important;
+ inset:var(--pac-card-edge)!important;
+ z-index:-1!important;
+ pointer-events:none!important;
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
+  linear-gradient(165deg,#fafafa,#e9e9e9 60%,#dcdcdc)!important;
+ clip-path:polygon(0 0,100% var(--pac-card-slope),100% calc(100% - var(--pac-card-slope)),0 100%)!important;
+}
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before{
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0 / 4px 4px repeat,
+  linear-gradient(195deg,#f3f3f3,#eaeaea 58%,#d7d7d7)!important;
+ clip-path:polygon(0 var(--pac-card-slope),100% 0,100% 100%,0 calc(100% - var(--pac-card-slope)))!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
+ aspect-ratio:auto!important;
+ min-height:105px!important;
+ padding:clamp(27px,5vw,45px) 10%!important;
+}
+#view .pac-front-accordions .pac-power-detail[open] > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail[open] > summary.entry.power.comic-paper-row{
+ min-height:0!important;
+ padding:clamp(28px,5vw,45px) 10%!important;
+}
+@media(max-width:620px){
+ #view .pac-front-accordions .pac-power-detail,
+ #view .pac-filter-results .pac-power-detail{
+  --pac-card-slope:9px;
+  --pac-card-edge:5px;
+ }
 }
