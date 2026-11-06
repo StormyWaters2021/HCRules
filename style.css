@@ -1993,3 +1993,59 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  #view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row{gap:7px;padding:9% 8%!important}
  #view .pac-front-accordions .pac-power-detail-content > .comic-reading-panel{padding:26px 9%!important}
 }
+
+
+/* The PAC Back compressed heading uses its actual supplied PNG, rather than
+   stacking a CSS background under the former dark sticky-title treatment. */
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-back-sticky-art{
+ display:none;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
+ display:grid!important;
+ grid-template-areas:"banner"!important;
+ grid-template-columns:minmax(0,1fr)!important;
+ align-items:center!important;
+ justify-items:center!important;
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8!important;
+ width:100%!important;
+ height:auto!important;
+ max-height:none!important;
+ min-height:0!important;
+ aspect-ratio:auto!important;
+ padding:0!important;
+ margin:0!important;
+ background:none!important;
+ background-color:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+ isolation:auto!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::before,
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::after{
+ content:none!important;
+ display:none!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary > .pac-back-sticky-art{
+ grid-area:banner;
+ display:block!important;
+ width:100%;
+ height:auto;
+ max-width:100%;
+ object-fit:contain;
+ pointer-events:none;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary > .pac-reverse-label{
+ grid-area:banner;
+ z-index:1;
+ justify-self:center;
+ align-self:center;
+ color:#171717!important;
+ text-shadow:none!important;
+ margin:0;
+ padding:0 6%;
+ font-size:clamp(.95rem,2vw,1.2rem);
+}
