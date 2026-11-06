@@ -1762,3 +1762,38 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 #view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section > summary.terrain-summary.pac-front-summary[data-panel]{
  background-image:none!important;
 }
+
+/* Keep each PAC front title treatment inside the actual comic-panel border.
+   The supplied cover has transparent margins beyond its visible panel. */
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary{
+ box-sizing:border-box!important;
+ width:100%!important;
+ max-width:100%!important;
+ background-color:transparent!important;
+}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{
+ box-sizing:border-box!important;
+ flex:0 1 auto!important;
+ width:max-content!important;
+ max-width:82%!important;
+ min-width:0!important;
+ margin:0 auto!important;
+ padding:9px clamp(12px,2vw,24px)!important;
+ border:1px solid #111!important;
+ border-radius:4px!important;
+ background:rgba(18,29,43,.91)!important;
+}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading .group-symbols{
+ flex-wrap:nowrap;
+ min-width:0;
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-front-heading{
+ max-width:90%!important;
+ padding:1px 8px!important;
+}
+@media(max-width:480px){
+ #view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{
+  max-width:88%!important;
+  padding:5px 8px!important;
+ }
+}
