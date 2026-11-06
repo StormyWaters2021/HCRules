@@ -1176,18 +1176,24 @@ summary.terrain-summary.comic-paper-row{
 .terrain-accordions > .terrain-detail:nth-child(even) > summary.terrain-summary.comic-paper-row{
   background-image:var(--halftone-b)!important;
 }
+/* One hover effect only, identical for both tiles. Since the supplied
+   artwork is transparent around its black frame, drop-shadow follows the
+   panel border, not a rectangular CSS outline. */
+:is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row:is(:hover,:focus-visible),
 button.entry.comic-paper-row:is(:hover,:focus-visible),
+.terrain-accordions > .terrain-detail > summary.terrain-summary.comic-paper-row:is(:hover,:focus-visible),
 summary.terrain-summary.comic-paper-row:is(:hover,:focus-visible){
   background-color:transparent!important;
-  filter:none!important;
+  filter:drop-shadow(0 0 4px rgba(255,255,255,.28))!important;
   box-shadow:none!important;
   outline:none!important;
+  transform:none!important;
+  transition:none!important;
 }
 button.entry.comic-paper-row:is(:hover,:focus-visible) :is(.label,.num,.power-text),
 summary.terrain-summary.comic-paper-row:is(:hover,:focus-visible) > span:not(.terrain-swatch){
-  text-decoration:underline;
-  text-decoration-thickness:2px;
-  text-underline-offset:4px;
+  text-decoration:none!important;
+  text-shadow:none!important;
 }
 :is(.stack,.comic-paper-stack,.power-group-stack) > button.entry.comic-paper-row + button.entry.comic-paper-row{
   margin-top:-2.5%!important;
