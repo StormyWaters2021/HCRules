@@ -173,14 +173,15 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .combat-stat-icon{width:27px;height:27px;display:block;object-fit:contain;background:transparent}
 .power-group-heading .group-count{margin-left:auto}
 @media(max-width:460px){.combat-icon-circle{width:33px;height:33px}.combat-stat-icon{width:24px;height:24px}.group-symbols{gap:4px}.crumb-trail{font-size:12px;padding:8px}}
-/* Inline glyphs size relative to text, without legacy button dimensions. */
+/* Inline icon rhythm: one centered 1.85em line box for every type.
+   Images keep their native aspect ratio but no longer sit on mixed baselines. */
 .inline-symbol-button{
  display:inline-flex;
  align-items:center;
  justify-content:center;
  width:auto;
- height:1.44em;
- min-width:0;
+ height:1.85em;
+ min-width:1.85em;
  max-width:none;
  padding:0;
  margin:0 .10em;
@@ -191,20 +192,21 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
  color:inherit;
  line-height:1;
  white-space:nowrap;
- vertical-align:-.31em;
+ vertical-align:-.48em;
  cursor:pointer;
 }
-.inline-symbol-button .symbol-art{
+.inline-symbol-button .symbol-art,
+.inline-symbol-button.improved-symbol .symbol-art,
+.inline-symbol-button.combat-symbol .symbol-art{
  display:block;
+ flex:none;
  width:auto;
- height:1.35em;
- max-width:2.1em;
+ height:1.7em;
+ max-width:2.45em;
  object-fit:contain;
  object-position:center;
  background:transparent;
 }
-.inline-symbol-button.improved-symbol .symbol-art{height:1.43em}
-.inline-symbol-button.combat-symbol .symbol-art{height:1.34em}
 .inline-symbol-button:focus-visible,.combat-icon-circle:focus-visible,
 .pac-source-heading:focus-visible{outline:2px solid #f7b75e;outline-offset:2px}
 .symbol-text-fallback{font-size:.62em;font-weight:bold;line-height:1.05}
@@ -1837,4 +1839,31 @@ body:not(.home-mode) #context{margin-top:3px}
  margin:0 auto!important;
  padding:0!important;
  background:transparent!important;
+}
+
+/* Non-button PDF glyphs and inline illustrated PAC graphics share that
+   same baseline; colored symbols are not recolored or squashed. */
+#view .comic-reading-panel img.rule-glyph,
+.symbol-dialog .symbol-reference-panel img.rule-glyph{
+ height:1.7em!important;
+ width:auto!important;
+ max-width:2.45em!important;
+ vertical-align:-.48em!important;
+ object-fit:contain;
+}
+#view .comic-reading-panel .pac-source-inline,
+#view .comic-reading-panel img.keyphrase-inline,
+#view .comic-reading-panel img.pac-vector-inline{
+ height:1.7em;
+ width:auto;
+ max-width:2.45em;
+ vertical-align:-.48em;
+ object-fit:contain;
+}
+.symbol-punctuation-group{
+ display:inline-flex;
+ align-items:center;
+ vertical-align:-.48em;
+ white-space:nowrap;
+ line-height:1;
 }
