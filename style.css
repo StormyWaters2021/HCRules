@@ -2727,3 +2727,10 @@ body:not(.home-mode) #context{margin-top:3px}
  border:0!important;
  box-shadow:none!important;
 }
+
+/* Leave a narrow strip of comic background between Comprehensive Rules
+   chapter/subsection cards instead of overlapping their angled borders. */
+#view .rules-accordion-tree > .rules-accordion + .rules-accordion,
+#view .rules-accordion-children > .rules-accordion + .rules-accordion{
+ margin-top:6px!important;
+}
