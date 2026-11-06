@@ -436,7 +436,7 @@ function cardPower(p,index=0){
  if(matchingRule)body.append(row('§'+matchingRule.id,matchingRule.title,()=>goTarget('rule',matchingRule.id)));
  details.append(body);
  details.addEventListener('toggle',()=>{
-  if(!details.open)return;
+  if(!details.open||details.closest('.pac-filter-results'))return;
   for(const other of details.parentElement.querySelectorAll(':scope > details.pac-power-detail')){
    if(other!==details&&other.open)other.open=false;
   }
@@ -510,11 +510,48 @@ function showHome(){
  host.append(imageLayer,fallback);
  view.append(host);
 }
+let pacColorFilter=null;
+function pacColorSelector(){
+ const colors=[...new Set(db.pac.filter(p=>p.group==='Speed').map(p=>p.color))];
+ const strip=E('div','pac-color-filter');
+ strip.setAttribute('role','group');
+ strip.setAttribute('aria-label','Filter powers by dial color');
+ for(const [index,color] of colors.entries()){
+  const active=pacColorFilter===color;
+  const b=E('button','pac-filter-dot'+(active?' active':''));
+  b.type='button';b.style.setProperty('--filter-color',color);
+  b.title=(active?'Clear ':'Show ')+['Red','Orange','Yellow','Light green','Green','Light blue','Blue','Purple','Pink','Brown','Black','Gray'][index]+' abilities';
+  b.setAttribute('aria-label',b.title);
+  b.setAttribute('aria-pressed',String(active));
+  b.onclick=()=>{
+   pacColorFilter=active?null:color;
+   if(mode==='pac'){path=[];clearSearch();render();resetScroll();syncHash()}
+  };
+  strip.append(b);
+ }
+ return strip;
+}
+function showPacFilteredAbilities(){
+ const wrapper=E('div','pac-filter-results');
+ const groups=['Speed','Attack','Defense','Damage'];
+ for(const group of groups){
+  const power=db.pac.find(p=>p.group===group&&p.color===pacColorFilter);
+  if(!power)continue;
+  const label=E('h2','pac-filter-group',group);
+  wrapper.append(label);
+  const details=cardPower(power,db.pac.filter(p=>p.group===group).indexOf(power));
+  details.open=true;
+  wrapper.append(details);
+ }
+ $('view').append(wrapper);
+}
 function showPowerList(){
  const current=path.at(-1)||'';
  const selected=current.startsWith('group:')?current.slice(6):null;
  if(!selected){
   setHeading('Powers & Abilities');
+  $('context').append(pacColorSelector());
+  if(pacColorFilter){showPacFilteredAbilities();return}
   const host=E('div','pac-front-accordions pac-reverse-accordions');
   const artFiles={
    Speed:'PAC_Speed.png',Attack:'PAC_Attack.png',
@@ -658,6 +695,7 @@ function watchPacReverseSections(host){
 }
 function showBackIndex(){
  setHeading('PAC · Reverse Side');
+ $('context').append(pacColorSelector());
  const view=$('view'),accordion=E('div','pac-reverse-accordions');
  let index=0;
  for(const back of db.back.filter(b=>b.id!=='back-terrain-values')){
