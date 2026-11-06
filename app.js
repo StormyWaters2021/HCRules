@@ -495,9 +495,42 @@ function showPowerList(){
  const selected=current.startsWith('group:')?current.slice(6):null;
  if(!selected){
   setHeading('Powers & Abilities');
-  const list=E('div','comic-pac');
-  for(const group of groups)list.append(comicPanel(group,'stat-'+low(group),()=>move(['group:'+group])));
-  $('view').append(list);
+  const host=E('div','pac-cover-host');
+  const art=E('div','pac-cover');
+  art.hidden=true;
+  const img=E('img','pac-cover-image');
+  img.src='assets/PACCover.png';
+  img.alt='Four comic panels representing Speed, Attack, Defense and Damage';
+  img.decoding='async';
+  art.append(img);
+  const overlay=E('div','pac-cover-overlay');
+  for(const group of groups){
+   const panel=E('div','pac-cover-panel pac-cover-'+low(group));
+   panel.setAttribute('role','button');
+   panel.setAttribute('tabindex','0');
+   panel.setAttribute('aria-label','Open '+group+' powers');
+   panel.onclick=()=>move(['group:'+group]);
+   panel.onkeydown=e=>{
+    if(e.target===panel&&(e.key==='Enter'||e.key===' ')){
+     e.preventDefault();move(['group:'+group]);
+    }
+   };
+   const face=E('span','pac-cover-content');
+   face.append(E('span','pac-cover-label',group),pacGroupIcons(group));
+   panel.append(face);
+   overlay.append(panel);
+  }
+  art.append(overlay);
+  const fallback=E('div','comic-pac pac-cover-fallback');
+  for(const group of groups){
+   const panel=E('div','pac-fallback-panel');
+   const label=button(group,()=>move(['group:'+group]),'comic-panel comic-panel-stat-'+low(group));
+   panel.append(label,pacGroupIcons(group));fallback.append(panel);
+  }
+  img.onload=()=>{art.hidden=false;fallback.hidden=true};
+  img.onerror=()=>{art.hidden=true;fallback.hidden=false};
+  host.append(art,fallback);
+  $('view').append(host);
   return;
  }
  setHeading(selected);
