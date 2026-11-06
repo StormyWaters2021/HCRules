@@ -2460,21 +2460,25 @@ body:not(.home-mode) #context{margin-top:3px}
  }
 }
 
-/* Match the main site's grayscale comic backdrop inside symbol-reference modals. */
+/* The page remains visible behind the overlay; artwork belongs to the dialog. */
 .symbol-overlay{
- background:#101827!important;
- isolation:isolate;
+ background:#050a13c9!important;
+ isolation:auto;
 }
 .symbol-overlay::before{
+ content:none!important;
+}
+.symbol-overlay > .symbol-dialog{
+ position:relative;
+ isolation:isolate;
+ background:#101827!important;
+}
+.symbol-overlay > .symbol-dialog::before{
  content:"";
- position:fixed;
+ position:absolute;
  inset:0;
  z-index:-1;
  pointer-events:none;
  background:url("assets/comic-background.webp") center center / cover no-repeat;
  filter:grayscale(1) brightness(.29) contrast(.82);
-}
-.symbol-overlay > .symbol-dialog{
- position:relative;
- z-index:1;
 }
