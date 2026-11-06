@@ -1582,3 +1582,46 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
   padding:25px 9%!important;
  }
 }
+
+
+/* Only the three ability sections use a compact sticky title.
+   Terrain and Terrain Marker Values remain ordinary expanding panels. */
+#view .pac-reverse-accordions > .pac-reverse-section[open] > summary.terrain-summary{
+ position:relative;
+ top:auto;
+ z-index:1;
+}
+#view .pac-reverse-accordions > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8;
+ width:100%;
+ height:var(--pac-open-height)!important;
+ min-height:0!important;
+ max-height:var(--pac-open-height)!important;
+ aspect-ratio:auto!important;
+ padding:0 8%!important;
+ margin:0!important;
+ background-size:100% 100%!important;
+ transition:none!important;
+ transform:none!important;
+}
+#view .pac-reverse-accordions > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary .pac-reverse-label{
+ font-size:clamp(.95rem,2vw,1.2rem);
+ line-height:1.1;
+}
+#view .pac-reverse-accordions > .pac-reverse-section:not(.pac-sticky-eligible)[open] > summary.terrain-summary{
+ position:relative!important;
+ top:auto!important;
+ height:auto!important;
+ max-height:none!important;
+ aspect-ratio:1800/753!important;
+ padding:8% 9%!important;
+}
+#view .pac-reverse-accordions > .pac-reverse-section.pac-sticky-eligible[open] > .pac-reverse-content{
+ margin-top:0!important;
+}
+#view .pac-reverse-accordions > .pac-reverse-section:not(.pac-sticky-eligible)[open] > .pac-reverse-content{
+ margin-top:-12px!important;
+}
+#view .pac-reverse-accordions{overflow-anchor:none}
