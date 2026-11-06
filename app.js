@@ -544,28 +544,64 @@ function showPowerList(){
  section.append(stack);content.append(section);
 }
 function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));const fragment=E('div','pac-reading-stack');pieces.forEach((part,i)=>{const paper=E('div','rule-paper comic-reading-panel');paper.dataset.panel=String(i%2);if(i===0)paper.append(header);paper.append(part);fragment.append(paper)});article.append(fragment);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
-function showBackIndex(){setHeading('PAC · Reverse Side');const v=$('view');const stack=E('div','stack');db.back.filter(b=>b.id!=='back-terrain-values').forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows());const terrainValues=db.back.find(b=>b.id==='back-terrain-values');if(terrainValues)v.append(row('',terrainValues.name,()=>move(['back:'+terrainValues.id])))}
-function terrainRows(){
- const stack=E('div','terrain-accordions');
- for(const [index,[title,id,color]] of db.terrain.entries()){
-  const details=E('details','terrain-detail');const summary=E('summary','terrain-summary comic-paper-row');
-  const sw=E('span','terrain-swatch');sw.style.background=color;if(title==='Walls')sw.classList.add('terrain-swatch-wall');summary.append(sw,E('span','',title),E('span','terrain-chevron','⌄'));
-  details.append(summary);const content=E('div','terrain-content');
-  // The first expanded panel uses the opposite artwork from its summary.
-  // Subsequent rule panels alternate without repeating or modifying rule data.
-  let part=0;
-  const addRule=s=>{
-   const sub=E('section','terrain-rule comic-reading-panel');
-   sub.dataset.panel=String((index+part+1)%2);part++;
-   sub.append(E('h3','',s.id+' '+s.title),universalRuleText(s));
-   content.append(sub);
-  };
-  const root=byId(id);const descendants=db.sections.filter(s=>s.id.startsWith(id+'.')||s.id.startsWith(id)&&id==='17'&&s.id!=='17');
-  if(root)addRule(root);
-  for(const s of descendants)if(s.text)addRule(s);
-  details.append(content);stack.append(details);
+function makePacAccordion(name,index,renderContent,color=null){
+ const details=E('details','pac-reverse-section terrain-detail');
+ const summary=E('summary','terrain-summary comic-paper-row');
+ summary.dataset.panel=String(index%2);
+ if(color!==null){
+  const swatch=E('span','terrain-swatch');swatch.style.background=color;
+  if(name==='Walls')swatch.classList.add('terrain-swatch-wall');
+  summary.append(swatch);
  }
- return stack;
+ summary.append(E('span','pac-reverse-label',name));
+ details.append(summary);
+ const content=E('div','terrain-content pac-reverse-content');
+ renderContent(content);
+ for(const [i,panel] of [...content.children].entries()){
+  if(panel.classList.contains('comic-reading-panel'))panel.dataset.panel=String((index+i+1)%2);
+ }
+ details.append(content);
+ details.addEventListener('toggle',()=>{
+  if(!details.open)return;
+  const all=details.closest('.pac-reverse-accordions');
+  if(!all)return;
+  for(const other of all.querySelectorAll('details.pac-reverse-section')){
+   if(other!==details&&other.open)other.open=false;
+  }
+  requestAnimationFrame(()=>{
+   if(!details.isConnected||!details.open)return;
+   const offset=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pac-sticky-top'))||0;
+   const top=summary.getBoundingClientRect().top+window.scrollY-offset;
+   window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+  });
+ });
+ return details;
+}
+function showBackIndex(){
+ setHeading('PAC · Reverse Side');
+ const view=$('view'),accordion=E('div','pac-reverse-accordions');
+ let index=0;
+ for(const back of db.back.filter(b=>b.id!=='back-terrain-values')){
+  accordion.append(makePacAccordion(back.name,index++,content=>showBack(back,content)));
+ }
+ accordion.append(E('h2','pac-reverse-subheading','MAP TERRAIN'));
+ for(const [title,id,color] of db.terrain){
+  accordion.append(makePacAccordion(title,index++,content=>appendTerrainRules(content,id),color));
+ }
+ const values=db.back.find(b=>b.id==='back-terrain-values');
+ if(values)accordion.append(makePacAccordion(values.name,index++,content=>showBack(values,content)));
+ view.append(accordion);
+}
+function appendTerrainRules(content,id){
+ const root=byId(id);
+ const descendants=db.sections.filter(s=>s.id.startsWith(id+'.')||s.id.startsWith(id)&&id==='17'&&s.id!=='17');
+ const add=s=>{
+  const panel=E('section','terrain-rule comic-reading-panel');
+  panel.append(E('h3','',s.id+' '+s.title),universalRuleText(s));
+  content.append(panel);
+ };
+ if(root&&root.text)add(root);
+ for(const rule of descendants)if(rule.text)add(rule);
 }
 // The PAC contains sequences of independent symbols. Each image is taken directly
 // from the supplied individual-icon archive; the visible rule wording is untouched.
@@ -600,8 +636,8 @@ function keyphraseText(e,b){
  }else append(e.text);
  return div;
 }
-function showBack(b){
- setHeading(b.name,'PAC · Reverse Side');const v=$('view');
+function showBack(b,host=null){
+ if(!host)setHeading(b.name,'PAC · Reverse Side');const v=host||$('view');
  if(b.id==='back-0'&&Array.isArray(b.entries)){
   for(const e of b.entries){const parts=textContentPieces(e.text,{type:'back',id:b.id});parts.forEach((part,i)=>{const article=E('section','rule-paper comic-reading-panel inherent-entry');article.dataset.panel=String(i%2);if(i===0)article.append(E('h2','',e.name));article.append(part);v.append(article)})}
  }else if(b.id==='back-1'&&Array.isArray(b.entries)){
