@@ -188,11 +188,6 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .dialog-symbol{width:55px;height:55px;object-fit:contain;background:#f2f6fa;border-radius:9px;padding:8px}
 .symbol-dialog-header h2{margin:0;font-size:clamp(19px,4vw,25px);line-height:1.25;flex:1}
 .symbol-close{background:#364c64;color:#fff;font-weight:bold;border:1px solid #637b94;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:16px}
-.symbol-ref-detail{border:1px solid #4e6780;border-radius:10px;margin:9px 0;background:#192737;overflow:hidden}
-.symbol-ref-title{cursor:pointer;padding:13px 15px;font-weight:700;line-height:1.4}
-.symbol-ref-detail[open]>.symbol-ref-title{border-bottom:1px solid #4e6780}
-.symbol-ref-content{padding:14px 16px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
-.symbol-ref-content a{color:#82c9ff}
 .symbol-empty{color:#bfd2e5}
 /* Narrow, content aligned PAC toggle. */
 .pac-side-switch,.pac-side-switch:not([hidden]){width:174px!important;max-width:174px!important;min-width:0!important;flex:none!important;margin-left:max(0px,calc((100% - 660px)/2))!important;margin-right:0!important}
@@ -207,7 +202,6 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .inline-symbol-button.monochrome-symbol .symbol-art{filter:brightness(0) invert(1)}
 .inline-symbol-button.improved-symbol .symbol-art{width:1.62em;height:1.62em}
 .inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:2px;border-radius:4px}
-.symbol-ref-detail[open]>.symbol-ref-title{border-bottom:1px solid #4e6780}
 
 /* Icon token behavior is independent from artwork display.
    Never apply brightness/invert to original colored icons. */
@@ -309,7 +303,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .entry .label,.entry .num,.back,.mode-toggle button,.pac-side-switch button,
 .sidebar-power-heading,.keyphrase-heading h2,.inherent-entry h2,
 .improved-cell h2,.pac-title h2,.symbol-dialog-header h2,
-.symbol-ref-title,.sidebar-group{
+.symbol-reference-title,.sidebar-group{
   font-family:var(--display-font);
 }
 .brand{font-size:19px;letter-spacing:.015em}
@@ -334,7 +328,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .rule-paper{background:var(--rule-panel);border:1px solid #3d5269;border-radius:5px;box-shadow:none;font-family:var(--reading-font)}
 .rule-paper .verbatim,.rule-paper .structured-content,
 .rule-paper .structured-content *,.rule-paper .rule-paragraph,
-.symbol-ref-content,.symbol-ref-content *,.terrain-rule .verbatim{
+.symbol-reference-text,.symbol-reference-text *,.terrain-rule .verbatim{
   font-family:var(--reading-font);
 }
 .power-group{background:var(--panel);border-color:var(--stroke);overflow:hidden}
@@ -358,7 +352,6 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .desktop-sidebar{border-radius:5px;box-shadow:none}
 .sidebar-item.active{box-shadow:inset 3px 0 #e35460}
 .symbol-dialog{border-radius:7px;box-shadow:0 16px 45px #0008}
-.symbol-ref-detail{border-radius:4px}
 .crumb-trail{border-radius:4px;background:#1a2a3e}
 
 /* Shared navigation row: Back first, compact PAC Front/Back beside it.
@@ -578,7 +571,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 
 /* Consistent, high-contrast text references across the rules and PAC. */
 :root{--reference-link:#bfeaff;--reference-link-hover:#ffffff}
-:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a,
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a,
 .crumb-link{
   color:var(--reference-link);
   font-weight:600;
@@ -588,14 +581,14 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
   text-decoration-color:currentColor;
   text-underline-offset:3px;
 }
-:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a:hover,
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a:hover,
 .crumb-link:hover{
   color:var(--reference-link-hover);
   text-decoration-thickness:2px;
 }
-:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a:focus-visible,
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a:focus-visible,
 .crumb-link:focus-visible{color:#fff;outline:2px solid #ffcf65;outline-offset:3px}
-:is(.view,.rule-paper,.symbol-ref-content,.terrain-value-description,.terrain-content,.breadcrumbs) a:visited{color:var(--reference-link)}
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a:visited{color:var(--reference-link)}
 
 /* Wall swatch: centered black stripe at one quarter of the swatch height. */
 .terrain-swatch-wall{position:relative;overflow:hidden}
@@ -1034,7 +1027,7 @@ summary.terrain-summary.comic-paper-row .terrain-chevron{
 #view .improved-row,
 #view .terrain-value-entry,
 #view .terrain-rule,
-.symbol-ref-content.comic-reading-panel{
+.symbol-reference-panel.comic-reading-panel{
  position:relative;
  width:min(100%,680px);
  max-width:680px;
@@ -1057,20 +1050,20 @@ summary.terrain-summary.comic-paper-row .terrain-chevron{
 #view .terrain-value-entry:nth-of-type(even),
 #view .terrain-rule:nth-of-type(even),
 #view .comic-reading-panel[data-panel="1"],
-.symbol-ref-detail:nth-of-type(even) .symbol-ref-content.comic-reading-panel{
+.symbol-reference-panel[data-panel="1"]{
  background-image:var(--halftone-b)!important;
 }
 #view :is(.rule-paper,.improved-row,.terrain-value-entry,.terrain-rule) + :is(.rule-paper,.improved-row,.terrain-value-entry,.terrain-rule){
  margin-top:-15px;
 }
 #view .comic-reading-panel :is(.verbatim,.structured-content,.tokenized-content,.rule-paragraph,.improved-cell,.terrain-value-source,.terrain-value-name,.terrain-value-source h3,.inherent-entry h2,.keyphrase-heading h2,.improved-cell h2,.terrain-rule h3),
-.symbol-ref-content.comic-reading-panel{
+.symbol-reference-panel.comic-reading-panel{
  color:var(--reading-ink)!important;
 }
 #view .comic-reading-panel a,
 #view .comic-reading-panel a:visited,
-.symbol-ref-content.comic-reading-panel a,
-.symbol-ref-content.comic-reading-panel a:visited{
+.symbol-reference-panel.comic-reading-panel a,
+.symbol-reference-panel.comic-reading-panel a:visited{
  color:var(--reading-link)!important;
  text-decoration:underline;
  text-decoration-thickness:1px;
@@ -1078,9 +1071,9 @@ summary.terrain-summary.comic-paper-row .terrain-chevron{
  text-underline-offset:3px;
 }
 #view .comic-reading-panel a:hover,
-.symbol-ref-content.comic-reading-panel a:hover{color:#003958!important}
+.symbol-reference-panel.comic-reading-panel a:hover{color:#003958!important}
 #view .comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content),
-.symbol-ref-content.comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content){
+.symbol-reference-panel.comic-reading-panel :is(.verbatim,.rule-paragraph,.tokenized-content){
  font-family:var(--reading-font);
  font-size:inherit;
  line-height:1.6;
@@ -1098,19 +1091,6 @@ summary.terrain-summary.comic-paper-row .terrain-chevron{
 #view .terrain-content{background:transparent!important;border:0!important;padding:8px 0}
 #view .terrain-rule{padding-top:32px;padding-bottom:32px}
 #view .terrain-rule h3{margin-top:0}
-/* The modal itself remains dark; its rule references now use source panels. */
-.symbol-ref-detail{border:0!important;background:transparent!important;overflow:visible!important}
-.symbol-ref-title{
- background:#253448;color:#eff5ff;
- border:1px solid #52677a;border-radius:3px;
- padding:12px 16px;
-}
-.symbol-ref-content.comic-reading-panel{
- width:100%;min-height:130px;
- margin:0 auto 7px;
- padding:34px 37px;
-}
-.symbol-ref-content.comic-reading-panel :is(h2,h3,h4){color:#242424!important}
 /* Breadcrumbs are navigation, not separate dark content cards. */
 .crumb-trail{
  box-shadow:none!important;
@@ -1129,7 +1109,6 @@ summary.terrain-summary.comic-paper-row .terrain-chevron{
   font-size:15px;
  }
  #view .improved-row{gap:7px}
- .symbol-ref-content.comic-reading-panel{padding:27px 25px}
 }
 
 
@@ -1253,15 +1232,15 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 #view .comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
 #view .comic-reading-panel img.rule-glyph[src*="/inline/"],
 #view .comic-reading-panel img.rule-glyph[src*="/glyphs/"],
-.symbol-ref-content.comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
-.symbol-ref-content.comic-reading-panel img.rule-glyph[src*="/inline/"],
-.symbol-ref-content.comic-reading-panel img.rule-glyph[src*="/glyphs/"],
+.symbol-reference-panel.comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
+.symbol-reference-panel.comic-reading-panel img.rule-glyph[src*="/inline/"],
+.symbol-reference-panel.comic-reading-panel img.rule-glyph[src*="/glyphs/"],
 #view .rule-paper .inline-symbol-button .symbol-art[src*="/inline/"]{
   filter:brightness(0)!important;
   opacity:1!important;
 }
 #view .comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]),
-.symbol-ref-content.comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]){
+.symbol-reference-panel.comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]){
   background:transparent!important;
   border:0!important;
 }
@@ -1352,7 +1331,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
    Light halftone reading surfaces use BLACK for monochrome source art.
    Colored ability/combat tokens are never recolored.
    Dark popup headers and PAC navigation preserve their light originals. */
-:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
 :is(img.tone-monochrome-art,
     img[src*="/inline/"],
     img[src*="/glyphs/"],
@@ -1370,7 +1349,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
   filter:brightness(0)!important;
   opacity:1!important;
 }
-:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
 :is(svg.tone-monochrome-vector,svg.pac-vector-inline,svg.pac-vector-heading){
   color:#111!important;
   fill:currentColor;
@@ -1379,20 +1358,20 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 }
 /* Full-color icon art remains true to the supplied assets in every context.
    Explicitly exclude colored tokens from monochrome filters. */
-:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
 :is(img[src*="/improved-abilities/"],
     img[src*="/terrain-values/"],img.pac-source-inline){
   filter:none!important;
   opacity:1!important;
 }
 /* Keep the symbol glyph itself inline, without a pale box around it. */
-:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
 .inline-symbol-button{
   background:transparent!important;
   border:0!important;
   box-shadow:none!important;
 }
-:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-ref-content.comic-reading-panel)
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
 .inline-symbol-button .symbol-art{
   vertical-align:middle;
 }
@@ -2420,4 +2399,63 @@ body:not(.home-mode) #context{margin-top:3px}
 }
 #view .pac-filter-results .pac-static-power > summary.entry.power.comic-paper-row:hover{
  filter:none!important;
+}
+
+/* Icon reference popups render only the standard comic rule-paper format. */
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ display:block;
+ position:relative;
+ width:100%;
+ max-width:680px;
+ min-height:160px;
+ margin:0 auto 8px;
+ padding:clamp(34px,5vw,52px) clamp(28px,5.6vw,48px);
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ background:transparent var(--halftone-a) center / 100% 100% no-repeat!important;
+ color:var(--reading-ink)!important;
+ font-family:var(--reading-font);
+ font-size:clamp(15px,1.5vw,17px);
+ line-height:1.6;
+ overflow-wrap:break-word;
+}
+.symbol-dialog .symbol-reference-panel[data-panel="1"]{
+ background-image:var(--halftone-b)!important;
+}
+.symbol-dialog .symbol-reference-title{
+ margin:0 0 12px;
+ color:#191919!important;
+ font:800 clamp(1.05rem,2.8vw,1.4rem)/1.25 var(--display-font);
+ text-align:center;
+}
+.symbol-dialog .symbol-reference-text{
+ margin:0;
+ padding:0;
+ color:var(--reading-ink)!important;
+ font-family:var(--reading-font);
+ font-size:inherit;
+ line-height:inherit;
+ white-space:normal;
+ overflow-wrap:break-word;
+}
+.symbol-dialog .symbol-reference-text :is(.verbatim,.tokenized-content,.rule-paragraph){
+ color:inherit;
+ font-family:inherit;
+ line-height:inherit;
+}
+.symbol-dialog .symbol-reference-text a,
+.symbol-dialog .symbol-reference-text a:visited{
+ color:var(--reading-link)!important;
+ text-decoration:underline;
+}
+.symbol-dialog .symbol-reference-panel h4{
+ color:#242424!important;
+ font-family:var(--display-font);
+}
+@media(max-width:620px){
+ .symbol-dialog .symbol-reference-panel.comic-reading-panel{
+  padding:clamp(25px,6vw,36px) clamp(23px,6vw,33px);
+  min-height:135px;
+ }
 }
