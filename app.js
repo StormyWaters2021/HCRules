@@ -422,7 +422,26 @@ function specialRuleText(s){
  });return root;
 }
 
-function cardPower(p){const b=button(' ',()=>move(['power:'+p.id]),'entry power comic-paper-row');b.textContent='';const icon=powerSymbol(p);const t=E('span','power-text',p.name);b.append(icon,t);return b}
+function cardPower(p,index=0){
+ const details=E('details','pac-power-detail');
+ const heading=E('summary','entry power comic-paper-row');
+ heading.dataset.panel=String(index%2);
+ heading.append(powerSymbol(p),E('span','power-text',p.name));
+ details.append(heading);
+ const body=E('div','pac-power-detail-content');
+ const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));
+ appendReadingPanels(body,pieces,'pac-power-rule');
+ const matchingRule=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\\s*\\([^)]*\\)\\s*$/,''))===low(p.name));
+ if(matchingRule)body.append(row('§'+matchingRule.id,matchingRule.title,()=>goTarget('rule',matchingRule.id)));
+ details.append(body);
+ details.addEventListener('toggle',()=>{
+  if(!details.open)return;
+  for(const other of details.parentElement.querySelectorAll(':scope > details.pac-power-detail')){
+   if(other!==details&&other.open)other.open=false;
+  }
+ });
+ return details;
+}
 const pacCombatIcons={
  Speed:[['speed/run.png','Standard speed'],['speed/flight.png','Flight'],['speed/swim.png','Swim']],
  Attack:[['attack/fist.png','Standard attack'],['attack/autonomous.png','Autonomous']],
@@ -496,33 +515,31 @@ function showPowerList(){
  if(!selected){
   setHeading('Powers & Abilities');
   const host=E('div','pac-front-accordions pac-reverse-accordions');
-  const crops=[
-   [58,450],[508,470],[978,510],[1488,505]
-  ];
+  const artFiles={
+   Speed:'PAC_Speed.png',Attack:'PAC_Attack.png',
+   Defense:'PAC_Defense.png',Damage:'PAC_Damage.png'
+  };
   for(const [index,group] of groups.entries()){
    const details=makePacAccordion(group,index,content=>{
     const stack=E('div','stack power-group-stack');
-    for(const p of db.pac.filter(p=>p.group===group))stack.append(cardPower(p));
+    db.pac.filter(p=>p.group===group).forEach((p,i)=>stack.append(cardPower(p,i)));
     content.append(stack);
    },null,true);
    details.classList.add('pac-front-section');
    const summary=details.querySelector('summary');
    summary.classList.add('pac-front-summary');
    summary.replaceChildren();
-   const ns='http://www.w3.org/2000/svg';
-   const art=document.createElementNS(ns,'svg');
-   art.setAttribute('class','pac-front-art');
-   art.setAttribute('viewBox',`0 ${crops[index][0]} 1420 ${crops[index][1]}`);
-   art.setAttribute('preserveAspectRatio','none');
-   art.setAttribute('aria-hidden','true');
-   const image=document.createElementNS(ns,'image');
-   image.setAttribute('href','assets/PACCover.png');
-   image.setAttribute('x','0');image.setAttribute('y','0');
-   image.setAttribute('width','1420');image.setAttribute('height','2048');
-   art.append(image);
+   const art=E('img','pac-front-original-art');
+   art.src='assets/'+artFiles[group];
+   art.alt='';
+   art.decoding='async';
+   const compact=E('img','pac-front-sticky-art');
+   compact.src='assets/PAC_Collapsed.png';
+   compact.alt='';
+   compact.decoding='async';
    const label=E('span','pac-front-heading');
    label.append(E('span','pac-cover-label',group),pacGroupIcons(group));
-   summary.append(art,label);
+   summary.append(art,compact,label);
    host.append(details);
   }
   $('view').append(host);
@@ -575,8 +592,8 @@ function makePacAccordion(name,index,renderContent,color=null,sticky=false){
   }
   if(!sticky)return;
   const width=summary.getBoundingClientRect().width;
-  const ratio=details.classList.contains('pac-front-section')?(175/1648):(753/1800);
-  summary.style.setProperty('--pac-open-height',(width*ratio*(details.classList.contains('pac-front-section')?1:.2)).toFixed(2)+'px');
+  const ratio=175/1648;
+  summary.style.setProperty('--pac-open-height',(width*ratio).toFixed(2)+'px');
   requestAnimationFrame(()=>{
    if(!details.isConnected||!details.open)return;
    const offset=updatePacStickyOffset();
