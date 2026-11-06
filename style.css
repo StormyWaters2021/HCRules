@@ -1445,3 +1445,140 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 #view .terrain-accordions .terrain-detail[open] > .terrain-content > :last-child{
   margin-bottom:0!important;
 }
+
+
+/* PAC reverse-side accordion: shared tile rhythm and readable sticky heading.
+   Sticky heading stays in its own details section; page scrolling remains enabled. */
+:root{--pac-sticky-top:112px}
+#view .pac-reverse-accordions{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ max-width:900px;
+ margin:0 auto;
+ padding:0 0 2px;
+ gap:0;
+}
+#view .pac-reverse-accordions > .pac-reverse-section{
+ width:min(100%,680px);
+ max-width:680px;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+ border-radius:0!important;
+ overflow:visible!important;
+ background:transparent!important;
+ box-shadow:none!important;
+}
+#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary{
+ position:relative;
+ z-index:1;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:clamp(9px,2vw,22px);
+ width:100%;
+ height:auto;
+ min-height:0;
+ aspect-ratio:1800/753;
+ margin:0!important;
+ padding:8% 9%;
+ cursor:pointer;
+ list-style:none;
+ border:0!important;
+ border-radius:0!important;
+ background-color:transparent!important;
+ background-position:center!important;
+ background-size:100% 100%!important;
+ background-repeat:no-repeat!important;
+ box-shadow:none!important;
+}
+#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary::-webkit-details-marker{display:none}
+#view .pac-reverse-accordions .pac-reverse-section:nth-of-type(odd) > summary.terrain-summary{
+ background-image:var(--halftone-a)!important;
+}
+#view .pac-reverse-accordions .pac-reverse-section:nth-of-type(even) > summary.terrain-summary{
+ background-image:var(--halftone-b)!important;
+}
+/* The exact tile is determined by data-panel rather than sibling index,
+   so the terrain heading between groups never shifts alternation. */
+#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary[data-panel="0"]{background-image:var(--halftone-a)!important}
+#view .pac-reverse-accordions .pac-reverse-section > summary.terrain-summary[data-panel="1"]{background-image:var(--halftone-b)!important}
+#view .pac-reverse-accordions > .pac-reverse-section[open] > summary.terrain-summary{
+ position:sticky;
+ top:var(--pac-sticky-top);
+ z-index:7;
+}
+#view .pac-reverse-accordions .pac-reverse-section > .pac-reverse-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ padding:0!important;
+ margin:-12px 0 -8px!important;
+ gap:0!important;
+ border:0!important;
+ background:transparent!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel{
+ flex:none;
+ width:100%;
+ max-width:100%;
+ min-height:0;
+ height:auto;
+ margin:0!important;
+ padding:clamp(28px,6vw,50px) clamp(28px,7vw,60px)!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ background-color:transparent!important;
+ background-position:center!important;
+ background-size:100% 100%!important;
+ background-repeat:no-repeat!important;
+}
+#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel[data-panel="0"]{
+ background-image:var(--halftone-a)!important;
+}
+#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel[data-panel="1"]{
+ background-image:var(--halftone-b)!important;
+}
+#view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel + .comic-reading-panel{
+ margin-top:-10px!important;
+}
+#view .pac-reverse-accordions > .pac-reverse-section + .pac-reverse-section{
+ margin-top:-9px!important;
+}
+#view .pac-reverse-accordions .pac-reverse-section:not([open]) > .pac-reverse-content{
+ display:none;
+}
+#view .pac-reverse-accordions .pac-reverse-subheading{
+ align-self:stretch;
+ width:100%;
+ max-width:680px;
+ margin:4px auto 0!important;
+ padding:5px 12px;
+ background:transparent!important;
+ border:0!important;
+ text-align:center;
+}
+#view .pac-reverse-accordions .pac-reverse-section > summary .pac-reverse-label{
+ color:#171717!important;
+ font-family:var(--display-font);
+ font-size:clamp(1rem,2.8vw,1.5rem);
+ text-shadow:none!important;
+}
+#view .pac-reverse-accordions .pac-reverse-content :is(.terrain-rule,.improved-row,.terrain-value-entry){
+ border:0!important;
+}
+#view .pac-reverse-accordions .pac-reverse-content .terrain-rule h3{margin:0 0 8px}
+@media(max-width:640px){
+ :root{--pac-sticky-top:106px}
+ #view .pac-reverse-accordions .pac-reverse-section > .pac-reverse-content{
+  margin-top:-8px!important;margin-bottom:-5px!important;
+ }
+ #view .pac-reverse-accordions .pac-reverse-content > .comic-reading-panel{
+  padding:25px 9%!important;
+ }
+}
