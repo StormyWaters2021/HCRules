@@ -236,7 +236,7 @@ function showSymbolDialog(key){
   if(normalizedText)seenDefinitions.add(normalizedText);
   const det=E('details','symbol-ref-detail');det.open=true;
   const summary=E('summary','symbol-ref-title',result.title);det.append(summary);
-  const contents=E('div','symbol-ref-content');contents.append(result.node);det.append(contents);panel.append(det);
+  const contents=E('div','symbol-ref-content comic-reading-panel');contents.append(result.node);det.append(contents);panel.append(det);
  }
  overlay.append(panel);overlay.onclick=e=>{if(e.target===overlay)overlay.remove()};
  document.body.append(overlay);close.focus();activeSymbol=key;
@@ -324,7 +324,7 @@ function setHeading(title,eyebrow='',subtitle=''){
  c.append(E('p','effective-date','Effective '+date));
  if(subtitle&&!/^\s*(?:July 1, 2026|October 3, 2022)/.test(subtitle))c.append(E('p','source-caption',subtitle));
 }
-function row(num,label,fn,cls=''){const b=button('',fn,'entry comic-paper-row '+cls);if(num)b.append(E('span','num',num));b.append(E('span','label',label),E('span','chevron','›'));return b}
+function row(num,label,fn,cls=''){const b=button('',fn,'entry comic-paper-row '+cls);if(num)b.append(E('span','num',num));b.append(E('span','label',label));return b}
 function showButtons(items,container){for(const it of items)container.append(it)}
 function pageSnapshot(){return {mode,path:[...path]}}
 function samePage(a,b){return a.mode===b.mode&&JSON.stringify(a.path)===JSON.stringify(b.path)}
@@ -422,7 +422,7 @@ function specialRuleText(s){
  });return root;
 }
 
-function cardPower(p){const b=button(' ',()=>move(['power:'+p.id]),'entry power comic-paper-row');b.textContent='';const icon=powerSymbol(p);const t=E('span','power-text',p.name);b.append(icon,t,E('span','chevron','›'));return b}
+function cardPower(p){const b=button(' ',()=>move(['power:'+p.id]),'entry power comic-paper-row');b.textContent='';const icon=powerSymbol(p);const t=E('span','power-text',p.name);b.append(icon,t);return b}
 const pacCombatIcons={
  Speed:[['speed/run.png','Standard speed'],['speed/flight.png','Flight'],['speed/swim.png','Swim']],
  Attack:[['attack/fist.png','Standard attack'],['attack/autonomous.png','Autonomous']],
@@ -543,7 +543,7 @@ function showPowerList(){
  for(const p of db.pac.filter(p=>p.group===selected))stack.append(cardPower(p));
  section.append(stack);content.append(section);
 }
-function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const paper=E('div','rule-paper');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));paper.append(header,p.inlineContent?tokenContent(p.inlineContent,{type:'power',id:p.id}):textNode(p.text,{type:'power',id:p.id}));article.append(paper);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
+function showPower(p){setHeading(p.name,'PAC · '+p.group);const v=$('view');const article=E('article','pac-article');const header=E('div','pac-title');const img=powerSymbol(p);header.append(img,E('h2','',p.name));const pieces=textContentPieces(p.inlineContent||p.text,{type:'power',id:p.id},Boolean(p.inlineContent));const fragment=E('div','pac-reading-stack');pieces.forEach((part,i)=>{const paper=E('div','rule-paper comic-reading-panel');paper.dataset.panel=String(i%2);if(i===0)paper.append(header);paper.append(part);fragment.append(paper)});article.append(fragment);v.append(article);const rules=db.sections.find(x=>x.level===3&&x.id.startsWith('27.')&&low(x.title.replace(/\s*\([^)]*\)\s*$/,''))===low(p.name));if(rules)v.append(row('§'+rules.id,rules.title,()=>goTarget('rule',rules.id)))}
 function showBackIndex(){setHeading('PAC · Reverse Side');const v=$('view');const stack=E('div','stack');db.back.filter(b=>b.id!=='back-terrain-values').forEach(b=>stack.append(row('',b.name,()=>move(['back:'+b.id]))));v.append(stack);v.append(E('h2','group-head','MAP TERRAIN'));v.append(terrainRows());const terrainValues=db.back.find(b=>b.id==='back-terrain-values');if(terrainValues)v.append(row('',terrainValues.name,()=>move(['back:'+terrainValues.id])))}
 function terrainRows(){
  const stack=E('div','terrain-accordions');
@@ -552,8 +552,8 @@ function terrainRows(){
   const sw=E('span','terrain-swatch');sw.style.background=color;if(title==='Walls')sw.classList.add('terrain-swatch-wall');summary.append(sw,E('span','',title),E('span','terrain-chevron','⌄'));
   details.append(summary);const content=E('div','terrain-content');
   const root=byId(id);const descendants=db.sections.filter(s=>s.id.startsWith(id+'.')||s.id.startsWith(id)&&id==='17'&&s.id!=='17');
-  if(root){const sub=E('section','terrain-rule');sub.append(E('h3','',root.id+' '+root.title));sub.append(universalRuleText(root));content.append(sub)}
-  for(const s of descendants){if(!s.text)continue;const sub=E('section','terrain-rule');sub.append(E('h3','',s.id+' '+s.title));sub.append(universalRuleText(s));content.append(sub)}
+  if(root){const sub=E('section','terrain-rule comic-reading-panel');sub.append(E('h3','',root.id+' '+root.title));sub.append(universalRuleText(root));content.append(sub)}
+  for(const s of descendants){if(!s.text)continue;const sub=E('section','terrain-rule comic-reading-panel');sub.append(E('h3','',s.id+' '+s.title));sub.append(universalRuleText(s));content.append(sub)}
   details.append(content);stack.append(details);
  }
  return stack;
@@ -594,10 +594,10 @@ function keyphraseText(e,b){
 function showBack(b){
  setHeading(b.name,'PAC · Reverse Side');const v=$('view');
  if(b.id==='back-0'&&Array.isArray(b.entries)){
-  for(const e of b.entries){const article=E('section','rule-paper inherent-entry');article.append(E('h2','',e.name),textNode(e.text,{type:'back',id:b.id}));v.append(article)}
+  for(const e of b.entries){const parts=textContentPieces(e.text,{type:'back',id:b.id});parts.forEach((part,i)=>{const article=E('section','rule-paper comic-reading-panel inherent-entry');article.dataset.panel=String(i%2);if(i===0)article.append(E('h2','',e.name));article.append(part);v.append(article)})}
  }else if(b.id==='back-1'&&Array.isArray(b.entries)){
   for(const row of b.entries){
-   const wrap=E('section','improved-row');
+   const wrap=E('section','improved-row comic-reading-panel');wrap.dataset.panel=String(b.entries.indexOf(row)%2);
    const img=E('img','improved-icon');
    const improvedName=['elevated','hindering','blocking','outdoorblocking','destroyblocking','characters','throughadjacent'][b.entries.indexOf(row)];
    img.src=pacIconBase+'improved-abilities/'+improvedName+'.png';img.alt='Improved ability symbol';
@@ -616,7 +616,7 @@ function showBack(b){
   }
  }else if(Array.isArray(b.entries)&&b.id!=='back-terrain-values'){
   for(const entry of b.entries){
-    const article=E('section','rule-paper keyphrase-entry');
+    const article=E('section','rule-paper comic-reading-panel keyphrase-entry');article.dataset.panel=String(b.entries.indexOf(entry)%2);
     const heading=E('div','keyphrase-heading');
     const headIcons={Flight:'speed/flight_white.png','Giant Reach: X':'damage/giant_white.png', 'Great Size':'damage/colossal_white.png',Swim:'speed/swim_white.png','Tiny Size':'damage/tiny_white.png'};
     if(headIcons[entry.name]){const icon=E('img','pac-source-heading');icon.src=pacIconBase+headIcons[entry.name];icon.alt=entry.name+' symbol';heading.append(icon)}
@@ -626,7 +626,7 @@ function showBack(b){
  }else if(b.id==='back-terrain-values'&&Array.isArray(b.entries)){
   // PAC renders the actual Comprehensive Rules objects; there are no duplicate definitions or defaults.
   for(const entry of b.entries){
-   const article=E('section','terrain-value-entry shared-terrain-values');
+   const article=E('section','terrain-value-entry shared-terrain-values comic-reading-panel');article.dataset.panel=String(b.entries.indexOf(entry)%2);
    const h=E('h2','terrain-value-name',entry.name);article.append(h);
    for(const ruleId of entry.ruleIds){
     const rule=byId(ruleId);if(!rule)continue;
@@ -638,23 +638,47 @@ function showBack(b){
   }
   const defaults=byId(b.defaultRuleId);
   if(defaults){
-   const article=E('section','terrain-value-entry shared-terrain-values terrain-defaults');
+   const article=E('section','terrain-value-entry shared-terrain-values terrain-defaults comic-reading-panel');article.dataset.panel=String(b.entries.length%2);
    article.append(E('h2','terrain-value-name',defaults.id+' '+defaults.title));
    article.append(universalRuleText(defaults));v.append(article);
   }
  }else{
-  const panel=E('div','rule-paper');panel.append(textNode(b.text,{type:'back',id:b.id}));v.append(panel);
+  appendReadingPanels(v,textContentPieces(b.text,{type:'back',id:b.id}));
  }
 }
+/* Content stays linked to the source rules; splitting only changes display.
+   Original inline symbols and their click handlers are rendered anew per section. */
+function ruleContentPieces(s){
+ if(Array.isArray(s.displayBlocks)&&s.displayBlocks.length)
+  return s.displayBlocks.map(block=>structuredBlocks({...s,displayBlocks:[block]}));
+ const value=s.inlineContent||'';
+ if(value&&/\n[ \t]*\n/.test(value))
+  return value.split(/\n[ \t]*\n+/).filter(x=>x.trim()).map(part=>tokenContent(part,{type:'rule',id:s.id}));
+ if(!s.verifiedInline&&!(s.graphics||[]).length&&/\n[ \t]*\n/.test(s.text||''))
+  return s.text.split(/\n[ \t]*\n+/).filter(x=>x.trim()).map(part=>textNode(part,{type:'rule',id:s.id}));
+ return [universalRuleText(s)];
+}
+function textContentPieces(value,source,inline=false){
+ const segments=String(value||'').split(/\n[ \t]*\n+/).filter(x=>x.trim());
+ return (segments.length?segments:[value]).map(part=>inline?tokenContent(part,source):textNode(part,source));
+}
+function appendReadingPanels(host,parts,cls=''){
+ parts.forEach((content,index)=>{
+  const article=E('article','rule-paper comic-reading-panel '+cls);
+  article.dataset.panel=String(index%2);
+  article.append(content);host.append(article);
+ });
+}
+function appendRulePanels(host,s,cls=''){appendReadingPanels(host,ruleContentPieces(s),cls)}
 function family(s){return db.sections.filter(x=>x.id.startsWith(s.id)&&x.id!==s.id&&x.level===s.level+1)}
-function showRule(s){setHeading(s.id+' '+s.title,'Comprehensive Rules','July 1, 2026 · source page '+Math.max(1,s.page-17));const v=$('view');const body=E('article','rule-paper');body.append(universalRuleText(s));v.append(body);const children=family(s);if(children.length){v.append(E('h2','group-head','SUBSECTIONS'));const stack=E('div','stack');children.forEach(c=>stack.append(row(c.id,c.title,()=>enter(c))));v.append(stack)}const tools=E('div','rule-tools');tools.append(button('Copy link',()=>navigator.clipboard?.writeText(location.href),'small-action'));v.append(tools)}
+function showRule(s){setHeading(s.id+' '+s.title,'Comprehensive Rules','July 1, 2026 · source page '+Math.max(1,s.page-17));const v=$('view');appendRulePanels(v,s);const children=family(s);if(children.length){v.append(E('h2','group-head','SUBSECTIONS'));const stack=E('div','stack');children.forEach(c=>stack.append(row(c.id,c.title,()=>enter(c))));v.append(stack)}const tools=E('div','rule-tools');tools.append(button('Copy link',()=>navigator.clipboard?.writeText(location.href),'small-action'));v.append(tools)}
 function enter(s){if(s.level===1)move(['chapter:'+s.id]);else if(s.level===2)move(['chapter:'+s.chapter,'section:'+s.id]);else move(['chapter:'+s.chapter,'section:'+s.id.match(/^\d+\.\d+/)?.[0],'rule:'+s.id])}
 function decorateRulePanels(stack){
  stack.classList.add('comic-paper-stack');
  return stack;
 }
-function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper chapter-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(decorateRulePanels(stack))}
-function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text){const intro=E('article','rule-paper section-intro');intro.append(universalRuleText(s));v.append(intro)}db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(decorateRulePanels(stack));else if(!s.text)showRule(s)}
+function showChapter(ch){const s=byId(ch);if(!s)return;setHeading(ch+' '+s.title,'Comprehensive Rules');const v=$('view'),stack=E('div','stack');if(s.text)appendRulePanels(v,s,'chapter-intro');db.sections.filter(x=>x.level===2&&x.chapter===ch).forEach(x=>stack.append(row(x.id,x.title,()=>enter(x))));v.append(decorateRulePanels(stack))}
+function showSection(id){const s=byId(id);if(!s)return;setHeading(id+' '+s.title,'Chapter '+s.chapter);const v=$('view'),stack=E('div','stack');if(s.text)appendRulePanels(v,s,'section-intro');db.sections.filter(x=>x.level===3&&x.id.startsWith(id)&&x.id.length>id.length).forEach(x=>stack.append(row(x.id,x.title,()=>move([...path,'rule:'+x.id]))));if(stack.children.length)v.append(decorateRulePanels(stack));else if(!s.text)showRule(s)}
 function showChapters(){setHeading('Comprehensive Rules');const stack=E('div','stack');db.sections.filter(x=>x.level===1).forEach(s=>stack.append(row(s.id,s.title,()=>enter(s),'chapter')));$('view').append(decorateRulePanels(stack))}
 function showSearch(){setHeading('Search results',mode==='rules'?'Comprehensive Rules':'Powers & Abilities Card');const v=$('view'),stack=E('div','stack');let count=0;if(mode==='rules'){const matches=db.sections.filter(s=>eligible(s,query));for(const s of matches){stack.append(row(s.id,s.title,()=>goTarget('rule',s.id),'search-result'));count++}}else{for(const group of groups){const entries=db.pac.filter(p=>p.group===group&&searchText(p));if(entries.length)stack.append(E('h2','group-head '+low(group),group));for(const p of entries){stack.append(cardPower(p));count++}}for(const b of db.back.filter(searchText)){stack.append(row('',b.name,()=>goTarget('back',b.id)));count++}}v.append(stack);if(!count)v.append(E('p','empty','No results found.'))}
 
