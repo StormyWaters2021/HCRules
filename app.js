@@ -100,12 +100,65 @@ function linkedLine(t,source){
  }
  node.append(document.createTextNode(t.slice(pos)));return node;
 }
+// Trim transparent image margins for inline icons only. The original PNGs
+// and the homepage/PAC panel artwork are never modified.
+const inlineIconCropCache=new Map();
+function cropInlineIcon(img){
+ const original=img.getAttribute('src');
+ if(!original||!original.toLowerCase().endsWith('.png'))return;
+ img.dataset.originalSrc=original;
+ const apply=()=>{
+  if(!img.isConnected&&img.dataset.cropState==='done')return;
+  if(!img.naturalWidth||!img.naturalHeight)return;
+  if(inlineIconCropCache.has(original)){
+   const cached=inlineIconCropCache.get(original);
+   if(cached)img.src=cached;
+   return;
+  }
+  const width=img.naturalWidth,height=img.naturalHeight;
+  if(width*height>4000000){inlineIconCropCache.set(original,null);return}
+  try{
+   const canvas=document.createElement('canvas');
+   canvas.width=width;canvas.height=height;
+   const ctx=canvas.getContext('2d',{willReadFrequently:true});
+   if(!ctx)return;
+   ctx.drawImage(img,0,0);
+   const pixels=ctx.getImageData(0,0,width,height).data;
+   let left=width,right=-1,top=height,bottom=-1;
+   for(let y=0;y<height;y++){
+    for(let x=0;x<width;x++){
+     if(pixels[(y*width+x)*4+3]<8)continue;
+     if(x<left)left=x;
+     if(x>right)right=x;
+     if(y<top)top=y;
+     if(y>bottom)bottom=y;
+    }
+   }
+   if(right<left||left===0&&top===0&&right===width-1&&bottom===height-1){
+    inlineIconCropCache.set(original,null);
+    return;
+   }
+   const cropped=document.createElement('canvas');
+   cropped.width=right-left+1;cropped.height=bottom-top+1;
+   cropped.getContext('2d').drawImage(canvas,left,top,cropped.width,cropped.height,0,0,cropped.width,cropped.height);
+   const data=cropped.toDataURL('image/png');
+   inlineIconCropCache.set(original,data);
+   img.dataset.cropState='done';
+   img.src=data;
+  }catch(_error){
+   // Keep the original icon if canvas cropping is unsupported.
+   inlineIconCropCache.set(original,null);
+  }
+ };
+ if(img.complete&&img.naturalWidth)apply();
+ else img.addEventListener('load',apply,{once:true});
+}
 function glyph(src,alt='Combat symbol'){
  const key=Object.keys(symbolRegistry).find(k=>symbolRegistry[k].image===src);
  if(key)return symbolButton(key);
  const c=glyphMap[src];const im=E('img','rule-glyph tone-monochrome-art');
  im.src=c?'assets/glyphs/'+c.codePointAt(0).toString(16)+'.png':src;
- im.alt=alt;im.decoding='async';return im;
+ im.alt=alt;im.decoding='async';cropInlineIcon(im);return im;
 }
 
 function textNode(value,source,graphics=[]){
@@ -135,7 +188,7 @@ function symbolButton(key){
  if(!item){const warning=E('span','unknown-symbol','[['+key+']]');warning.title='Unknown symbol token';return warning}
  const isMonochrome=Boolean(item.image&&(/\/inline\//.test(item.image)||/\/glyphs\//.test(item.image)||/\/combat\//.test(item.image)||/\/combat-token\//.test(item.image)||/\/source-icons\/(?:speed|attack|defense|damage)\/[^/]*_white\.png$/.test(item.image)||/\/keyphrase\/(?:passenger-light|flight-wing|giant-reach-symbol|great-size-symbol|swim-symbol|tiny-symbol)\.png$/.test(item.image)));const b=E('button','inline-symbol-button'+(item.image?.includes('/improved-abilities/')?' improved-symbol':item.image?.includes('/combat-token/')?' combat-symbol':' default-symbol')+(isMonochrome?' tone-monochrome':''));b.type='button';b.title=item.name;
  b.setAttribute('aria-label','Explain '+item.name);
- if(item.image){const im=E('img','symbol-art'+(isMonochrome?' tone-monochrome-art':''));im.src=item.image;im.alt='';im.loading='lazy';b.append(im)}
+ if(item.image){const im=E('img','symbol-art'+(isMonochrome?' tone-monochrome-art':''));im.src=item.image;im.alt='';im.loading='lazy';cropInlineIcon(im);b.append(im)}
  else b.append(E('span','symbol-text-fallback',item.name));
  b.onclick=()=>showSymbolDialog(key);return b;
 }
