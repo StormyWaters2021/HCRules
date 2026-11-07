@@ -422,7 +422,7 @@ function navigateBack(){
 }
 function breadcrumbSteps(){
  const steps=[];
- if(mode==='home'||mode==='tools')return steps;
+ if(mode==='home'||mode==='tools'||mode==='contact')return steps;
  if(mode==='rules'){
   steps.push({label:'Comprehensive Rules',path:[]});
   const chapter=path.find(k=>k.startsWith('chapter:'))?.slice(8);
@@ -448,7 +448,7 @@ function breadcrumbSteps(){
 function hierarchy(){
  const nav=$('breadcrumbs');nav.replaceChildren();
 
- if(visited.length||path.length||mode==='tools')nav.append(button('‹ Back',navigateBack,'back'));
+ if(visited.length||path.length||mode==='tools'||mode==='contact')nav.append(button('‹ Back',navigateBack,'back'));
  const steps=breadcrumbSteps();
  // The reverse-side landing page has no breadcrumb trail; detail pages keep theirs.
  if(mode==='pac'&&path.at(-1)==='back-index')return;
@@ -541,6 +541,79 @@ function comicPanel(label,kind,click){
  b.setAttribute('aria-label',label);
  return b;
 }
+/* GitHub Pages contact form; Formspree handles delivery. */
+function showContact(){
+ setHeading('Contact');
+ const panel=E('section','contact-panel comic-reading-panel');panel.dataset.panel='0';
+ panel.append(E('h2','contact-title','Get in Touch'));
+ panel.append(E('p','contact-intro','Questions, corrections, suggestions, or website feedback? Send a message using the form below.'));
+ const form=E('form','contact-form');
+ form.id='clixContactForm';form.method='POST';
+ form.action='https://formspree.io/f/mjyydgvl';
+ const field=(label,name,type,required=false)=>{
+  const wrap=E('label','contact-field');
+  const text=E('span','',label+(required?' *':''));
+  const input=E('input','contact-input');
+  input.name=name;input.type=type;input.required=required;
+  input.autocomplete=name==='name'?'name':name==='email'?'off';
+  wrap.append(text,input);return {wrap,input};
+ };
+ const name=field('Name','name','text',true);
+ const email=field('Email','email','email',true);
+ name.input.maxLength=120;email.input.maxLength=254;
+ const identity=E('div','contact-identity');identity.append(name.wrap,email.wrap);
+ form.append(identity);
+ const subjectLabel=E('label','contact-field');
+ subjectLabel.append(E('span','','Topic'));
+ const subject=E('select','contact-input');subject.name='topic';
+ for(const optionText of ['General Question','Rules Correction','Website Problem','Suggestion','Other']){
+  const option=E('option','',optionText);option.value=optionText;subject.append(option);
+ }
+ subjectLabel.append(subject);form.append(subjectLabel);
+ const messageLabel=E('label','contact-field');
+ messageLabel.append(E('span','','Message *'));
+ const message=E('textarea','contact-input contact-message');
+ message.name='message';message.required=true;message.rows=7;message.maxLength=12000;
+ message.placeholder='How can we help?';
+ messageLabel.append(message);form.append(messageLabel);
+ const honeypot=E('input','contact-honeypot');
+ honeypot.type='text';honeypot.name='_gotcha';honeypot.tabIndex=-1;
+ honeypot.autocomplete='off';honeypot.setAttribute('aria-hidden','true');
+ form.append(honeypot);
+ const status=E('p','contact-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+ const submit=E('button','contact-submit','Send Message');submit.type='submit';
+ form.append(submit,status);
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!form.reportValidity())return;
+  submit.disabled=true;submit.textContent='Sending…';
+  status.className='contact-status';status.textContent='';
+  const payload=new FormData(form);
+  payload.set('_subject','ClixRules Contact: '+subject.value);
+  try{
+   const response=await fetch(form.action,{method:'POST',body:payload,headers:{Accept:'application/json'}});
+   if(response.ok){
+    form.reset();status.classList.add('contact-success');
+    status.textContent='Message sent. Thank you for contacting us!';
+   }else{
+    let errorMessage='Unable to send your message. Please try again.';
+    try{
+     const data=await response.json();
+     if(Array.isArray(data.errors)&&data.errors.length)
+      errorMessage=data.errors.map(x=>x.message).filter(Boolean).join(' ')||errorMessage;
+    }catch(_err){}
+    status.classList.add('contact-error');status.textContent=errorMessage;
+   }
+  }catch(_err){
+   status.classList.add('contact-error');
+   status.textContent='Unable to reach the form service. Check your connection and try again.';
+  }finally{
+   submit.disabled=false;submit.textContent='Send Message';
+  }
+ });
+ panel.append(form);$('view').append(panel);
+}
+
 function showHome(){
  $('context').replaceChildren();
  const view=$('view');
@@ -561,7 +634,7 @@ function showHome(){
   {name:'Comprehensive Rules',points:'58,535 698,594 711,1240 58,1310',open:()=>visitLocation('rules',[])},
   {name:'PAC',points:'713,594 1362,688 1362,1207 711,1240',open:()=>visitLocation('pac',[])},
   {name:'Game Tools',points:'58,1322 710,1257 745,1914 58,1914',open:()=>visitLocation('tools',[])},
-  {name:'Contact',points:'714,1257 1362,1210 1362,1914 747,1914',open:()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer')}
+  {name:'Contact',points:'714,1257 1362,1210 1362,1914 747,1914',open:()=>visitLocation('contact',[])}
  ];
  for(const panel of panels){
   const shape=document.createElementNS(ns,'polygon');
@@ -582,7 +655,7 @@ function showHome(){
  fallback.append(comicPanel('Comprehensive Rules','rules',()=>visitLocation('rules',[])));
  fallback.append(comicPanel('PAC','pac',()=>visitLocation('pac',[])));
  fallback.append(comicPanel('Game Tools','team',()=>visitLocation('tools',[])));
- fallback.append(comicPanel('Contact','contact',()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer')));
+ fallback.append(comicPanel('Contact','contact',()=>visitLocation('contact',[])));
  cover.onload=()=>{imageLayer.hidden=false;fallback.hidden=true};
  cover.onerror=()=>{imageLayer.hidden=true;fallback.hidden=false};
  host.append(imageLayer,fallback);
@@ -1219,7 +1292,7 @@ function sidebarRow(label,fn,depth=0,selected=false){
 function sidebar(){
  const host=$('sidebarContents');if(!host)return;host.replaceChildren();
  const isPac=mode==='pac';const last=path.at(-1)||'';
- if(mode==='tools')return;
+ if(mode==='tools'||mode==='contact')return;
  if(mode==='home')return;
  $('desktopSidebar').querySelector('.sidebar-title').textContent=isPac?'Powers & Abilities':'Comprehensive Rules';
  if(isPac){
@@ -1261,8 +1334,8 @@ function sidebar(){
  }
 }
 
-function render(){pacReverseTeardown();lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('game-tools-mode',mode==='tools');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';$('homeSearch').hidden=mode==='home';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('toolsTab').classList.toggle('chosen',mode==='tools');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(mode==='tools'){showGameTools();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
+function render(){pacReverseTeardown();lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('game-tools-mode',mode==='tools');document.body.classList.toggle('contact-mode',mode==='contact');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';$('homeSearch').hidden=mode==='home';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('toolsTab').classList.toggle('chosen',mode==='tools');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(mode==='tools'){showGameTools();return}if(mode==='contact'){showContact();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
  const key=path.at(-1)||'';if(key.startsWith('rule:'))showRule(byId(key.slice(5)));else if(key.startsWith('section:'))showSection(key.slice(8));else if(key.startsWith('chapter:'))showChapter(key.slice(8));else showChapters()}
-async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();readGameToolRows();$('homeSearch').onclick=()=>visitLocation('home',[]);$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('toolsTab').onclick=()=>visitLocation('tools',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
+async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();readGameToolRows();$('homeSearch').onclick=()=>visitLocation('home',[]);$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('toolsTab').onclick=()=>visitLocation('tools',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools','contact'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools','contact'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('symbolOverlay')?.remove()});
