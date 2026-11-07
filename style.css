@@ -1923,8 +1923,8 @@ body.game-tools-mode #context{text-align:center}
  background:transparent;
  cursor:pointer;
 }
-.game-die-button svg{width:66px;height:66px;overflow:visible;filter:drop-shadow(1px 3px 2px #0006)}
-.game-die-button:hover svg,.game-die-button:focus-visible svg{filter:drop-shadow(0 0 5px #1118)}
+.game-die-button .game-die-art{display:block;width:66px;height:66px;object-fit:contain;filter:drop-shadow(1px 3px 2px #0006)}
+.game-die-button:hover .game-die-art,.game-die-button:focus-visible .game-die-art{filter:drop-shadow(0 0 5px #1118)}
 .game-die-button:focus-visible{outline:2px solid #222;outline-offset:2px}
 .game-dice-results{
  display:flex;
@@ -2050,7 +2050,7 @@ body.game-tools-mode #context{text-align:center}
  width:21px!important;
  height:21px!important;
  object-fit:contain;
- filter:brightness(0) invert(1)!important;
+ filter:none!important;
 }
 .game-special-icon{
  background:#fff;
@@ -2109,7 +2109,7 @@ body.game-tools-mode #context{text-align:center}
  .game-use-toggle{grid-column:2;grid-row:1}
  .game-remove-ability{grid-column:3;grid-row:1}
  .game-die-button{width:62px;height:62px;flex-basis:62px}
- .game-die-button svg{width:60px;height:60px}
+ .game-die-button .game-die-art{width:60px;height:60px}
 }
 @media(max-width:380px){
  .game-tracker-row{gap:5px;padding:5px}
