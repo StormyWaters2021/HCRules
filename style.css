@@ -1223,12 +1223,16 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  cursor:pointer;
  overflow:hidden;
 }
+/* The PAC uses the exact cropped combat-token artwork shown in the rules.
+   Leave a small consistent rim, rather than magnifying padded source images. */
 #view .pac-front-accordions .combat-icon-circle .combat-stat-icon{
- width:96%!important;
- height:96%!important;
+ display:block;
+ width:90%!important;
+ height:90%!important;
  max-width:none!important;
  max-height:none!important;
  object-fit:contain;
+ object-position:center;
 }
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
  position:sticky!important;
