@@ -528,9 +528,17 @@ const pacCombatIcons={
 function pacGroupIcons(group){
  const wrap=E('span','group-symbols');wrap.setAttribute('aria-label',group+' combat symbols');
  for(const [file,label] of pacCombatIcons[group]||[]){
+  const key='Combat: '+group+': '+file.split('/').pop().replace('.png','');
   const circle=E('span','combat-icon-circle');circle.title=label;
-  const img=E('img','combat-stat-icon');img.src='assets/source-icons/'+file;img.alt=label;img.loading='lazy';
-  circle.append(img);const key='Combat: '+group+': '+file.split('/').pop().replace('.png','');circle.setAttribute('role','button');circle.tabIndex=0;circle.title='Explain '+label;circle.onclick=(e)=>{e.stopPropagation();e.preventDefault();showSymbolDialog(key)};circle.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();circle.click()}};wrap.append(circle);
+  // Match the clickable rules-panel symbols, including transparent-edge cropping.
+  const img=E('img','combat-stat-icon');
+  img.src=symbolRegistry[key]?.image||'assets/source-icons/'+file;
+  img.alt=label;img.loading='lazy';cropInlineIcon(img);
+  circle.append(img);
+  circle.setAttribute('role','button');circle.tabIndex=0;circle.title='Explain '+label;
+  circle.onclick=e=>{e.stopPropagation();e.preventDefault();showSymbolDialog(key)};
+  circle.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();circle.click()}};
+  wrap.append(circle);
  }
  return wrap;
 }
@@ -634,6 +642,8 @@ function showHome(){
  cover.src='assets/WebsiteCover.png';
  cover.alt='Clix Rules comic cover with four navigation panels';
  cover.decoding='async';
+ cover.loading='eager';
+ cover.fetchPriority='high';
  const ns='http://www.w3.org/2000/svg';
  const map=document.createElementNS(ns,'svg');
  map.setAttribute('class','comic-cover-map');
@@ -1346,6 +1356,26 @@ function sidebar(){
 
 function render(){pacReverseTeardown();lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('game-tools-mode',mode==='tools');document.body.classList.toggle('contact-mode',mode==='contact');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';$('homeSearch').hidden=mode==='home';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('toolsTab').classList.toggle('chosen',mode==='tools');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(mode==='tools'){showGameTools();return}if(mode==='contact'){showContact();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
  const key=path.at(-1)||'';if(key.startsWith('rule:'))showRule(byId(key.slice(5)));else if(key.startsWith('section:'))showSection(key.slice(8));else if(key.startsWith('chapter:'))showChapter(key.slice(8));else showChapters()}
-async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();readGameToolRows();$('homeSearch').onclick=()=>visitLocation('home',[]);$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('toolsTab').onclick=()=>visitLocation('tools',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools','contact'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools','contact'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
+async function init(){
+ // The cover does not depend on rule data. Render it while JSON loads, so
+ // its large image can appear as soon as the browser has decoded it.
+ const startupMode=decodeURIComponent(location.hash.slice(1)).split('/')[0];
+ const earlyHome=!startupMode||startupMode==='home';
+ if(earlyHome){
+  document.body.classList.add('home-mode');
+  $('homeSearch').hidden=true;
+  showHome();
+  $('view').inert=true;
+ }
+ try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').inert=false;$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();readGameToolRows();$('homeSearch').onclick=()=>visitLocation('home',[]);$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('toolsTab').onclick=()=>visitLocation('tools',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools','contact'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}
+if(earlyHome&&mode==='home'&&!path.length){
+ $('view').inert=false;
+ hierarchy();
+ sidebar();
+}else{
+ $('view').inert=false;
+ render();
+}
+window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools','contact'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('symbolOverlay')?.remove()});

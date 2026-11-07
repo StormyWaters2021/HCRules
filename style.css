@@ -1135,11 +1135,18 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 /* The PAC front uses four unmodified crops of PACCover.png as individual
    expandable category surfaces. The artwork is drawn by SVG, not regenerated. */
 #view .pac-front-accordions{
+ display:flex;
+ flex-direction:column;
  width:100%;
  max-width:690px;
  margin:0 auto;
  padding:0;
- gap:0;
+ gap:0!important;
+}
+/* Let adjacent collapsed PAC images overlap slightly at their angled edges.
+   Expanded sections keep their full size and sticky behavior. */
+#view .pac-front-accordions > .pac-front-section:not([open]) + .pac-front-section:not([open]){
+ margin-top:clamp(-30px,-3.1vw,-16px)!important;
 }
 #view .pac-front-accordions > .pac-front-section{
  width:100%;
@@ -1209,11 +1216,35 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  align-items:center;
  gap:5px;
 }
+/* Match the framed PAC power-icon proportions, with a white face and
+   black combat artwork. The token artwork is tightly cropped at load time. */
 #view .pac-front-accordions .combat-icon-circle{
  width:clamp(30px,4vw,43px);
  height:clamp(30px,4vw,43px);
- background:white;
+ box-sizing:border-box;
+ border:2px solid #47515a;
+ border-radius:50%;
+ background:#fff;
+ box-shadow:inset 0 0 0 2px #fff,inset 0 -2px 4px #aab0b6,0 2px 4px #0007;
  cursor:pointer;
+ overflow:hidden;
+}
+#view .pac-front-accordions .combat-icon-circle .combat-stat-icon{
+ display:block;
+ flex:none;
+ width:70%!important;
+ height:70%!important;
+ max-width:none!important;
+ max-height:none!important;
+ object-fit:contain;
+ object-position:center;
+ filter:brightness(0)!important;
+}
+/* The same white combat-token PNGs are used in the selected PAC group heading.
+   Crop processing replaces src with a data URL, so src-based monochrome
+   selectors cannot reliably apply here. */
+#view .power-group-selected .group-symbols .combat-stat-icon{
+ filter:brightness(0)!important;
 }
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
  position:sticky!important;
