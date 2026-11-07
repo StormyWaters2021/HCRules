@@ -2023,6 +2023,16 @@ body.game-tools-mode #context{text-align:center}
 }
 .game-ability-icon img{display:block;width:78%;height:78%;object-fit:contain}
 .game-special-icon{background:#fff;color:#101010;font:900 22px/1 var(--reading-font)}
+.game-ability-selected .power-symbol,.game-ability-option .power-symbol{
+ flex:0 0 32px;
+ width:32px;
+ height:32px;
+ border-width:2px;
+}
+.game-ability-selected .power-symbol img,.game-ability-option .power-symbol img{
+ width:21px;
+ height:21px;
+}
 .game-character{
  width:100%;
  min-width:0;
