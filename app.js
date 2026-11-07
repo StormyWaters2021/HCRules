@@ -544,74 +544,86 @@ function comicPanel(label,kind,click){
 /* GitHub Pages contact form; Formspree handles delivery. */
 function showContact(){
  setHeading('Contact');
- const panel=E('section','contact-panel comic-reading-panel');panel.dataset.panel='0';
- panel.append(E('h2','contact-title','Get in Touch'));
- panel.append(E('p','contact-intro','Questions, corrections, suggestions, or website feedback? Send a message using the form below.'));
+ const panel=E('section','contact-panel comic-reading-panel');
+ panel.dataset.panel='0';
  const form=E('form','contact-form');
- form.id='clixContactForm';form.method='POST';
+ form.id='clixContactForm';
+ form.method='POST';
  form.action='https://formspree.io/f/mjyydgvl';
- const field=(label,name,type,required=false)=>{
+ const makeField=(label,name,type)=>{
   const wrap=E('label','contact-field');
-  const text=E('span','',label+(required?' *':''));
   const input=E('input','contact-input');
-  input.name=name;input.type=type;input.required=required;
-  input.autocomplete=name==='name'?'name':name==='email'?'off';
-  wrap.append(text,input);return {wrap,input};
+  input.name=name;
+  input.type=type;
+  input.required=true;
+  input.autocomplete=name==='name'?'name':'email';
+  input.maxLength=name==='name'?120:254;
+  wrap.append(E('span','',label),input);
+  return wrap;
  };
- const name=field('Name','name','text',true);
- const email=field('Email','email','email',true);
- name.input.maxLength=120;email.input.maxLength=254;
- const identity=E('div','contact-identity');identity.append(name.wrap,email.wrap);
- form.append(identity);
- const subjectLabel=E('label','contact-field');
- subjectLabel.append(E('span','','Topic'));
- const subject=E('select','contact-input');subject.name='topic';
- for(const optionText of ['General Question','Rules Correction','Website Problem','Suggestion','Other']){
-  const option=E('option','',optionText);option.value=optionText;subject.append(option);
- }
- subjectLabel.append(subject);form.append(subjectLabel);
+ form.append(makeField('Name','name','text'));
+ form.append(makeField('Email','email','email'));
  const messageLabel=E('label','contact-field');
- messageLabel.append(E('span','','Message *'));
+ messageLabel.append(E('span','','What\'s up?'));
  const message=E('textarea','contact-input contact-message');
- message.name='message';message.required=true;message.rows=7;message.maxLength=12000;
- message.placeholder='How can we help?';
- messageLabel.append(message);form.append(messageLabel);
+ message.name='message';
+ message.required=true;
+ message.rows=7;
+ message.maxLength=12000;
+ messageLabel.append(message);
+ form.append(messageLabel);
  const honeypot=E('input','contact-honeypot');
- honeypot.type='text';honeypot.name='_gotcha';honeypot.tabIndex=-1;
- honeypot.autocomplete='off';honeypot.setAttribute('aria-hidden','true');
+ honeypot.type='text';
+ honeypot.name='_gotcha';
+ honeypot.tabIndex=-1;
+ honeypot.autocomplete='off';
+ honeypot.setAttribute('aria-hidden','true');
  form.append(honeypot);
- const status=E('p','contact-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
- const submit=E('button','contact-submit','Send Message');submit.type='submit';
+ const status=E('p','contact-status');
+ status.setAttribute('role','status');
+ status.setAttribute('aria-live','polite');
+ const submit=E('button','contact-submit','Send Message');
+ submit.type='submit';
  form.append(submit,status);
  form.addEventListener('submit',async event=>{
   event.preventDefault();
   if(!form.reportValidity())return;
-  submit.disabled=true;submit.textContent='Sending…';
-  status.className='contact-status';status.textContent='';
+  submit.disabled=true;
+  submit.textContent='Sending…';
+  status.className='contact-status';
+  status.textContent='';
   const payload=new FormData(form);
-  payload.set('_subject','ClixRules Contact: '+subject.value);
+  payload.set('_subject','ClixRules Contact');
   try{
-   const response=await fetch(form.action,{method:'POST',body:payload,headers:{Accept:'application/json'}});
+   const response=await fetch(form.action,{
+    method:'POST',
+    body:payload,
+    headers:{Accept:'application/json'}
+   });
    if(response.ok){
-    form.reset();status.classList.add('contact-success');
-    status.textContent='Message sent. Thank you for contacting us!';
+    form.reset();
+    status.classList.add('contact-success');
+    status.textContent='Message sent. Thank you!';
    }else{
-    let errorMessage='Unable to send your message. Please try again.';
+    let feedback='Unable to send your message. Please try again.';
     try{
-     const data=await response.json();
-     if(Array.isArray(data.errors)&&data.errors.length)
-      errorMessage=data.errors.map(x=>x.message).filter(Boolean).join(' ')||errorMessage;
+     const result=await response.json();
+     if(Array.isArray(result.errors)&&result.errors.length)
+      feedback=result.errors.map(e=>e.message).filter(Boolean).join(' ')||feedback;
     }catch(_err){}
-    status.classList.add('contact-error');status.textContent=errorMessage;
+    status.classList.add('contact-error');
+    status.textContent=feedback;
    }
   }catch(_err){
    status.classList.add('contact-error');
    status.textContent='Unable to reach the form service. Check your connection and try again.';
   }finally{
-   submit.disabled=false;submit.textContent='Send Message';
+   submit.disabled=false;
+   submit.textContent='Send Message';
   }
  });
- panel.append(form);$('view').append(panel);
+ panel.append(form);
+ $('view').append(panel);
 }
 
 function showHome(){
