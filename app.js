@@ -22,8 +22,6 @@ const button=(label,click,cls='')=>{const n=E('button',cls,label);n.type='button
 const byId=id=>db.sections.find(s=>s.id===id),findPac=id=>db.pac.find(p=>p.id===id),findBack=id=>db.back.find(p=>p.id===id);
 const searchText=s=>low([s.title,s.name,s.id,s.text,s.searchText,JSON.stringify(s.entries||[])].join(' ')).includes(query);
 const groups=['Speed','Attack','Defense','Damage'];
-const combat=['autonomous_white','bolt','colossal_white','fist_white','flight_white','improved','run_white','shield_white','standard_white','swim_white','tiny_white','trait','vehicle_white'];
-const iconPath=(name,dark=false)=>'assets/combat/'+(dark?'dark/':'')+name+'.png';
 const linkTargets=[];let linkPattern=null;
 const contextualAbilityNames=new Set(['elevated','hindering','blocking','outdoor blocking','destroy blocking','characters','move through','adjacent']);
 const improvedRuleIds={movement:new Map(),targeting:new Map()};
