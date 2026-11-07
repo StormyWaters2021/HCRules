@@ -631,7 +631,7 @@ let gameToolNextId=1;
 function readGameToolRows(){
  try{
   const saved=JSON.parse(localStorage.getItem(GAME_TOOLS_KEY)||'[]');
-  if(Array.isArray(saved))gameToolRows=saved.filter(x=>x&&TRACKER_POWERS.includes(x.ability)).map(x=>({id:String(x.id),ability:x.ability,character:String(x.character||'').slice(0,100),used:!!x.used,ready:!!x.ready}));
+  if(Array.isArray(saved))gameToolRows=saved.filter(x=>x&&(x.ability===''||TRACKER_POWERS.includes(x.ability))).map(x=>({id:String(x.id),ability:x.ability,character:String(x.character||'').slice(0,100),used:!!x.used,ready:!!x.ready}));
  }catch(_err){gameToolRows=[]}
 }
 function saveGameToolRows(){
@@ -645,19 +645,6 @@ function trackerIcon(name){
  const p=trackerPower(name);
  if(!p)return E('span','game-special-icon','★');
  return powerSymbol(p);
-}
-function dieIcon(sides){
- const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
- svg.setAttribute('viewBox','0 0 64 64');
- svg.setAttribute('aria-hidden','true');
- const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
- const shapes={6:'8,8 56,8 56,56 8,56',8:'32,6 59,54 5,54',20:'32,6 59,54 5,54'};
- poly.setAttribute('points',shapes[sides]);poly.setAttribute('fill','#f8f8f8');
- poly.setAttribute('stroke','#101010');poly.setAttribute('stroke-width','3');
- const text=document.createElementNS('http://www.w3.org/2000/svg','text');
- text.setAttribute('x','32');text.setAttribute('y','39');text.setAttribute('text-anchor','middle');text.setAttribute('font-size','20');text.setAttribute('font-weight','900');text.setAttribute('fill','#151515');
- text.textContent=String(sides);
- svg.append(poly,text);return svg;
 }
 function rollGameDie(sides){
  const roll=()=>Math.floor(Math.random()*sides)+1;
@@ -689,8 +676,8 @@ function refreshTrackerRows(){
   const row=E('article','game-tracker-row'+(item.ready&&!item.used?' game-tracker-ready':''));
   const picker=E('div','game-ability-picker');
   const selected=button('',()=>openGameAbilityMenu(selected,item),'game-ability-selected');
-  selected.append(trackerIcon(item.ability),E('span','',item.ability));
-  selected.setAttribute('aria-label','Choose ability, currently '+item.ability);
+  if(item.ability)selected.append(trackerIcon(item.ability));selected.append(E('span','',item.ability||'Select Ability'));
+  selected.setAttribute('aria-label',item.ability?'Choose ability, currently '+item.ability:'Select an ability');
   selected.setAttribute('aria-haspopup','menu');
   picker.append(selected);
   const character=E('input','game-character');
@@ -750,7 +737,7 @@ function showGameTools(){
  const diceButtons=E('div','game-dice-buttons');
  for(const sides of [6,8,20]){
   const btn=button('',()=>rollGameDie(sides),'game-die-button');
-  btn.append(dieIcon(sides));btn.setAttribute('aria-label','Roll a d'+sides);
+  const img=E('img','game-die-art');img.src='assets/game-tools/d'+sides+'.png';img.alt='';img.decoding='async';btn.append(img);btn.setAttribute('aria-label','Roll a d'+sides);
   diceButtons.append(btn);
  }
  dice.append(diceButtons);
@@ -760,7 +747,7 @@ function showGameTools(){
  tracker.append(E('h2','game-tools-title','Ability Tracker'));
  const controls=E('div','game-tracker-actions');
  controls.append(button('+ Add Ability',()=>{
-  gameToolRows.push({id:String(Date.now())+'-'+gameToolNextId++,ability:'Sidestep',character:'',used:false,ready:false});
+  gameToolRows.push({id:String(Date.now())+'-'+gameToolNextId++,ability:'',character:'',used:false,ready:false});
   saveGameToolRows();refreshTrackerRows()
  },'game-tools-action game-tools-add'));
  controls.append(button('Start My Turn',()=>{
