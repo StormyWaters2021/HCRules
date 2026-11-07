@@ -570,6 +570,21 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 }
 
 
+/* Three-way Rules / PAC / Tools switch remains visible on Game Tools. */
+@media(max-width:520px){
+ .search-controls .mode-toggle button{
+  min-width:0;
+  padding:7px 8px;
+ }
+}
+@media(max-width:390px){
+ .search-controls .mode-toggle button{
+  font-size:11px;
+  padding:7px 6px;
+ }
+ .search-controls .mode-toggle{gap:1px;padding:2px}
+}
+
 /* Consistent, high-contrast text references across the rules and PAC. */
 :root{--reference-link:#bfeaff;--reference-link-hover:#ffffff}
 :is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a,
@@ -1891,7 +1906,6 @@ img.symbol-art[data-original-src$="/terrain-values/destroy-clean.png"]{
 
 
 /* Game Tools uses the common scalable comic panel, without large empty rows. */
-body.game-tools-mode .mode-toggle{display:none!important}
 body.game-tools-mode #context{text-align:center}
 #view .game-tools-panel.comic-reading-panel{
  width:min(100%,760px);
