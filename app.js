@@ -634,6 +634,8 @@ function showHome(){
  cover.src='assets/WebsiteCover.png';
  cover.alt='Clix Rules comic cover with four navigation panels';
  cover.decoding='async';
+ cover.loading='eager';
+ cover.fetchPriority='high';
  const ns='http://www.w3.org/2000/svg';
  const map=document.createElementNS(ns,'svg');
  map.setAttribute('class','comic-cover-map');
