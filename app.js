@@ -794,14 +794,18 @@ function refreshTrackerRows(){
  }
 }
 function openGameAbilityMenu(trigger,item){
- document.querySelectorAll('.game-ability-menu[popover]').forEach(menu=>menu.remove());
+ // Popovers render in the top layer, outside clipped comic panels.
+ for(const previous of document.querySelectorAll('.game-ability-menu[popover]')){
+  if(previous.matches(':popover-open'))previous.hidePopover();
+  previous.remove();
+ }
  const menu=E('div','game-ability-menu');
  menu.setAttribute('popover','auto');
  menu.setAttribute('role','menu');
  for(const name of TRACKER_POWERS){
   const option=button('',()=>{
    item.ability=name;item.used=false;item.ready=false;
-   saveGameToolRows();menu.hidePopover();menu.remove();refreshTrackerRows();
+   saveGameToolRows();menu.hidePopover();refreshTrackerRows();
   },'game-ability-option'+(name===item.ability?' selected':''));
   option.append(trackerIcon(name),E('span','',name));
   option.setAttribute('role','menuitem');
@@ -809,18 +813,54 @@ function openGameAbilityMenu(trigger,item){
   menu.append(option);
  }
  document.body.append(menu);
- const bounds=trigger.getBoundingClientRect();
- const width=Math.min(300,window.innerWidth-20);
- const left=Math.max(10,Math.min(bounds.left,window.innerWidth-width-10));
- const maxHeight=Math.min(330,window.innerHeight-20);
- const below=window.innerHeight-bounds.bottom;
- menu.style.width=width+'px';
- menu.style.left=left+'px';
- menu.style.maxHeight=maxHeight+'px';
- menu.style.top=(below>=Math.min(maxHeight,240)||below>=bounds.top?
-  bounds.bottom+3:Math.max(10,bounds.top-Math.min(maxHeight,330)-3))+'px';
- menu.addEventListener('toggle',event=>{if(event.newState==='closed')menu.remove()});
+ const controller=new AbortController();
+ const signal=controller.signal;
+ const position=()=>{
+  if(!menu.matches(':popover-open')||!trigger.isConnected){
+   if(!trigger.isConnected&&menu.matches(':popover-open'))menu.hidePopover();
+   return;
+  }
+  // Chrome's shrinking address bar and Android navigation change the
+  // visual viewport without necessarily updating window.innerHeight.
+  const vv=window.visualViewport;
+  const leftEdge=vv?vv.offsetLeft:0;
+  const topEdge=vv?vv.offsetTop:0;
+  const viewportWidth=vv?vv.width:window.innerWidth;
+  const viewportHeight=vv?vv.height:window.innerHeight;
+  const rightEdge=leftEdge+viewportWidth;
+  const bottomEdge=topEdge+viewportHeight;
+  const pad=10,gap=3;
+  const anchor=trigger.getBoundingClientRect();
+  const width=Math.min(300,Math.max(0,viewportWidth-pad*2));
+  menu.style.width=width+'px';
+  const left=Math.max(leftEdge+pad,Math.min(anchor.left,rightEdge-pad-width));
+  const availableBelow=Math.max(0,bottomEdge-pad-anchor.bottom-gap);
+  const availableAbove=Math.max(0,anchor.top-topEdge-pad-gap);
+  // Measure the actual menu, not an arbitrary 240px threshold.
+  menu.style.maxHeight='none';
+  const naturalHeight=Math.min(menu.scrollHeight+menu.offsetHeight-menu.clientHeight,330);
+  const openBelow=availableBelow>=naturalHeight||
+    (availableAbove<naturalHeight&&availableBelow>=availableAbove);
+  const room=openBelow?availableBelow:availableAbove;
+  const height=Math.max(0,Math.min(330,room));
+  menu.style.maxHeight=height+'px';
+  menu.style.left=left+'px';
+  menu.style.top=(openBelow?anchor.bottom+gap:anchor.top-gap-height)+'px';
+ };
+ menu.addEventListener('toggle',event=>{
+  if(event.newState==='closed'){
+   controller.abort();
+   menu.remove();
+  }
+ });
  menu.showPopover();
+ position();
+ window.addEventListener('resize',position,{signal});
+ window.addEventListener('scroll',position,{signal,passive:true});
+ if(window.visualViewport){
+  visualViewport.addEventListener('resize',position,{signal});
+  visualViewport.addEventListener('scroll',position,{signal,passive:true});
+ }
 }
 function showGameTools(){
  setHeading('Game Tools');
