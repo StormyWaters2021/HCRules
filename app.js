@@ -397,7 +397,7 @@ function setHeading(title,eyebrow='',subtitle=''){
  c.append(E('h1','',title));
  // The effective date belongs directly beneath the current heading.
  const date=mode==='pac'?PAC_DATE:RULE_DATE;
- c.append(E('p','effective-date','Effective '+date));
+ if(mode==='pac'||mode==='rules')c.append(E('p','effective-date','Effective '+date));
  if(subtitle&&!/^\s*(?:July 1, 2026|October 3, 2022)/.test(subtitle))c.append(E('p','source-caption',subtitle));
 }
 function row(num,label,fn,cls=''){const b=button('',fn,'entry comic-paper-row '+cls);if(num)b.append(E('span','num',num));b.append(E('span','label',label));return b}
