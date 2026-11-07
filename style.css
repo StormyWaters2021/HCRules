@@ -1146,7 +1146,7 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 /* Let adjacent collapsed PAC images overlap slightly at their angled edges.
    Expanded sections keep their full size and sticky behavior. */
 #view .pac-front-accordions > .pac-front-section:not([open]) + .pac-front-section:not([open]){
- margin-top:clamp(-12px,-1.5vw,-6px)!important;
+ margin-top:clamp(-30px,-3.1vw,-16px)!important;
 }
 #view .pac-front-accordions > .pac-front-section{
  width:100%;
@@ -1224,10 +1224,10 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  overflow:hidden;
 }
 #view .pac-front-accordions .combat-icon-circle .combat-stat-icon{
- width:86%;
- height:86%;
- max-width:none;
- max-height:none;
+ width:96%!important;
+ height:96%!important;
+ max-width:none!important;
+ max-height:none!important;
  object-fit:contain;
 }
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
