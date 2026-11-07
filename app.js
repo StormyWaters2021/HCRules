@@ -528,9 +528,17 @@ const pacCombatIcons={
 function pacGroupIcons(group){
  const wrap=E('span','group-symbols');wrap.setAttribute('aria-label',group+' combat symbols');
  for(const [file,label] of pacCombatIcons[group]||[]){
+  const key='Combat: '+group+': '+file.split('/').pop().replace('.png','');
   const circle=E('span','combat-icon-circle');circle.title=label;
-  const img=E('img','combat-stat-icon');img.src='assets/source-icons/'+file;img.alt=label;img.loading='lazy';
-  circle.append(img);const key='Combat: '+group+': '+file.split('/').pop().replace('.png','');circle.setAttribute('role','button');circle.tabIndex=0;circle.title='Explain '+label;circle.onclick=(e)=>{e.stopPropagation();e.preventDefault();showSymbolDialog(key)};circle.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();circle.click()}};wrap.append(circle);
+  // Match the clickable rules-panel symbols, including transparent-edge cropping.
+  const img=E('img','combat-stat-icon');
+  img.src=symbolRegistry[key]?.image||'assets/source-icons/'+file;
+  img.alt=label;img.loading='lazy';cropInlineIcon(img);
+  circle.append(img);
+  circle.setAttribute('role','button');circle.tabIndex=0;circle.title='Explain '+label;
+  circle.onclick=e=>{e.stopPropagation();e.preventDefault();showSymbolDialog(key)};
+  circle.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();circle.click()}};
+  wrap.append(circle);
  }
  return wrap;
 }
