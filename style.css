@@ -1216,19 +1216,24 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  align-items:center;
  gap:5px;
 }
+/* Match the framed PAC power-icon proportions, with a white face and
+   black combat artwork. The token artwork is tightly cropped at load time. */
 #view .pac-front-accordions .combat-icon-circle{
  width:clamp(30px,4vw,43px);
  height:clamp(30px,4vw,43px);
- background:white;
+ box-sizing:border-box;
+ border:2px solid #47515a;
+ border-radius:50%;
+ background:#fff;
+ box-shadow:inset 0 0 0 2px #fff,inset 0 -2px 4px #aab0b6,0 2px 4px #0007;
  cursor:pointer;
  overflow:hidden;
 }
-/* The PAC uses the exact cropped combat-token artwork shown in the rules.
-   Leave a small consistent rim, rather than magnifying padded source images. */
 #view .pac-front-accordions .combat-icon-circle .combat-stat-icon{
  display:block;
- width:90%!important;
- height:90%!important;
+ flex:none;
+ width:70%!important;
+ height:70%!important;
  max-width:none!important;
  max-height:none!important;
  object-fit:contain;
