@@ -1233,6 +1233,13 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  max-height:none!important;
  object-fit:contain;
  object-position:center;
+ filter:brightness(0)!important;
+}
+/* The same white combat-token PNGs are used in the selected PAC group heading.
+   Crop processing replaces src with a data URL, so src-based monochrome
+   selectors cannot reliably apply here. */
+#view .power-group-selected .group-symbols .combat-stat-icon{
+ filter:brightness(0)!important;
 }
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
  position:sticky!important;
