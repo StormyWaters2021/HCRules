@@ -1135,11 +1135,18 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
 /* The PAC front uses four unmodified crops of PACCover.png as individual
    expandable category surfaces. The artwork is drawn by SVG, not regenerated. */
 #view .pac-front-accordions{
+ display:flex;
+ flex-direction:column;
  width:100%;
  max-width:690px;
  margin:0 auto;
  padding:0;
- gap:0;
+ gap:0!important;
+}
+/* Let adjacent collapsed PAC images overlap slightly at their angled edges.
+   Expanded sections keep their full size and sticky behavior. */
+#view .pac-front-accordions > .pac-front-section:not([open]) + .pac-front-section:not([open]){
+ margin-top:clamp(-12px,-1.5vw,-6px)!important;
 }
 #view .pac-front-accordions > .pac-front-section{
  width:100%;
@@ -1214,6 +1221,14 @@ body.pac-comic-mode{background:#101827!important;background-image:none!important
  height:clamp(30px,4vw,43px);
  background:white;
  cursor:pointer;
+ overflow:hidden;
+}
+#view .pac-front-accordions .combat-icon-circle .combat-stat-icon{
+ width:86%;
+ height:86%;
+ max-width:none;
+ max-height:none;
+ object-fit:contain;
 }
 #view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
  position:sticky!important;
