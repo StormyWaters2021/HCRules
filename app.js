@@ -422,7 +422,7 @@ function navigateBack(){
 }
 function breadcrumbSteps(){
  const steps=[];
- if(mode==='home')return steps;
+ if(mode==='home'||mode==='tools')return steps;
  if(mode==='rules'){
   steps.push({label:'Comprehensive Rules',path:[]});
   const chapter=path.find(k=>k.startsWith('chapter:'))?.slice(8);
@@ -448,7 +448,7 @@ function breadcrumbSteps(){
 function hierarchy(){
  const nav=$('breadcrumbs');nav.replaceChildren();
 
- if(visited.length||path.length)nav.append(button('‹ Back',navigateBack,'back'));
+ if(visited.length||path.length||mode==='tools')nav.append(button('‹ Back',navigateBack,'back'));
  const steps=breadcrumbSteps();
  // The reverse-side landing page has no breadcrumb trail; detail pages keep theirs.
  if(mode==='pac'&&path.at(-1)==='back-index')return;
@@ -560,7 +560,7 @@ function showHome(){
  const panels=[
   {name:'Comprehensive Rules',points:'58,535 698,594 711,1240 58,1310',open:()=>visitLocation('rules',[])},
   {name:'PAC',points:'713,594 1362,688 1362,1207 711,1240',open:()=>visitLocation('pac',[])},
-  {name:'Team Abilities',points:'58,1322 710,1257 745,1914 58,1914',open:()=>goTarget('rule','19.4')},
+  {name:'Game Tools',points:'58,1322 710,1257 745,1914 58,1914',open:()=>visitLocation('tools',[])},
   {name:'Contact',points:'714,1257 1362,1210 1362,1914 747,1914',open:()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer')}
  ];
  for(const panel of panels){
@@ -581,7 +581,7 @@ function showHome(){
  fallback.append(E('div','comic-home-mast','CLIX RULES!'));
  fallback.append(comicPanel('Comprehensive Rules','rules',()=>visitLocation('rules',[])));
  fallback.append(comicPanel('PAC','pac',()=>visitLocation('pac',[])));
- fallback.append(comicPanel('Team Abilities','team',()=>goTarget('rule','19.4')));
+ fallback.append(comicPanel('Game Tools','team',()=>visitLocation('tools',[])));
  fallback.append(comicPanel('Contact','contact',()=>window.open('https://github.com/StormyWaters2021/HCRules/issues/new','_blank','noopener,noreferrer')));
  cover.onload=()=>{imageLayer.hidden=false;fallback.hidden=true};
  cover.onerror=()=>{imageLayer.hidden=true;fallback.hidden=false};
@@ -621,6 +621,143 @@ function showPacFilteredAbilities(){
  }
  $('view').append(wrapper);
 }
+
+/* Game Tools: persistent turn tracker and quick dice. */
+const GAME_TOOLS_KEY='clixrules:ability-tracker:v1';
+const TRACKER_POWERS=['Sidestep','Poison','Willpower','Probability Control','Perplex','Outwit','Leadership','Special'];
+let gameToolRows=[];
+let gameDiceResult=null;
+let gameToolNextId=1;
+function readGameToolRows(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(GAME_TOOLS_KEY)||'[]');
+  if(Array.isArray(saved))gameToolRows=saved.filter(x=>x&&TRACKER_POWERS.includes(x.ability)).map(x=>({id:String(x.id),ability:x.ability,character:String(x.character||'').slice(0,100),used:!!x.used}));
+ }catch(_err){gameToolRows=[]}
+}
+function saveGameToolRows(){
+ try{localStorage.setItem(GAME_TOOLS_KEY,JSON.stringify(gameToolRows))}catch(_err){}
+}
+function trackerPower(name){return db.pac.find(p=>p.name===name)}
+function trackerIcon(name){
+ if(name==='Special'){
+  const circle=E('span','game-special-icon','★');circle.setAttribute('aria-label','Special ability');return circle;
+ }
+ const p=trackerPower(name);
+ if(!p)return E('span','game-special-icon','★');
+ const circle=E('span','game-ability-icon');
+ circle.style.background=p.color;
+ const icon=E('img');icon.src=p.icon;icon.alt='';icon.loading='lazy';circle.append(icon);
+ return circle;
+}
+function dieIcon(sides){
+ const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+ svg.setAttribute('viewBox','0 0 64 64');
+ svg.setAttribute('aria-hidden','true');
+ const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+ const shapes={6:'12,8 52,8 57,49 48,57 10,57 7,49',8:'32,3 59,32 32,61 5,32',20:'32,3 58,21 49,51 32,61 15,51 6,21'};
+ poly.setAttribute('points',shapes[sides]);poly.setAttribute('fill','#f8f8f8');
+ poly.setAttribute('stroke','#101010');poly.setAttribute('stroke-width','3');
+ const text=document.createElementNS('http://www.w3.org/2000/svg','text');
+ text.setAttribute('x','32');text.setAttribute('y','39');text.setAttribute('text-anchor','middle');text.setAttribute('font-size','20');text.setAttribute('font-weight','900');text.setAttribute('fill','#151515');
+ text.textContent=String(sides);
+ svg.append(poly,text);return svg;
+}
+function rollGameDie(sides){
+ const roll=()=>Math.floor(Math.random()*sides)+1;
+ if(sides===6){const a=roll(),b=roll();gameDiceResult={sides,a,b,total:a+b}}
+ else gameDiceResult={sides,a:roll()};
+ renderGameDiceResult();
+}
+function renderGameDiceResult(){
+ const host=document.getElementById('gameDiceResult');if(!host)return;
+ host.replaceChildren();
+ if(!gameDiceResult){host.append(E('p','game-tools-hint','Select a die to roll.'));return}
+ const r=gameDiceResult;
+ if(r.sides===6){
+  const single=E('div','game-dice-result-item');
+  single.append(E('span','game-dice-caption','Single Die'),E('strong','game-dice-value',String(r.a)));
+  const pair=E('div','game-dice-result-item');
+  pair.append(E('span','game-dice-caption','Two Dice'),E('strong','game-dice-value',r.a+' + '+r.b+' = '+r.total));
+  host.append(single,pair);
+ }else{
+  const item=E('div','game-dice-result-item');
+  item.append(E('span','game-dice-caption','d'+r.sides+' Result'),E('strong','game-dice-value',String(r.a)));
+  host.append(item);
+ }
+}
+function refreshTrackerRows(){
+ const host=document.getElementById('gameTrackerRows');if(!host)return;
+ host.replaceChildren();
+ if(!gameToolRows.length){host.append(E('p','game-tools-hint','Add an ability to track its use during the game.'));return}
+ for(const item of gameToolRows){
+  const row=E('article','game-tracker-row');
+  const picker=E('details','game-ability-picker');
+  const summary=E('summary','game-ability-selected');
+  summary.append(trackerIcon(item.ability),E('span','',item.ability));
+  picker.append(summary);
+  const options=E('div','game-ability-options');
+  for(const name of TRACKER_POWERS){
+   const option=button('',()=>{
+    item.ability=name;item.used=false;saveGameToolRows();refreshTrackerRows()
+   },'game-ability-option');
+   option.append(trackerIcon(name),E('span','',name));
+   option.setAttribute('aria-label','Select '+name);
+   if(name===item.ability)option.classList.add('selected');
+   options.append(option);
+  }
+  picker.append(options);
+  const character=E('input','game-character');
+  character.type='text';character.placeholder='Character (optional)';character.value=item.character;
+  character.setAttribute('aria-label','Character for '+item.ability);
+  character.maxLength=100;
+  character.addEventListener('input',()=>{item.character=character.value;saveGameToolRows()});
+  const status=button(item.used?'Used':'Unused',()=>{
+   item.used=!item.used;saveGameToolRows();refreshTrackerRows()
+  },'game-use-toggle '+(item.used?'game-use-used':'game-use-unused'));
+  status.setAttribute('aria-pressed',String(item.used));
+  status.title=item.used?'Mark ability unused':'Mark ability used';
+  const remove=button('',()=>{},'game-remove-ability');
+  // Attach directly, rather than using a string callback.
+  remove.onclick=()=>{gameToolRows=gameToolRows.filter(x=>x.id!==item.id);saveGameToolRows();refreshTrackerRows()};
+  remove.textContent='🗑';
+  remove.setAttribute('aria-label','Remove '+item.ability);
+  row.append(picker,character,status,remove);host.append(row);
+ }
+}
+function showGameTools(){
+ setHeading('Game Tools');
+ const host=$('view');
+ const dice=E('section','game-tools-panel comic-reading-panel');dice.dataset.panel='0';
+ dice.append(E('h2','game-tools-title','Dice Roller'));
+ const diceButtons=E('div','game-dice-buttons');
+ for(const sides of [6,8,20]){
+  const btn=button('',()=>rollGameDie(sides),'game-die-button');
+  btn.append(dieIcon(sides),E('span','', 'd'+sides));btn.setAttribute('aria-label','Roll a d'+sides);
+  diceButtons.append(btn);
+ }
+ dice.append(diceButtons);
+ const results=E('div','game-dice-results');results.id='gameDiceResult';dice.append(results);
+ host.append(dice);
+ const tracker=E('section','game-tools-panel comic-reading-panel');tracker.dataset.panel='1';
+ tracker.append(E('h2','game-tools-title','Ability Tracker'));
+ const controls=E('div','game-tracker-actions');
+ controls.append(button('+ Add Ability',()=>{
+  gameToolRows.push({id:String(Date.now())+'-'+gameToolNextId++,ability:'Sidestep',character:'',used:false});
+  saveGameToolRows();refreshTrackerRows()
+ },'game-tools-action game-tools-add'));
+ controls.append(button('Start My Turn',()=>{
+  gameToolRows.forEach(x=>x.used=false);saveGameToolRows();refreshTrackerRows()
+ },'game-tools-action'));
+ controls.append(button('Pass Turn',()=>{
+  gameToolRows.filter(x=>x.ability==='Probability Control').forEach(x=>x.used=false);
+  saveGameToolRows();refreshTrackerRows()
+ },'game-tools-action'));
+ tracker.append(controls);
+ const rows=E('div','game-tracker-rows');rows.id='gameTrackerRows';tracker.append(rows);
+ host.append(tracker);
+ renderGameDiceResult();refreshTrackerRows();
+}
+
 function showPowerList(){
  const current=path.at(-1)||'';
  const selected=current.startsWith('group:')?current.slice(6):null;
@@ -1077,6 +1214,7 @@ function sidebarRow(label,fn,depth=0,selected=false){
 function sidebar(){
  const host=$('sidebarContents');if(!host)return;host.replaceChildren();
  const isPac=mode==='pac';const last=path.at(-1)||'';
+ if(mode==='tools')return;
  if(mode==='home')return;
  $('desktopSidebar').querySelector('.sidebar-title').textContent=isPac?'Powers & Abilities':'Comprehensive Rules';
  if(isPac){
@@ -1118,8 +1256,8 @@ function sidebar(){
  }
 }
 
-function render(){pacReverseTeardown();lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';$('homeSearch').hidden=mode==='home';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
+function render(){pacReverseTeardown();lastVisited=pageSnapshot();const v=$('view');v.replaceChildren();document.body.classList.toggle('home-mode',mode==='home');document.body.classList.toggle('game-tools-mode',mode==='tools');document.body.classList.toggle('pac-comic-mode',mode==='pac'&&path.length===0&&!query);const pacSwitch=$('pacSideSwitch');pacSwitch.hidden=mode!=='pac';$('homeSearch').hidden=mode==='home';const pacBack=mode==='pac'&&((path.at(-1)||'')==='back-index'||(path.at(-1)||'').startsWith('back:'));$('pacFront').classList.toggle('active',!pacBack);$('pacBack').classList.toggle('active',pacBack);$('rulesTab').classList.toggle('chosen',mode==='rules');$('pacTab').classList.toggle('chosen',mode==='pac');$('search').placeholder='Search';$('clear').hidden=!query;hierarchy();sidebar();if(mode==='home'){showHome();return}if(mode==='tools'){showGameTools();return}if(query){showSearch();return}if(mode==='pac'){const key=path.at(-1)||'';if(key.startsWith('power:'))showPower(findPac(key.slice(6)));else if(key==='back-index')showBackIndex();else if(key.startsWith('back:'))showBack(findBack(key.slice(5)));else showPowerList();return}
  const key=path.at(-1)||'';if(key.startsWith('rule:'))showRule(byId(key.slice(5)));else if(key.startsWith('section:'))showSection(key.slice(8));else if(key.startsWith('chapter:'))showChapter(key.slice(8));else showChapters()}
-async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();$('homeSearch').onclick=()=>visitLocation('home',[]);$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
+async function init(){try{[db,glyphMap,symbolRegistry]=await Promise.all([fetch('data.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('glyph-map.json?v=20261105-terrain-shared1').then(r=>r.json()),fetch('symbols.json?v=20261105-terrain-shared1').then(r=>r.json())])}catch(e){$('view').textContent='Could not load rule data. Open through GitHub Pages or a local HTTP server.';return}buildAbilityIndex();initLinks();readGameToolRows();$('homeSearch').onclick=()=>visitLocation('home',[]);$('rulesTab').onclick=()=>visitLocation('rules',[]);$('pacTab').onclick=()=>visitLocation('pac',[]);$('pacFront').onclick=()=>{mode='pac';move([])};$('pacBack').onclick=()=>{mode='pac';move(['back-index'])};$('search').oninput=e=>{query=low(e.target.value.trim());render()};$('clear').onclick=()=>{query='';$('search').value='';render()};const hash=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools'].includes(hash[0])){mode=hash[0];if(hash[1]){const k=hash[1];if(k.startsWith('rule:')){const id=k.slice(5);const s=byId(id);if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(k)}}else path=[k==='back:back-3'?'back:back-2':k]}}render();window.addEventListener('popstate',()=>{const h=decodeURIComponent(location.hash.slice(1)).split('/');if(['rules','pac','home','tools'].includes(h[0])){mode=h[0];path=h[1]?[h[1]==='back:back-3'?'back:back-2':h[1]]:[];if(h[1]?.startsWith('rule:')){const s=byId(h[1].slice(5));if(s){path=['chapter:'+s.chapter];if(s.level>=2){const parent=s.id.match(/^\d+\.\d+/)?.[0];if(parent)path.push('section:'+parent)}path.push(h[1])}}visited=[];render()}})}init();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('symbolOverlay')?.remove()});
