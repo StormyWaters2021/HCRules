@@ -1982,11 +1982,11 @@ body.game-tools-mode #context{text-align:center}
 .game-ability-selected::-webkit-details-marker{display:none}
 .game-ability-selected::after{content:"▾";margin-left:auto;font:18px var(--reading-font)}
 .game-ability-options{
- position:absolute;
- top:calc(100% + 2px);
- left:0;
- width:max(100%,230px);
- max-width:min(315px,80vw);
+ position:relative;
+ top:auto;
+ left:auto;
+ width:100%;
+ max-width:none;
  max-height:290px;
  overflow:auto;
  z-index:25;
@@ -2075,7 +2075,7 @@ body.game-tools-mode #context{text-align:center}
  .game-character{grid-column:1/-1;grid-row:2}
  .game-use-toggle{grid-column:2;grid-row:1}
  .game-remove-ability{grid-column:3;grid-row:1}
- .game-ability-options{max-width:min(315px,88vw)}
+ .game-ability-options{max-width:none}
  .game-die-button{min-height:83px}
  .game-die-button svg{width:48px;height:48px}
 }
