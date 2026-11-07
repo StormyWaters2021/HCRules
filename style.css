@@ -1,4 +1,4 @@
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#101827;color:#f2f5fb;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}.header{position:sticky;top:0;z-index:10;min-height:60px;padding:10px max(14px,env(safe-area-inset-left));background:#172233;border-bottom:1px solid #334255;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:9px;font-size:16px;white-space:nowrap}.brand-logo{width:31px;height:31px;background:#cf3340;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:850}.mode-toggle{display:flex;gap:3px;background:#0b1524;padding:4px;border-radius:11px;border:1px solid #35485c}.mode-toggle button{border:0;border-radius:8px;color:#c4cedb;background:transparent;padding:9px 15px;font-weight:750;font-size:13px;cursor:pointer}.mode-toggle button.chosen{background:#db4551;color:#fff}.search-area{position:sticky;top:60px;z-index:9;background:#101827;padding:10px 14px 8px;border-bottom:1px solid #2c3b4e}.search-frame{display:flex;align-items:center;gap:9px;background:#222f41;border:1px solid #495a70;border-radius:12px;padding:0 12px;max-width:740px;height:48px;margin:auto}.search-frame:focus-within{border-color:#ff858b}.search-frame>span{font-size:28px;color:#b6c3d1}.search-frame input{background:transparent;color:#fff;font:inherit;outline:0;border:0;min-width:0;flex:1}.search-frame input::placeholder{color:#acb8c9}.search-frame button{font-size:24px;color:#d5dce7;border:0;background:transparent;cursor:pointer}main{padding:12px 15px 70px;max-width:760px;margin:auto}.breadcrumbs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-height:12px}.back{background:#27364a;border:1px solid #51647b;color:#eff5fa;padding:10px 15px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}.context{margin:14px 0 16px;text-align:center}.context .eyebrow{font-size:11px;color:#f3a1a5;text-transform:uppercase;font-weight:850;letter-spacing:1.4px}.context h1{margin:5px 0;font-size:clamp(22px,5vw,31px);line-height:1.25}.context p{font-size:13px;color:#a9bacc;margin:6px 0}.view{max-width:660px;margin:auto}.stack{display:flex;flex-direction:column;gap:10px;align-items:stretch}.entry{display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;color:#f6f7fb;background:#223249;border:1px solid #415874;border-radius:13px;min-height:64px;padding:14px 15px;font:inherit;box-shadow:0 3px 7px #0002;width:100%;transition:background .15s}.entry:hover,.entry:focus-visible{background:#314762;outline:1px solid #8fa8c3}.entry .num{color:#f28a90;font-size:13px;font-weight:850;min-width:46px}.entry .label{flex:1;font-weight:700}.entry .chevron{font-size:23px;color:#97acc3}.entry small{font-size:12px;color:#b2c4d7;display:block}.chapter.entry{min-height:74px}.chapter .num{font-size:17px}.group-head{margin:25px 0 10px;padding:10px 12px;background:#2c3a4e;border-left:5px solid #db4551;font-size:17px;font-weight:850;border-radius:4px}.group-head:first-child{margin-top:0}.group-head.speed{border-color:#e8434c}.group-head.attack{border-color:#f7b52c}.group-head.defense{border-color:#3ea7e6}.group-head.damage{border-color:#44bc78}.power.entry{min-height:70px}.power-image{width:49px;height:49px;object-fit:contain;flex:0 0 49px;border-radius:50%;background:#fff}.power-text{flex:1;min-width:0;font-weight:800}.power .category{display:block;font-size:11px;color:#afc1d5;font-weight:600}.rule-paper{background:#f8fafc;color:#111923;border-radius:13px;padding:22px 19px;white-space:normal;box-shadow:0 8px 28px #0005;font-size:16px;line-height:1.68}.verbatim{white-space:pre-wrap;overflow-wrap:anywhere}.verbatim a{color:#125ab0;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;font-weight:650}.verbatim a:hover{color:#a52338}.inline-graphic{display:inline-block;vertical-align:middle;object-fit:contain;max-height:52px;max-width:85px;margin:0 3px}.symbol-inline{display:inline-block;vertical-align:middle;object-fit:contain;width:25px;height:25px;background:#32465d;border-radius:4px;margin:0 3px;padding:2px}.rule-tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.small-action{background:#25384d;color:white;border:1px solid #58718b;padding:8px 11px;border-radius:8px;cursor:pointer;font-size:12px}.rule-paper .crosslink{cursor:pointer}.pac-article{margin-bottom:12px}.pac-article .rule-paper{padding:22px 18px}.pac-title{display:flex;align-items:center;gap:12px;margin:0 0 13px}.pac-title img{width:58px;height:58px;object-fit:contain;background:white;border-radius:50%}.pac-title h2{margin:0;font-size:22px}.note{font-size:13px;color:#b7c8d9;line-height:1.5;margin:10px 0 16px}.reference{margin-top:16px}.reference .entry{margin:8px 0}.terrain-swatch{width:34px;height:18px;flex:none;border-radius:3px;border:1px solid #fff6}.symbol-strip{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:9px 0 12px}.symbol-strip img{width:45px;height:45px;object-fit:contain;background:#364c63;border-radius:9px;padding:7px}.empty{padding:25px;text-align:center;color:#b3c0d1}.search-result{border-left:3px solid #e16c74}.source-label{color:#76899f;font-size:12px}.footer{color:#99a9bc;text-align:center;font-size:12px;margin:24px 0}.panel-accordion{border:1px solid #4d6278;background:#233449;border-radius:12px;overflow:hidden;margin-bottom:9px}.panel-accordion summary{cursor:pointer;padding:16px 18px;font-weight:750}.panel-accordion[open] summary{border-bottom:1px solid #52667c}.panel-accordion .rule-paper{border-radius:0}.search-result .num{min-width:40px}@media(min-width:800px){.header{padding-left:28px;padding-right:28px}main{padding-top:24px}.entry{min-height:72px}.rule-paper{padding:30px 32px}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#101827;color:#f2f5fb;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}.header{position:sticky;top:0;z-index:10;min-height:60px;padding:10px max(14px,env(safe-area-inset-left));background:#172233;border-bottom:1px solid #334255;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:9px;font-size:16px;white-space:nowrap}.brand-logo{width:31px;height:31px;background:#cf3340;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:850}.mode-toggle{display:flex;gap:3px;background:#0b1524;padding:4px;border-radius:11px;border:1px solid #35485c}.mode-toggle button{border:0;border-radius:8px;color:#c4cedb;background:transparent;padding:9px 15px;font-weight:750;font-size:13px;cursor:pointer}.mode-toggle button.chosen{background:#db4551;color:#fff}.search-area{position:sticky;top:60px;z-index:9;background:#101827;padding:10px 14px 8px;border-bottom:1px solid #2c3b4e}.search-frame{display:flex;align-items:center;gap:9px;background:#222f41;border:1px solid #495a70;border-radius:12px;padding:0 12px;max-width:740px;height:48px;margin:auto}.search-frame:focus-within{border-color:#ff858b}.search-frame>span{font-size:28px;color:#b6c3d1}.search-frame input{background:transparent;color:#fff;font:inherit;outline:0;border:0;min-width:0;flex:1}.search-frame input::placeholder{color:#acb8c9}.search-frame button{font-size:24px;color:#d5dce7;border:0;background:transparent;cursor:pointer}main{padding:12px 15px 70px;max-width:760px;margin:auto}.breadcrumbs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-height:12px}.back{background:#27364a;border:1px solid #51647b;color:#eff5fa;padding:10px 15px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}.context{margin:14px 0 16px;text-align:center}.context .eyebrow{font-size:11px;color:#f3a1a5;text-transform:uppercase;font-weight:850;letter-spacing:1.4px}.context h1{margin:5px 0;font-size:clamp(22px,5vw,31px);line-height:1.25}.context p{font-size:13px;color:#a9bacc;margin:6px 0}.view{max-width:660px;margin:auto}.stack{display:flex;flex-direction:column;gap:10px;align-items:stretch}.entry{display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;color:#f6f7fb;background:#223249;border:1px solid #415874;border-radius:13px;min-height:64px;padding:14px 15px;font:inherit;box-shadow:0 3px 7px #0002;width:100%;transition:background .15s}.entry:hover,.entry:focus-visible{background:#314762;outline:1px solid #8fa8c3}.entry .num{color:#f28a90;font-size:13px;font-weight:850;min-width:46px}.entry .label{flex:1;font-weight:700}.entry .chevron{font-size:23px;color:#97acc3}.entry small{font-size:12px;color:#b2c4d7;display:block}.chapter.entry{min-height:74px}.chapter .num{font-size:17px}.group-head{margin:25px 0 10px;padding:10px 12px;background:#2c3a4e;border-left:5px solid #db4551;font-size:17px;font-weight:850;border-radius:4px}.group-head:first-child{margin-top:0}.group-head.speed{border-color:#e8434c}.group-head.attack{border-color:#f7b52c}.group-head.defense{border-color:#3ea7e6}.group-head.damage{border-color:#44bc78}.power.entry{min-height:70px}.power-image{width:49px;height:49px;object-fit:contain;flex:0 0 49px;border-radius:50%;background:#fff}.power-text{flex:1;min-width:0;font-weight:800}.power .category{display:block;font-size:11px;color:#afc1d5;font-weight:600}.rule-paper{background:#f8fafc;color:#111923;border-radius:13px;padding:22px 19px;white-space:normal;box-shadow:0 8px 28px #0005;font-size:16px;line-height:1.68}.verbatim{white-space:pre-wrap;overflow-wrap:anywhere}.verbatim a{color:#125ab0;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;font-weight:650}.verbatim a:hover{color:#a52338}.inline-graphic{display:inline-block;vertical-align:middle;object-fit:contain;max-height:52px;max-width:85px;margin:0 3px}.symbol-inline{display:inline-block;vertical-align:middle;object-fit:contain;width:25px;height:25px;background:#32465d;border-radius:4px;margin:0 3px;padding:2px}.rule-tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.small-action{background:#25384d;color:white;border:1px solid #58718b;padding:8px 11px;border-radius:8px;cursor:pointer;font-size:12px}.rule-paper .crosslink{cursor:pointer}.pac-article{margin-bottom:12px}.pac-article .rule-paper{padding:22px 18px}.pac-title{display:flex;align-items:center;gap:12px;margin:0 0 13px}.pac-title img{width:58px;height:58px;object-fit:contain;background:white;border-radius:50%}.pac-title h2{margin:0;font-size:22px}.note{font-size:13px;color:#b7c8d9;line-height:1.5;margin:10px 0 16px}.reference{margin-top:16px}.reference .entry{margin:8px 0}.terrain-swatch{width:34px;height:18px;flex:none;border-radius:3px;border:1px solid #fff6}.symbol-strip{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:9px 0 12px}.symbol-strip img{width:45px;height:45px;object-fit:contain;background:#364c63;border-radius:9px;padding:7px}.empty{padding:25px;text-align:center;color:#b3c0d1}.search-result{border-left:3px solid #e16c74}.source-label{color:#76899f;font-size:12px}.footer{color:#99a9bc;text-align:center;font-size:12px;margin:24px 0}.search-result .num{min-width:40px}@media(min-width:800px){.header{padding-left:28px;padding-right:28px}main{padding-top:24px}.entry{min-height:72px}.rule-paper{padding:30px 32px}}
 /* v2: Symbol-first, readable on mobile, with no tiny cropped PAC artwork. */
 .power-symbol{--power-color:#777;flex:0 0 52px;width:52px;height:52px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--power-color);border:3px solid rgba(255,255,255,.88);box-shadow:0 2px 6px #0006,inset 0 0 0 2px #0003}
 .power-symbol img{width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 1px 1px #0009)}
@@ -173,26 +173,54 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .combat-stat-icon{width:27px;height:27px;display:block;object-fit:contain;background:transparent}
 .power-group-heading .group-count{margin-left:auto}
 @media(max-width:460px){.combat-icon-circle{width:33px;height:33px}.combat-stat-icon{width:24px;height:24px}.group-symbols{gap:4px}.crumb-trail{font-size:12px;padding:8px}}
-/* Shared inline reference system: the browser decides wrapping, never PDF coordinates. */
-.inline-symbol-button{display:inline-flex;align-items:center;justify-content:center;vertical-align:-.22em;margin:0 .14em;padding:2px;min-width:1.45em;height:1.55em;max-width:2.4em;border:1px solid #617890;border-radius:5px;background:#dfe9f2;color:#111923;cursor:pointer;white-space:nowrap;line-height:1}
-.inline-symbol-button:focus-visible,.combat-icon-circle:focus-visible,.pac-source-heading:focus-visible{outline:3px solid #f7b75e;outline-offset:2px}
-.symbol-art{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
+/* Inline icon rhythm: one centered 1.85em line box for every type.
+   Images keep their native aspect ratio but no longer sit on mixed baselines. */
+.inline-symbol-button{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ width:auto;
+ height:1.85em;
+ min-width:1.85em;
+ max-width:none;
+ padding:0;
+ margin:0 .10em;
+ border:0;
+ border-radius:0;
+ background:transparent;
+ box-shadow:none;
+ color:inherit;
+ line-height:1;
+ white-space:nowrap;
+ vertical-align:-.48em;
+ cursor:pointer;
+}
+.inline-symbol-button .symbol-art,
+.inline-symbol-button.improved-symbol .symbol-art,
+.inline-symbol-button.combat-symbol .symbol-art{
+ display:block;
+ flex:none;
+ width:auto;
+ height:1.7em;
+ max-width:2.45em;
+ object-fit:contain;
+ object-position:center;
+ background:transparent;
+}
+.inline-symbol-button:focus-visible,.combat-icon-circle:focus-visible,
+.pac-source-heading:focus-visible{outline:2px solid #f7b75e;outline-offset:2px}
 .symbol-text-fallback{font-size:.62em;font-weight:bold;line-height:1.05}
 .unknown-symbol{color:#ffb0b0;background:#5d2533;border-radius:4px;padding:2px}
 .structured-content .rule-paragraph{margin:0 0 .7em}
 .structured-content .rule-bullets{margin:.5em 0;padding-inline-start:1.5em;list-style-type:square}
 .structured-content .rule-bullets li{margin:.55em 0;white-space:normal}
 .symbol-overlay{position:fixed;inset:0;z-index:200;background:#050a13c9;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
-.symbol-dialog{background:#223246;color:#edf4ff;border:1px solid #647d97;border-radius:16px;width:min(100%,640px);max-height:min(90dvh,900px);overflow:auto;padding:18px;box-shadow:0 18px 50px #000b}
+.symbol-dialog{position:relative;isolation:isolate;background:#101010;color:#edf4ff;border:1px solid #777;border-radius:7px;width:min(100%,640px);max-height:min(90dvh,900px);overflow:auto;padding:18px;box-shadow:0 18px 50px #000b}
+.symbol-dialog::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url("assets/comic-background.webp") center center/cover no-repeat;filter:grayscale(1) brightness(.29) contrast(.82)}
 .symbol-dialog-header{display:flex;align-items:center;gap:15px;margin-bottom:17px}
 .dialog-symbol{width:55px;height:55px;object-fit:contain;background:#f2f6fa;border-radius:9px;padding:8px}
 .symbol-dialog-header h2{margin:0;font-size:clamp(19px,4vw,25px);line-height:1.25;flex:1}
-.symbol-close{background:#364c64;color:#fff;font-weight:bold;border:1px solid #637b94;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:16px}
-.symbol-ref-detail{border:1px solid #4e6780;border-radius:10px;margin:9px 0;background:#192737;overflow:hidden}
-.symbol-ref-title{cursor:pointer;padding:13px 15px;font-weight:700;line-height:1.4}
-.symbol-ref-detail[open]>.symbol-ref-title{border-bottom:1px solid #4e6780}
-.symbol-ref-content{padding:14px 16px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
-.symbol-ref-content a{color:#82c9ff}
+.symbol-close{background:#252525;color:#fff;font-weight:bold;border:1px solid #858585;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:16px}
 .symbol-empty{color:#bfd2e5}
 /* Narrow, content aligned PAC toggle. */
 .pac-side-switch,.pac-side-switch:not([hidden]){width:174px!important;max-width:174px!important;min-width:0!important;flex:none!important;margin-left:max(0px,calc((100% - 660px)/2))!important;margin-right:0!important}
@@ -201,43 +229,10 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .improved-source-row:last-child{border-bottom:0}
 .improved-source-row h4{margin:7px 0 3px;font-size:15px;color:#ffd2d4}
 
-/* 2026-11-05: rule-symbol artwork stays inline without a white box. */
-.inline-symbol-button{background:transparent;border:0;border-radius:0;padding:0;margin:0 .12em;min-width:1.48em;height:1.65em;max-width:none;vertical-align:-.36em;box-shadow:none;color:inherit}
-.inline-symbol-button .symbol-art{width:1.48em;height:1.48em;max-width:none;object-fit:contain}
-.inline-symbol-button.monochrome-symbol .symbol-art{filter:brightness(0) invert(1)}
-.inline-symbol-button.improved-symbol .symbol-art{width:1.62em;height:1.62em}
-.inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:2px;border-radius:4px}
-.symbol-ref-detail[open]>.symbol-ref-title{border-bottom:1px solid #4e6780}
-
-/* Icon token behavior is independent from artwork display.
-   Never apply brightness/invert to original colored icons. */
-.inline-symbol-button,
-.inline-symbol-button.monochrome-symbol,
-.inline-symbol-button.improved-symbol,
-.inline-symbol-button.combat-symbol,
-.inline-symbol-button.default-symbol{
-  display:inline-flex;align-items:center;justify-content:center;
-  vertical-align:-.38em;line-height:1;padding:0;margin:0 .11em;
-  border:0;background:transparent;border-radius:0;
-  min-width:0;max-width:none;height:auto;box-shadow:none;
-  white-space:nowrap;cursor:pointer;
-}
-.inline-symbol-button .symbol-art,
-.inline-symbol-button.monochrome-symbol .symbol-art,
-.inline-symbol-button.improved-symbol .symbol-art,
-.inline-symbol-button.combat-symbol .symbol-art{
-  display:block;width:auto;height:1.82em;max-width:2.35em;
-  object-fit:contain;background:transparent;
-  filter:none!important;
-}
-.inline-symbol-button.improved-symbol .symbol-art{height:2.08em;max-width:2.15em}
-.inline-symbol-button.combat-symbol .symbol-art{height:1.78em;max-width:2.2em}
-.inline-symbol-button:focus-visible{outline:2px solid #f7b75e;outline-offset:3px;border-radius:3px}
-
 /* Symbol reference previews: show light glyphs on a dark panel, not a pale tile. */
 .symbol-dialog .dialog-symbol{
-  background:#172536;
-  border:1px solid #435c76;
+  background:#181818;
+  border:1px solid #777;
   padding:8px;
   width:64px;
   height:64px;
@@ -263,18 +258,38 @@ img.rule-glyph{display:inline-block!important;font-family:inherit!important;vert
 .shared-terrain-values .symbol-art{max-width:none}
 
 
-/* Editorial refresh: comic-book navigation, quiet reference typography.
-   Back Issues is only used if licensed and installed on the visitor's device.
-   No third-party font file is redistributed by this website. */
+/* Comic Book by Pixel Sagas. Font files are supplied separately by the site owner.
+   The regular, bold, italic and bold italic faces use the original file names. */
 @font-face{
-  font-family:"Back Issues Local";
-  src:local("Back Issues BB"),local("BackIssuesBB Regular"),local("BackIssuesBB_reg");
+  font-family:"Comic Book Site";
+  src:local("Comic Book"),url("assets/fonts/Comic Book.otf") format("opentype");
   font-style:normal;
-  font-weight:400 900;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Comic Book Site";
+  src:local("Comic Book Bold"),url("assets/fonts/Comic Book Bold.otf") format("opentype");
+  font-style:normal;
+  font-weight:700 900;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Comic Book Site";
+  src:local("Comic Book Italic"),url("assets/fonts/Comic Book Italic.otf") format("opentype");
+  font-style:italic;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Comic Book Site";
+  src:local("Comic Book Bold Italic"),url("assets/fonts/Comic Book Bold Italic.otf") format("opentype");
+  font-style:italic;
+  font-weight:700 900;
   font-display:swap;
 }
 :root{
-  --display-font:"Back Issues Local","Trebuchet MS",Verdana,sans-serif;
+  --display-font:"Comic Book Site","Trebuchet MS",Verdana,sans-serif;
   --reading-font:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   --ink:#0e1725;
   --panel:#1a293b;
@@ -289,7 +304,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .entry .label,.entry .num,.back,.mode-toggle button,.pac-side-switch button,
 .sidebar-power-heading,.keyphrase-heading h2,.inherent-entry h2,
 .improved-cell h2,.pac-title h2,.symbol-dialog-header h2,
-.symbol-ref-title,.sidebar-group{
+.symbol-reference-title,.sidebar-group{
   font-family:var(--display-font);
 }
 .brand{font-size:19px;letter-spacing:.015em}
@@ -303,7 +318,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .mode-toggle button,.pac-side-switch button{border-radius:3px!important;letter-spacing:.025em}
 .back,.small-action{border-radius:4px;background:#24354a;box-shadow:none}
 .back:hover,.small-action:hover{background:#354960}
-.entry,.power-group,.terrain-detail,.panel-accordion,.improved-row,.keyphrase-entry,
+.entry,.power-group,.terrain-detail,.improved-row,.keyphrase-entry,
 .terrain-value-entry{border-radius:5px;box-shadow:none}
 .entry{background:#1d2d42;border:1px solid #3a536b;border-left:3px solid #506982}
 .entry:hover,.entry:focus-visible{background:#283c53;outline:1px solid #7a9bb7}
@@ -314,7 +329,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .rule-paper{background:var(--rule-panel);border:1px solid #3d5269;border-radius:5px;box-shadow:none;font-family:var(--reading-font)}
 .rule-paper .verbatim,.rule-paper .structured-content,
 .rule-paper .structured-content *,.rule-paper .rule-paragraph,
-.symbol-ref-content,.symbol-ref-content *,.terrain-rule .verbatim{
+.symbol-reference-text,.symbol-reference-text *,.terrain-rule .verbatim{
   font-family:var(--reading-font);
 }
 .power-group{background:var(--panel);border-color:var(--stroke);overflow:hidden}
@@ -338,7 +353,6 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .desktop-sidebar{border-radius:5px;box-shadow:none}
 .sidebar-item.active{box-shadow:inset 3px 0 #e35460}
 .symbol-dialog{border-radius:7px;box-shadow:0 16px 45px #0008}
-.symbol-ref-detail{border-radius:4px}
 .crumb-trail{border-radius:4px;background:#1a2a3e}
 
 /* Shared navigation row: Back first, compact PAC Front/Back beside it.
@@ -504,7 +518,7 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
 .search-area{
   position:sticky;
   top:0;
-  z-index:15;
+  z-index:100;
   padding:10px max(12px,env(safe-area-inset-left)) 10px;
   background:#0e1725;
   border-bottom:1px solid #35485f;
@@ -553,4 +567,1641 @@ body{background:var(--ink);font-family:var(--reading-font);letter-spacing:0}
     padding:7px 9px;
     font-size:12px;
   }
+}
+
+
+/* Three-way Rules / PAC / Tools switch remains visible on Game Tools. */
+@media(max-width:520px){
+ .search-controls .mode-toggle button{
+  min-width:0;
+  padding:7px 8px;
+ }
+}
+@media(max-width:390px){
+ .search-controls .mode-toggle button{
+  font-size:11px;
+  padding:7px 6px;
+ }
+ .search-controls .mode-toggle{gap:1px;padding:2px}
+}
+
+/* Consistent, high-contrast text references across the rules and PAC. */
+:root{--reference-link:#bfeaff;--reference-link-hover:#ffffff}
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a,
+.crumb-link{
+  color:var(--reference-link);
+  font-weight:600;
+  text-decoration-line:underline;
+  text-decoration-style:solid;
+  text-decoration-thickness:1px;
+  text-decoration-color:currentColor;
+  text-underline-offset:3px;
+}
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a:hover,
+.crumb-link:hover{
+  color:var(--reference-link-hover);
+  text-decoration-thickness:2px;
+}
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a:focus-visible,
+.crumb-link:focus-visible{color:#fff;outline:2px solid #ffcf65;outline-offset:3px}
+:is(.view,.rule-paper,.symbol-reference-text,.terrain-value-description,.terrain-content,.breadcrumbs) a:visited{color:var(--reference-link)}
+
+/* Wall swatch: centered black stripe at one quarter of the swatch height. */
+.terrain-swatch-wall{position:relative;overflow:hidden}
+.terrain-swatch-wall::after{
+  content:"";
+  position:absolute;
+  display:block;
+  left:0;right:0;top:37.5%;
+  height:25%;
+  background:#090909;
+  pointer-events:none;
+}
+
+
+/* Comic panel home and PAC front; all illustrations use real CSS, not page images. */
+body.home-mode{background:#121212}
+body.home-mode .search-area,
+body.home-mode .navigation-bar,
+body.home-mode #context,
+body.home-mode .desktop-sidebar{display:none!important}
+body.home-mode .desktop-layout{display:block;max-width:none;padding:0}
+body.home-mode main{max-width:none;padding:0 14px 28px;margin:0 auto}
+body.home-mode .view{max-width:520px}
+.comic-home{
+  background:#121212;
+  padding:8px;
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  grid-template-rows:minmax(120px,1.2fr) minmax(180px,1.45fr) minmax(170px,1.25fr);
+  gap:0;
+  width:100%;
+  max-width:510px;
+  min-height:min(92dvh,720px);
+  margin:0 auto;
+}
+.comic-home-mast{
+  grid-column:1/-1;grid-row:1;
+  clip-path:polygon(1% 1%,99% 1%,99% 96%,1% 87%);
+  display:flex;align-items:center;justify-content:center;
+  padding:18px 24px 30px;
+  background:#f4f2ed;color:#171717;
+  border:0;font:900 clamp(2.15rem,7.8vw,3.5rem)/1 var(--display-font);
+  letter-spacing:.02em;text-align:center;
+}
+.comic-panel{
+  appearance:none;
+  position:relative;
+  border:0;
+  margin:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px 18px;
+  width:100%;height:100%;
+  background:#f4f2ed;color:#161719;
+  font:800 clamp(1.25rem,5vw,1.9rem)/1.15 var(--display-font);
+  text-align:center;
+  cursor:pointer;
+  transition:background .14s ease,filter .14s ease;
+  overflow:hidden;
+}
+.comic-panel:hover{background:#e2e8ef}
+.comic-panel:active{background:#d7dce2}
+.comic-panel:focus-visible{outline:4px solid #ffb94b;outline-offset:-7px;z-index:1}
+.comic-home .comic-panel-rules{
+  grid-column:1;grid-row:2;
+  padding:26px 35px 18px 12px;
+  clip-path:polygon(1% 0%,85% 8%,100% 79%,0% 99%);
+}
+.comic-home .comic-panel-pac{
+  grid-column:2;grid-row:2;
+  padding:38px 12px 20px 22px;
+  clip-path:polygon(0% 8%,99% 0%,99% 98%,14% 98%);
+}
+.comic-home .comic-panel-team{
+  grid-column:1;grid-row:3;
+  padding:22px 20px;
+  clip-path:polygon(0% 3%,100% 0%,99% 99%,0% 99%);
+}
+.comic-home .comic-panel-contact{
+  grid-column:2;grid-row:3;
+  clip-path:polygon(11% 3%,99% 3%,99% 99%,0% 99%);
+}
+.comic-home .comic-panel-rules,
+.comic-home .comic-panel-team{
+  border-left:0;
+}
+.comic-pac{
+  background:#111;
+  padding:6px;
+  display:grid;
+  grid-template-rows:repeat(4,minmax(112px,1fr));
+  width:100%;
+  max-width:680px;
+  min-height:min(70dvh,650px);
+  margin:0 auto 22px;
+}
+.comic-pac .comic-panel{font-size:clamp(1.7rem,5vw,2.4rem)}
+.comic-pac .comic-panel-stat-speed{
+  clip-path:polygon(0% 0%,100% 0%,100% 97%,0% 80%);
+  padding-bottom:27px;
+}
+.comic-pac .comic-panel-stat-attack{
+  clip-path:polygon(0% 0%,100% 20%,100% 98%,0% 78%);
+}
+.comic-pac .comic-panel-stat-defense{
+  clip-path:polygon(0% 0%,100% 23%,100% 82%,0% 99%);
+}
+.comic-pac .comic-panel-stat-damage{
+  clip-path:polygon(0% 18%,100% 1%,100% 100%,0% 100%);
+  padding-top:25px;
+}
+@media(min-width:1050px){
+  body.home-mode .desktop-layout{padding:0}
+  body.home-mode main{padding:10px 20px 30px}
+  .comic-home{min-height:min(89dvh,780px)}
+}
+@media(max-width:480px){
+  body.home-mode main{padding:0 8px 18px}
+  .comic-home{padding:6px;min-height:min(88dvh,650px)}
+  .comic-home-mast{font-size:clamp(2rem,9vw,2.8rem)}
+  .comic-panel{font-size:clamp(1.12rem,5vw,1.45rem);padding:15px 8px}
+  .comic-pac{min-height:min(67dvh,580px);grid-template-rows:repeat(4,minmax(92px,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+  .comic-panel{transition:none}
+}
+
+
+/* Exact uploaded home artwork with scaled, irregular hit regions. */
+.home-artwork{
+  display:block;
+  width:100%;
+  max-width:650px;
+  margin:0 auto;
+}
+.comic-cover{
+  position:relative;
+  width:100%;
+  margin:0 auto;
+  line-height:0;
+}
+.comic-cover[hidden],.comic-home-fallback[hidden]{display:none!important}
+.comic-cover-image{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  object-fit:contain;
+  user-select:none;
+}
+.comic-cover-map{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.comic-cover-hitarea{
+  fill:transparent;
+  stroke:transparent;
+  stroke-width:0;
+  cursor:pointer;
+  pointer-events:all;
+  transition:fill .13s ease;
+}
+.comic-cover-hitarea:hover{fill:rgba(255,255,255,.10)}
+.comic-cover-hitarea:focus-visible{
+  fill:rgba(255,219,105,.20);
+  stroke:#ffcf5a;
+  stroke-width:9;
+  outline:none;
+}
+.home-artwork .comic-home-fallback{max-width:510px}
+@media(min-width:1050px){
+  body.home-mode .view{max-width:650px}
+}
+@media(prefers-reduced-motion:reduce){
+  .comic-cover-hitarea{transition:none}
+}
+
+
+/* Supplied halftone artwork only behind the illustrated navigation screens. */
+body.home-mode,body.pac-comic-mode{
+  background-color:#a51f13;
+  background-image:url("assets/comic-background.webp");
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+body.home-mode .home-artwork{
+  max-width:650px;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.6));
+}
+body.home-mode .comic-home-fallback,
+body.pac-comic-mode .comic-pac{
+  background:transparent;
+  gap:7px;
+}
+body.pac-comic-mode .comic-pac{
+  padding:8px;
+  border:5px solid #111;
+  outline:1px solid rgba(255,255,255,.15);
+}
+body.pac-comic-mode .comic-pac .comic-panel{
+  background:#fff8e9;
+}
+body.pac-comic-mode .comic-pac .comic-panel:hover{
+  background:#fff0c7;
+}
+@media(max-width:600px){
+  body.home-mode,body.pac-comic-mode{background-attachment:scroll}
+  body.pac-comic-mode .comic-pac{border-width:3px;gap:5px;padding:5px}
+}
+
+
+/* Supplied PAC cover: an exact image with independently clickable icon references.
+   Panel geometry is defined as percentages of the original 1420 x 2048 artwork. */
+.pac-cover-host{width:100%;max-width:690px;margin:0 auto 22px}
+.pac-cover{position:relative;width:100%;line-height:0;filter:drop-shadow(0 8px 16px #0008)}
+.pac-cover[hidden],.pac-cover-fallback[hidden]{display:none!important}
+.pac-cover-image{display:block;width:100%;height:auto;object-fit:contain;user-select:none}
+.pac-cover-overlay{position:absolute;inset:0}
+.pac-cover-panel{
+ position:absolute;left:4.05%;width:91.9%;
+ display:flex;align-items:center;justify-content:center;
+ cursor:pointer;outline:none;
+}
+.pac-cover-speed{
+ top:3.05%;height:21.65%;
+ clip-path:polygon(0 0,100% 0,100% 100%,0 86%);
+}
+.pac-cover-attack{
+ top:24.75%;height:22.9%;
+ clip-path:polygon(0 0,100% 14%,100% 87%,0 100%);
+}
+.pac-cover-defense{
+ top:47.8%;height:24.8%;
+ clip-path:polygon(0 0,100% 0,100% 100%,0 90%);
+}
+.pac-cover-damage{
+ top:72.7%;height:24%;
+ clip-path:polygon(0 10%,100% 0,100% 100%,0 100%);
+}
+.pac-cover-panel:hover{background:rgba(255,245,174,.13)}
+.pac-cover-panel:focus-visible{background:rgba(255,228,104,.22);outline:3px solid #ffda53;outline-offset:-4px}
+.pac-cover-content{
+ display:inline-flex;align-items:center;justify-content:center;
+ flex-wrap:wrap;gap:clamp(5px,1.2vw,14px);
+ max-width:93%;padding:12px 14px;
+ border:2px solid rgba(0,0,0,.65);border-radius:6px;
+ background:rgba(18,29,43,.88);
+ box-shadow:3px 4px 0 #090909ad;
+ line-height:1.2;
+}
+.pac-cover-label{
+ font:800 clamp(1.35rem,4.2vw,2.3rem)/1 var(--display-font);
+ color:#f9f8f3;letter-spacing:.025em;
+ text-shadow:1px 2px 0 #070707;
+ white-space:nowrap;
+}
+.pac-cover-panel .group-symbols{
+ display:inline-flex;align-items:center;justify-content:center;
+ gap:clamp(3px,.6vw,8px);margin:0;
+}
+.pac-cover-panel .combat-icon-circle{
+ width:clamp(30px,3.8vw,44px);height:clamp(30px,3.8vw,44px);
+ background:#fff;box-shadow:0 1px 3px #0009;cursor:pointer;
+}
+.pac-cover-panel .combat-stat-icon{
+ width:74%;height:74%;object-fit:contain;
+}
+.pac-cover-panel .combat-icon-circle:hover,
+.pac-cover-panel .combat-icon-circle:focus-visible{
+ outline:3px solid #ffe38b;outline-offset:2px;
+}
+.pac-cover-fallback{
+ border:0!important;outline:0!important;gap:6px!important;
+ padding:6px!important;background:transparent!important;
+}
+.pac-fallback-panel{position:relative}
+.pac-fallback-panel>.group-symbols{
+ position:absolute;top:50%;right:9%;transform:translateY(-50%);
+ z-index:2;
+}
+.pac-fallback-panel>.comic-panel{padding-right:45%}
+@media(max-width:480px){
+ .pac-cover-content{gap:5px;padding:7px 6px;border-width:1px;box-shadow:2px 3px 0 #0009}
+ .pac-cover-label{font-size:clamp(1rem,4.7vw,1.5rem)}
+ .pac-cover-panel .combat-icon-circle{width:clamp(25px,8vw,34px);height:clamp(25px,8vw,34px)}
+ .pac-cover-panel .group-symbols{gap:3px}
+}
+
+
+
+
+
+
+:root{--reading-ink:#191919;--reading-link:#075583;--clix-panel-slope:12px;--clix-panel-edge:6px;--rules-sticky-top:60px;--rules-heading-height:52px;--pac-sticky-top:112px}
+
+/* Stable full-width reading layout: no sidebar and no filter/clip hover compositing. */
+@media (min-width: 1050px){
+  body:not(.home-mode) .desktop-layout{
+    display:block;
+    grid-template-columns:none;
+    max-width:1120px;
+    margin:0 auto;
+    padding:18px 24px 65px;
+  }
+}
+body:not(.home-mode) .desktop-sidebar{display:none!important}
+body:not(.home-mode) .desktop-layout{
+  width:100%;
+  display:block;
+  grid-template-columns:none;
+  max-width:1120px;
+  margin:0 auto;
+}
+body:not(.home-mode) main{width:100%;max-width:none;margin:0 auto}
+body:not(.home-mode) :is(.view,.context,.navigation-bar){max-width:900px;margin-left:auto;margin-right:auto}
+body:not(.home-mode) .navigation-bar{max-width:900px}
+
+/* Use the existing home-page background, desaturated and dimmed independently
+   of all text and artwork. Never grayscale the content or its icons. */
+body:not(.home-mode){
+  background:#101827;
+  background-image:none;
+  isolation:isolate;
+}
+body:not(.home-mode)::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:url("assets/comic-background.webp") center center / cover no-repeat;
+  filter:grayscale(1) brightness(.29) contrast(.82);
+}
+
+/* The original black panel borders provide their own shape; no rectangular
+   focus outline over transparent image margins. Keyboard focus underlines text. */
+body:not(.home-mode) .context{
+  width:100%;
+  max-width:900px;
+  text-align:center;
+  padding-inline:12px;
+  box-sizing:border-box;
+}
+body:not(.home-mode) .context h1{
+  overflow-wrap:break-word;
+  max-width:100%;
+}
+/* Keep the artwork readable even over a textured backdrop. */
+body:not(.home-mode) .context h1,
+body:not(.home-mode) .effective-date,
+body:not(.home-mode) .group-head{
+  text-shadow:0 1px 3px rgba(0,0,0,.6);
+}
+@media(max-width:620px){
+  body:not(.home-mode) .desktop-layout{padding:0 10px 28px}
+  body:not(.home-mode) :is(.view,.context,.navigation-bar){max-width:100%}
+}
+
+/* The PAC cover is also a secondary page; only Home remains saturated. */
+body.pac-comic-mode{background:#101827!important;background-image:none!important}
+
+
+
+/* PDF-extracted combat symbols are monochrome. On gray/white rule art,
+   render their silhouettes dark instead of inheriting the old light style.
+   Other full-color symbols and the PAC's dark cover icons are untouched. */
+#view .comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
+#view .comic-reading-panel img.rule-glyph[src*="/inline/"],
+#view .comic-reading-panel img.rule-glyph[src*="/glyphs/"],
+.symbol-reference-panel.comic-reading-panel .inline-symbol-button .symbol-art[src*="/inline/"],
+.symbol-reference-panel.comic-reading-panel img.rule-glyph[src*="/inline/"],
+.symbol-reference-panel.comic-reading-panel img.rule-glyph[src*="/glyphs/"],
+#view .rule-paper .inline-symbol-button .symbol-art[src*="/inline/"]{
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+#view .comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]),
+.symbol-reference-panel.comic-reading-panel .inline-symbol-button:has(.symbol-art[src*="/inline/"]){
+  background:transparent!important;
+  border:0!important;
+}
+
+
+
+/* PAC light-tile cleanup: remove category card remnants and darken monochrome icons. */
+#view .power-group-selected{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  padding:0;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+}
+#view .power-group-selected > .power-group-heading{
+  position:relative;
+  display:flex;
+  width:min(100%,680px);
+  min-height:0;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:4px auto 6px;
+  padding:10px 12px;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  color:#f6f6f6;
+}
+#view .power-group-selected > .power-group-heading::before,
+#view .power-group-selected > .power-group-heading::after{
+  display:none!important;
+  content:none!important;
+}
+#view .power-group-selected .power-group-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  max-width:900px;
+  gap:0;
+  margin:0 auto;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+#view .power-group-selected .power-group-stack > .entry{
+  margin-inline:auto;
+}
+#view .comic-reading-panel .pac-source-heading,
+#view .comic-reading-panel .keyphrase-heading > img.pac-source-heading{
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+#view .comic-reading-panel .pac-passenger-single,
+#view .comic-reading-panel .pac-vector-inline,
+#view .comic-reading-panel .keyphrase-inline{
+  color:#181818!important;
+  fill:currentColor;
+}
+#view .comic-reading-panel img.pac-passenger-single,
+#view .comic-reading-panel img.keyphrase-inline[src*="passenger-light"],
+#view .comic-reading-panel img.pac-vector-inline[src*="passenger-light"]{
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+/* PAC improved movement/targeting art retains its original red, brown,
+   green and gray colors, including icons inline within Flight. */
+#view .comic-reading-panel .pac-source-inline{
+  filter:none!important;
+  opacity:1!important;
+}
+@media(max-width:620px){
+  #view .power-group-selected > .power-group-heading{
+    gap:7px;
+    padding:7px 5px;
+  }
+}
+
+
+/* Unified icon contrast policy:
+   Light halftone reading surfaces use BLACK for monochrome source art.
+   Colored ability/combat tokens are never recolored.
+   Dark popup headers and PAC navigation preserve their light originals. */
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
+:is(img.tone-monochrome-art,
+    img[src*="/inline/"],
+    img[src*="/glyphs/"],
+    img[src*="/combat/"],
+    img[src*="/combat-token/"],
+    img[src*="/source-icons/"][src*="_white.png"],
+    img[src*="/keyphrase/passenger-light.png"],
+    img[src*="/keyphrase/flight-wing.png"],
+    img[src*="/keyphrase/giant-reach-symbol.png"],
+    img[src*="/keyphrase/great-size-symbol.png"],
+    img[src*="/keyphrase/swim-symbol.png"],
+    img[src*="/keyphrase/tiny-symbol.png"],
+    .pac-source-heading,
+    .pac-passenger-single){
+  filter:brightness(0)!important;
+  opacity:1!important;
+}
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
+:is(svg.tone-monochrome-vector,svg.pac-vector-inline,svg.pac-vector-heading){
+  color:#111!important;
+  fill:currentColor;
+  opacity:1!important;
+  filter:none!important;
+}
+/* Full-color icon art remains true to the supplied assets in every context.
+   Explicitly exclude colored tokens from monochrome filters. */
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
+:is(img[src*="/improved-abilities/"],
+    img[src*="/terrain-values/"],img.pac-source-inline){
+  filter:none!important;
+  opacity:1!important;
+}
+/* Keep the symbol glyph itself inline, without a pale box around it. */
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
+.inline-symbol-button{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+:is(#view .comic-reading-panel, #view .rule-paper, .symbol-dialog .symbol-reference-panel.comic-reading-panel)
+.inline-symbol-button .symbol-art{
+  vertical-align:middle;
+}
+/* Header artwork sits on dark blue, not on the white paper. */
+.symbol-dialog-header .dialog-symbol{
+  filter:none!important;
+}
+
+
+
+/* The PAC front uses four unmodified crops of PACCover.png as individual
+   expandable category surfaces. The artwork is drawn by SVG, not regenerated. */
+#view .pac-front-accordions{
+ width:100%;
+ max-width:690px;
+ margin:0 auto;
+ padding:0;
+ gap:0;
+}
+#view .pac-front-accordions > .pac-front-section{
+ width:100%;
+ max-width:690px;
+ background:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ overflow:visible!important;
+}
+#view .pac-front-accordions > .pac-front-section > .terrain-content{
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary{
+ position:relative;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:100%;
+ height:auto;
+ min-height:0;
+ aspect-ratio:1420/480;
+ padding:0!important;
+ margin:0!important;
+ border:0!important;
+ border-radius:0!important;
+ background-image:none!important;
+ background-color:transparent!important;
+ overflow:hidden;
+ isolation:isolate;
+}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary[data-panel]{
+ background-image:none!important;
+}
+#view .pac-front-accordions .pac-front-art{
+ display:block;
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ pointer-events:none;
+ z-index:-1;
+}
+#view .pac-front-accordions .pac-front-heading{
+ position:relative;
+ z-index:1;
+ display:flex;
+ align-items:center;
+ flex-wrap:wrap;
+ justify-content:center;
+ gap:clamp(7px,1.6vw,15px);
+ padding:8px 15px;
+ background:rgba(18,29,43,.88);
+ border:2px solid #101010;
+ border-radius:3px;
+}
+#view .pac-front-accordions .pac-front-heading .pac-cover-label{
+ font-size:clamp(1.25rem,3.8vw,2rem);
+ color:#fff;
+}
+#view .pac-front-accordions .group-symbols{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+}
+#view .pac-front-accordions .combat-icon-circle{
+ width:clamp(30px,4vw,43px);
+ height:clamp(30px,4vw,43px);
+ background:white;
+ cursor:pointer;
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ height:var(--pac-open-height)!important;
+ max-height:var(--pac-open-height)!important;
+ min-height:0!important;
+ aspect-ratio:auto!important;
+ padding:0!important;
+ background-color:transparent!important;
+ z-index:8;
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-front-heading{
+ background:rgba(18,29,43,.94);
+ padding:2px 10px;
+ border-width:1px;
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .pac-cover-label{
+ font-size:clamp(.95rem,2vw,1.2rem);
+}
+#view .pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary .combat-icon-circle{
+ width:clamp(20px,2.8vw,27px);
+ height:clamp(20px,2.8vw,27px);
+}
+#view .pac-front-accordions .pac-reverse-content{
+ margin:0!important;
+}
+#view .pac-front-accordions .power-group-stack{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ gap:0;
+ padding:0!important;
+ background:transparent!important;
+}
+#view .pac-front-accordions .power-group-stack > .comic-paper-row{
+ width:min(100%,520px);
+}
+@media(max-width:480px){
+ #view .pac-front-accordions .pac-front-heading{padding:4px 5px;gap:4px}
+ #view .pac-front-accordions .combat-icon-circle{width:25px;height:25px}
+ #view .pac-front-accordions .pac-front-heading .pac-cover-label{font-size:clamp(.95rem,4vw,1.25rem)}
+}
+
+
+/* 2026-11-06: Individual PAC artwork. Never crop, transform or force an
+   aspect ratio onto these five user-supplied PNGs. */
+#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section > summary.terrain-summary.pac-front-summary,
+#view .pac-reverse-accordions.pac-front-accordions > .pac-reverse-section.pac-front-section.pac-sticky-eligible[open] > summary.terrain-summary.pac-front-summary[data-panel]{
+ display:grid!important;
+ grid-template-areas:"cover"!important;
+ place-items:center!important;
+ position:relative;
+ width:100%!important;
+ height:auto!important;
+ min-height:0!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ padding:0!important;
+ margin:0!important;
+ background:transparent!important;
+ border:0!important;
+ overflow:visible!important;
+ box-shadow:none!important;
+}
+#view .pac-reverse-accordions.pac-front-accordions > .pac-front-section.pac-sticky-eligible[open] > summary.pac-front-summary{
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8!important;
+ background:transparent!important;
+ background-image:none!important;
+ box-shadow:none!important;
+}
+#view .pac-front-accordions .pac-front-original-art,
+#view .pac-front-accordions .pac-front-sticky-art{
+ grid-area:cover;
+ width:100%;
+ height:auto;
+ max-width:100%;
+ display:block;
+ pointer-events:none;
+ object-fit:contain;
+}
+#view .pac-front-accordions .pac-front-sticky-art{display:none}
+#view .pac-front-accordions > .pac-front-section[open] > summary .pac-front-original-art{display:none}
+#view .pac-front-accordions > .pac-front-section[open] > summary .pac-front-sticky-art{display:block}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary .pac-front-heading{
+ grid-area:cover!important;
+ justify-self:center;
+ align-self:center;
+ position:relative;
+ z-index:2;
+ width:max-content!important;
+ max-width:82%!important;
+ margin:0 auto!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-heading{
+ width:max-content!important;
+ max-width:95%!important;
+ margin:0 auto!important;
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+ padding:0 8px!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-cover-label{
+ color:#171717!important;
+ text-shadow:none!important;
+}
+
+
+/* 2026-11-06 unified interface controls: HOME belongs to Search, and the
+   PAC side selector is centered above the page title, not beside Back. */
+.search-controls .home-search-button{
+ flex:none;
+ align-self:center;
+ padding:8px 11px;
+ height:40px;
+ border:1px solid #596779;
+ border-radius:5px;
+ background:#26364b;
+ color:#f6f6f7;
+ font:700 clamp(12px,1.4vw,15px)/1 var(--display-font);
+ cursor:pointer;
+ white-space:nowrap;
+}
+.search-controls .home-search-button:hover,
+.search-controls .home-search-button:focus-visible{
+ outline:2px solid #d1d7e2;
+ outline-offset:1px;
+}
+.search-controls .home-search-button[hidden]{display:none!important}
+.pac-title-switch:not([hidden]){
+ display:flex!important;
+ width:max-content!important;
+ min-width:180px!important;
+ max-width:230px!important;
+ margin:8px auto 4px!important;
+ align-self:center!important;
+}
+.pac-title-switch:not([hidden]) button{min-width:80px}
+body:not(.home-mode) #context{margin-top:3px}
+@media(max-width:460px){
+ .search-controls .home-search-button{padding:7px;font-size:11px;height:36px}
+ .search-controls{gap:5px}
+ .search-controls .search-frame{min-width:0}
+}
+
+/* The colors are the actual 12 shared PAC dial colors, not approximations.
+   Selected colors gain a visible ring that also works for dark/gray dots. */
+#context .pac-color-filter{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:clamp(7px,1.2vw,12px);
+ width:min(100%,760px);
+ margin:12px auto 13px;
+ padding:6px;
+}
+#context .pac-filter-dot{
+ width:clamp(25px,3.8vw,34px);
+ height:clamp(25px,3.8vw,34px);
+ flex:none;
+ border-radius:50%;
+ border:2px solid rgba(250,250,250,.78);
+ background:var(--filter-color);
+ box-shadow:0 1px 4px #0008;
+ outline:none;
+ cursor:pointer;
+ transition:none!important;
+}
+#context .pac-filter-dot:hover,
+#context .pac-filter-dot:focus-visible{
+ box-shadow:0 0 0 2px #fff8,0 1px 4px #000!important;
+}
+#context .pac-filter-dot.active{
+ outline:3px solid #fff3d7!important;
+ outline-offset:3px!important;
+ box-shadow:0 0 0 5px #111a26,0 1px 3px #000!important;
+}
+/* ==========================================================================
+   SCALABLE COMIC PANELS
+   All rule, navigation, and PAC Back panels use one CSS-generated surface.
+   Panel artwork is reserved for the homepage and the four PAC front images.
+   ========================================================================== */
+#view .comic-reading-panel,
+#view button.entry.comic-paper-row,
+#view .rules-accordion > summary.rules-accordion-heading,
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary,
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row,
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ position:relative!important;
+ isolation:isolate!important;
+ box-sizing:border-box!important;
+ background:#090909!important;
+ background-image:none!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+ color:var(--reading-ink)!important;
+ overflow:visible!important;
+}
+#view .comic-reading-panel::before,
+#view button.entry.comic-paper-row::before,
+#view .rules-accordion > summary.rules-accordion-heading::before,
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary::before,
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row::before,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row::before,
+.symbol-dialog .symbol-reference-panel.comic-reading-panel::before{
+ content:""!important;
+ display:block!important;
+ position:absolute!important;
+ inset:var(--clix-panel-edge)!important;
+ z-index:-1!important;
+ pointer-events:none!important;
+ background:
+   radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0/4px 4px repeat,
+   linear-gradient(165deg,#fafafa 0%,#ececec 57%,#dcdcdc 100%)!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+}
+#view .comic-reading-panel[data-panel="1"],
+#view button.entry.comic-paper-row[data-panel="1"],
+#view .rules-accordion > summary.rules-accordion-heading[data-panel="1"],
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary[data-panel="1"],
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row,
+.symbol-dialog .symbol-reference-panel[data-panel="1"]{
+ clip-path:polygon(0 var(--clix-panel-slope),100% 0,100% 100%,0 calc(100% - var(--clix-panel-slope)))!important;
+}
+#view .comic-reading-panel[data-panel="1"]::before,
+#view button.entry.comic-paper-row[data-panel="1"]::before,
+#view .rules-accordion > summary.rules-accordion-heading[data-panel="1"]::before,
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary[data-panel="1"]::before,
+#view .pac-front-accordions .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before,
+#view .pac-filter-results .pac-power-detail:nth-child(even) > summary.entry.power.comic-paper-row::before,
+.symbol-dialog .symbol-reference-panel[data-panel="1"]::before{
+ clip-path:polygon(0 var(--clix-panel-slope),100% 0,100% 100%,0 calc(100% - var(--clix-panel-slope)))!important;
+ background:
+  radial-gradient(circle,rgba(0,0,0,.105) .65px,transparent .9px) 0 0/4px 4px repeat,
+  linear-gradient(195deg,#f3f3f3 0%,#eaeaea 58%,#d7d7d7 100%)!important;
+}
+#view .comic-reading-panel,
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ width:100%;
+ max-width:680px;
+ min-height:0;
+ height:auto;
+ margin:0 auto;
+ padding:clamp(28px,4.8vw,45px) clamp(25px,6vw,50px)!important;
+ font:clamp(15px,1.5vw,17px)/1.65 var(--reading-font);
+ overflow-wrap:break-word;
+}
+#view .comic-reading-panel :is(.verbatim,.structured-content,.tokenized-content,.rule-paragraph,.improved-cell,.terrain-value-source,.terrain-value-name,.terrain-value-source h3,.inherent-entry h2,.keyphrase-heading h2,.terrain-rule h3),
+.symbol-dialog .symbol-reference-panel :is(.verbatim,.tokenized-content,.rule-paragraph){
+ color:inherit!important;
+ font-family:var(--reading-font);
+ white-space:normal;
+}
+#view .comic-reading-panel a,.symbol-dialog .symbol-reference-panel a{
+ color:var(--reading-link)!important;
+ text-decoration:underline;
+ text-underline-offset:3px;
+}
+#view .comic-reading-panel :is(h2,h3,h4),
+.symbol-dialog .symbol-reference-panel :is(h2,h3,h4){
+ color:#202020!important;
+ font-family:var(--display-font);
+}
+#view .comic-reading-panel .rule-bullets{margin:.4em 0;padding-left:1.25em}
+#view .improved-row{display:flex;align-items:flex-start;gap:12px}
+#view .improved-cell{background:transparent!important;border-color:#9c9c9c!important}
+#view .improved-na{color:#575757!important}
+#view .terrain-value-source{background:transparent!important;border:0!important}
+#view .terrain-value-source + .terrain-value-source{margin-top:1rem;padding-top:1rem;border-top:1px solid #aaa}
+#view .terrain-value-entry{display:block!important}
+#view .terrain-rule h3{margin:0 0 8px}
+
+/* Shared headings: the angled ink surface, natural content height and 6px gap. */
+#view button.entry.comic-paper-row,
+#view .rules-accordion > summary.rules-accordion-heading,
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:100%;
+ min-height:108px!important;
+ height:auto!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ margin:0!important;
+ padding:clamp(26px,4.5vw,40px) clamp(20px,5vw,42px)!important;
+ cursor:pointer;
+ gap:clamp(7px,1.6vw,16px);
+ text-align:center;
+ list-style:none;
+}
+#view button.entry.comic-paper-row :is(.label,.num,.power-text),
+#view .rules-accordion > summary :is(.label,.num),
+#view .pac-reverse-section > summary .pac-reverse-label{
+ color:#171717!important;
+ font:800 clamp(.98rem,2.7vw,1.5rem)/1.2 var(--display-font);
+ text-shadow:none!important;
+ flex:0 1 auto;
+}
+#view :is(.rules-accordion-heading,.terrain-summary)::-webkit-details-marker{display:none}
+#view .terrain-chevron{display:none!important}
+#view button.entry.comic-paper-row:hover,
+#view .rules-accordion > summary.rules-accordion-heading:hover,
+#view .pac-reverse-section > summary.terrain-summary:hover{
+ filter:brightness(.96);
+}
+#view button.entry.comic-paper-row:focus-visible,
+#view .rules-accordion > summary.rules-accordion-heading:focus-visible,
+#view .pac-reverse-section > summary.terrain-summary:focus-visible{
+ outline:2px solid #ffcc65!important;
+ outline-offset:2px;
+}
+#view .comic-paper-stack,#view .stack:has(> button.entry.comic-paper-row),
+#view .power-group-stack,#view .rules-accordion-tree,#view .rules-accordion-children,
+#view .pac-reverse-accordions:not(.pac-front-accordions),
+#view .pac-reverse-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ width:100%;
+ gap:6px!important;
+}
+#view .comic-paper-stack > button.entry.comic-paper-row,
+#view .stack > button.entry.comic-paper-row{width:min(100%,660px)}
+#view .rules-accordion-tree,#view .rules-accordion-children{
+ max-width:760px;
+ margin:0 auto;
+ overflow:visible!important;
+ overflow-anchor:none;
+}
+#view .rules-accordion-tree > .rules-accordion,
+#view .rules-accordion-children > .rules-accordion{
+ width:min(100%,660px);
+ max-width:100%;
+ margin:0!important;
+ padding:0!important;
+ border:0!important;
+ background:transparent!important;
+ overflow:visible!important;
+}
+#view .rules-depth-2{width:min(100%,620px)!important}
+#view .rules-depth-3{width:min(100%,590px)!important}
+#view .rules-accordion-body{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:6px;
+ margin:6px auto 0;
+ padding:0;
+ width:100%;
+ background:transparent;
+ overflow:visible!important;
+}
+#view .rules-accordion-body > .comic-reading-panel{width:100%;max-width:100%}
+#view .rules-accordion-body > .rules-accordion-children{width:100%;max-width:100%}
+#view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading{
+ position:sticky!important;
+ top:var(--rules-sticky-top)!important;
+ z-index:30;
+ min-height:var(--rules-heading-height)!important;
+ height:var(--rules-heading-height)!important;
+ max-height:var(--rules-heading-height)!important;
+ padding:0 12px!important;
+ clip-path:none!important;
+}
+#view .rules-accordion[open]:not(.rules-search-match) > summary.rules-accordion-heading::before{clip-path:none!important}
+/* Equal-or-higher specificity than the generic expanded heading is required
+   so child headings stack beneath their open ancestors. */
+#view .rules-accordion.rules-depth-2[open]:not(.rules-search-match) > summary.rules-accordion-heading{
+ top:calc(var(--rules-sticky-top) + var(--rules-heading-height))!important;
+ z-index:20!important;
+}
+#view .rules-accordion.rules-depth-3[open]:not(.rules-search-match) > summary.rules-accordion-heading{
+ top:calc(var(--rules-sticky-top) + 2 * var(--rules-heading-height))!important;
+ z-index:10!important;
+}
+#view .rules-accordion[open] > summary :is(.label,.num){font-size:clamp(.82rem,2.5vw,1.08rem)!important}
+#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading{
+ position:relative!important;
+ top:auto!important;
+ height:auto!important;
+ min-height:108px!important;
+ max-height:none!important;
+ padding:clamp(26px,4.5vw,40px) clamp(20px,5vw,42px)!important;
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+}
+#view .rules-search-results > .rules-search-match[open] > summary.rules-accordion-heading::before{
+ clip-path:polygon(0 0,100% var(--clix-panel-slope),100% calc(100% - var(--clix-panel-slope)),0 100%)!important;
+}
+
+/* PAC Back: no artwork, no image placeholders, and identical compact headers
+   in both open and closed states. Sticky only for the first three sections. */
+#view .pac-reverse-accordions:not(.pac-front-accordions){
+ width:100%;
+ max-width:900px;
+ margin:0 auto;
+ padding:0;
+ overflow-anchor:none;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section{
+ width:min(100%,680px);
+ max-width:100%;
+ margin:0!important;
+ padding:0!important;
+ background:none!important;
+ border:0!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > summary.terrain-summary{
+ position:relative;
+ top:auto;
+ height:auto!important;
+ min-height:108px!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ background:#090909!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary{
+ position:sticky!important;
+ top:var(--pac-sticky-top)!important;
+ z-index:8!important;
+ min-height:64px!important;
+ height:64px!important;
+ max-height:64px!important;
+ padding:0 15px!important;
+ clip-path:none!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) > .pac-reverse-section.pac-sticky-eligible[open] > summary.terrain-summary::before{clip-path:none!important}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section > .pac-reverse-content{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:6px;
+ width:100%;
+ margin:6px 0 0!important;
+ padding:0!important;
+ background:none!important;
+ border:0!important;
+ overflow:visible!important;
+}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-section:not([open]) > .pac-reverse-content{display:none}
+#view .pac-reverse-subheading{
+ width:100%;
+ margin:12px auto 4px;
+ font:800 clamp(1rem,3vw,1.45rem)/1.25 var(--display-font);
+ text-align:center;
+ color:#fff;
+}
+#view .pac-reverse-section .terrain-swatch{flex:none}
+#view .pac-reverse-accordions:not(.pac-front-accordions) .pac-reverse-content > .comic-reading-panel{
+ width:100%;
+ max-width:100%;
+ margin:0!important;
+}
+
+/* PAC front artwork: the four category titles remain supplied graphics.
+   Their individual ability entries use the same CSS-generated paper. */
+#view .pac-front-accordions .power-group-stack{padding:0!important;background:none!important}
+#view .pac-front-accordions .pac-reverse-content{margin:0!important;padding:0!important}
+#view .pac-front-accordions .pac-power-detail,
+#view .pac-filter-results .pac-power-detail{
+ display:block;
+ width:min(100%,520px);
+ max-width:100%;
+ margin:0 auto 8px!important;
+ border:0!important;
+ background:none!important;
+ overflow:visible!important;
+}
+#view .pac-front-accordions .pac-power-detail > summary.entry.power.comic-paper-row,
+#view .pac-filter-results .pac-power-detail > summary.entry.power.comic-paper-row{
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:stretch!important;
+ justify-content:center!important;
+ width:100%;
+ min-height:105px!important;
+ height:auto!important;
+ max-height:none!important;
+ aspect-ratio:auto!important;
+ margin:0!important;
+ padding:clamp(27px,5vw,45px) 10%!important;
+ color:#171717!important;
+ text-align:left;
+ gap:0!important;
+ list-style:none;
+}
+#view .pac-power-detail .pac-power-heading-line{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:100%;
+ gap:clamp(7px,2vw,16px);
+}
+#view .pac-power-detail .pac-power-heading-line .power-text{
+ color:#151515!important;
+ font:800 clamp(1rem,2.8vw,1.45rem)/1.2 var(--display-font);
+ text-align:center;
+}
+#view .pac-power-detail .pac-power-inline-rules{
+ display:none;
+ width:100%;
+ margin-top:14px;
+ color:#171717!important;
+ font:clamp(15px,2.3vw,17px)/1.55 var(--reading-font);
+ text-align:left;
+ overflow-wrap:break-word;
+}
+#view .pac-power-detail[open] .pac-power-inline-rules{display:block}
+#view .pac-power-detail .pac-power-inline-rules a{color:#125ab0!important}
+#view .pac-power-detail .pac-power-inline-rules .verbatim{white-space:normal}
+#view .pac-filter-results{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 auto;width:min(100%,680px)}
+#view .pac-filter-results .pac-static-power > summary{cursor:default!important}
+#view .pac-filter-results .pac-static-power > summary:hover{filter:none!important}
+#view .power-group-selected{
+ width:100%;max-width:900px;margin:auto;padding:0;
+ border:0!important;background:none!important;overflow:visible!important;
+}
+#view .power-group-selected > .power-group-heading{
+ display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:10px;
+ max-width:680px;margin:4px auto 6px;padding:10px 12px;
+ background:none!important;border:0!important;
+}
+#view .power-group-selected .power-group-stack{padding:0!important;background:none!important}
+
+/* Symbol modal uses the same ink/paper generator as the page. */
+.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+ margin:0 auto 0!important;
+ padding:clamp(28px,4.6vw,39px) clamp(21px,4.8vw,38px)!important;
+}
+.symbol-dialog .symbol-reference-panel.comic-reading-panel + .symbol-reference-panel.comic-reading-panel{
+ margin-top:calc(-1 * var(--clix-panel-slope))!important;
+}
+.symbol-dialog .symbol-reference-title{
+ margin:0 0 12px;color:#191919!important;
+ font:800 clamp(1.05rem,2.8vw,1.4rem)/1.25 var(--display-font);
+ text-align:center;
+}
+.symbol-dialog .symbol-reference-text{color:var(--reading-ink)!important;font-family:var(--reading-font);line-height:1.6}
+.symbol-dialog .symbol-reference-text a{color:var(--reading-link)!important;text-decoration:underline}
+
+/* Symbols on white paper use black silhouettes; retain colored PAC artwork. */
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+:is(img.tone-monochrome-art,img[src*="/inline/"],img[src*="/glyphs/"],
+    img[src*="/combat/"],img[src*="/combat-token/"],
+    img[src*="/source-icons/"][src*="_white.png"],
+    img[src*="/keyphrase/passenger-light.png"],.pac-source-heading,.pac-passenger-single){
+ filter:brightness(0)!important;opacity:1!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+:is(img[src*="/improved-abilities/"],img.pac-source-inline){filter:none!important}
+#view .comic-reading-panel img.symbol-art[src$="/terrain-values/destroy-clean.png"],
+.symbol-dialog .symbol-reference-panel img.symbol-art[src$="/terrain-values/destroy-clean.png"]{
+ filter:brightness(0)!important;
+}
+/* Keep icon plus punctuation/value on one line while letting the text,
+   not a separate flex box, determine the normal text baseline. */
+.symbol-punctuation-group{
+ display:inline-block;
+ white-space:nowrap;
+ vertical-align:baseline;
+ line-height:inherit;
+}
+.symbol-punctuation-group .inline-symbol-button{flex:none}
+@media(max-width:620px){
+ :root{--clix-panel-slope:9px;--clix-panel-edge:5px}
+ #view .comic-reading-panel,.symbol-dialog .symbol-reference-panel.comic-reading-panel{
+  padding:clamp(24px,6vw,33px) clamp(21px,6vw,34px)!important;
+ }
+}
+
+/* Standalone rule references retain a comfortable width and size to their
+   actual text, with no inherited paper-card image ratio or fixed height. */
+#view > .rule-paper.comic-reading-panel{
+ display:block!important;
+ width:min(100%,680px)!important;
+ min-height:0!important;
+ max-height:none!important;
+ height:auto!important;
+ aspect-ratio:auto!important;
+ margin:0 auto 6px!important;
+ padding:clamp(23px,3.7vw,34px) clamp(24px,5vw,46px)!important;
+ font-size:clamp(15px,1.5vw,17px)!important;
+ line-height:1.6!important;
+}
+#view > .rule-paper.comic-reading-panel .verbatim,
+#view > .rule-paper.comic-reading-panel .tokenized-content{
+ display:inline;
+ white-space:normal;
+ overflow-wrap:break-word;
+}
+#view > .rule-paper.comic-reading-panel .structured-content{
+ display:block;
+}
+#view > .rule-paper.comic-reading-panel + .rule-paper.comic-reading-panel{
+ margin-top:6px!important;
+}
+
+/* The PAC front artwork supplies the entire heading surface. On expansion,
+   show only the cropped banner; don't paint a blue terrain container behind it. */
+#view .pac-front-accordions > .pac-front-section,
+#view .pac-front-accordions > .pac-front-section[open],
+#view .pac-front-accordions > .pac-front-section > .pac-reverse-content,
+#view .pac-front-accordions > .pac-front-section > .terrain-content{
+ background:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+#view .pac-front-accordions > .pac-front-section > summary.pac-front-summary,
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary{
+ background:transparent!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+ isolation:auto!important;
+ clip-path:none!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-sticky-art{
+ display:block;
+ width:100%;
+ height:auto;
+ object-fit:contain;
+}
+#view .pac-front-accordions > .pac-front-section[open] > summary.pac-front-summary .pac-front-heading{
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] > .pac-reverse-content{
+ margin:6px 0 0!important;
+ padding:0!important;
+}
+#view .pac-front-accordions > .pac-front-section[open] .power-group-stack{
+ margin:0 auto!important;
+ padding:0!important;
+ background:transparent!important;
+}
+
+/* Non-button PDF glyphs and inline illustrated PAC graphics share that
+   same baseline; colored symbols are not recolored or squashed. */
+#view .comic-reading-panel img.rule-glyph,
+.symbol-dialog .symbol-reference-panel img.rule-glyph{
+ height:1.7em!important;
+ width:auto!important;
+ max-width:2.45em!important;
+ vertical-align:-.48em!important;
+ object-fit:contain;
+}
+#view .comic-reading-panel .pac-source-inline,
+#view .comic-reading-panel img.keyphrase-inline,
+#view .comic-reading-panel img.pac-vector-inline{
+ height:1.7em;
+ width:auto;
+ max-width:2.45em;
+ vertical-align:-.48em;
+ object-fit:contain;
+}
+
+
+/* Cropped inline icon data URLs retain their original source path as metadata.
+   The visual PNG is cropped, while the source's contrast rules still apply. */
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+:is(img.tone-monochrome-art,img.rule-glyph.tone-monochrome-art){
+ filter:brightness(0)!important;
+ opacity:1!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+img.symbol-art[data-original-src*="/improved-abilities/"]{
+ filter:none!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+img.symbol-art[data-original-src*="/terrain-values/"]{
+ filter:none!important;
+}
+:is(#view .comic-reading-panel,.symbol-dialog .symbol-reference-panel)
+img.symbol-art[data-original-src$="/terrain-values/destroy-clean.png"]{
+ filter:brightness(0)!important;
+}
+
+
+/* Game Tools uses the common scalable comic panel, without large empty rows. */
+body.game-tools-mode #context{text-align:center}
+#view .game-tools-panel.comic-reading-panel{
+ width:min(100%,760px);
+ max-width:760px;
+ min-height:0!important;
+ margin:0 auto 12px!important;
+ padding:clamp(20px,3.5vw,31px) clamp(20px,4.5vw,39px)!important;
+}
+.game-tools-title{
+ margin:0 0 12px;
+ color:#171717;
+ text-align:center;
+ font:800 clamp(1.2rem,3vw,1.6rem)/1.2 var(--display-font);
+}
+.game-dice-buttons{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:clamp(12px,3vw,25px);
+}
+.game-die-button{
+ display:grid;
+ place-items:center;
+ padding:0;
+ width:70px;
+ height:70px;
+ flex:0 0 70px;
+ border:0;
+ background:transparent;
+ cursor:pointer;
+}
+.game-die-button .game-die-art{display:block;width:66px;height:66px;object-fit:contain;filter:drop-shadow(1px 3px 2px #0006)}
+.game-die-button:hover .game-die-art,.game-die-button:focus-visible .game-die-art{filter:drop-shadow(0 0 5px #1118)}
+.game-die-button:focus-visible{outline:2px solid #222;outline-offset:2px}
+.game-dice-results{
+ display:flex;
+ justify-content:center;
+ gap:8px;
+ flex-wrap:wrap;
+ margin:10px auto 0;
+}
+.game-dice-result-item{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
+ flex:0 1 auto;
+ padding:5px 12px;
+ border:1px solid #333;
+ background:#f5f5f5;
+ color:#171717;
+ text-align:center;
+}
+.game-dice-caption{font:800 .9rem/1.2 var(--display-font)}
+.game-dice-value{font:850 1.12rem/1.3 var(--reading-font)}
+.game-tracker-actions{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:7px;
+ margin:0 0 12px;
+}
+.game-tools-action{
+ min-height:36px;
+ padding:6px 10px;
+ border:2px solid #171717;
+ border-radius:3px;
+ background:#26364b;
+ color:#fff;
+ font:750 clamp(.78rem,1.7vw,.94rem)/1.2 var(--display-font);
+ cursor:pointer;
+}
+.game-tools-action:hover,.game-tools-action:focus-visible{background:#3b536e}
+.game-tools-add{background:#212121}
+.game-tracker-rows{display:flex;flex-direction:column;gap:7px}
+.game-tracker-row{
+ display:grid;
+ grid-template-columns:minmax(160px,1.15fr) minmax(115px,1fr) auto auto;
+ align-items:center;
+ gap:7px;
+ padding:7px;
+ border:2px solid #171717;
+ background:#f5f5f5;
+ color:#171717;
+}
+.game-tracker-row.game-tracker-ready{
+ border-color:#bb8614;
+ background:#fff8d9;
+ box-shadow:inset 0 0 0 2px #f6ce61,0 0 8px #e7b82b80;
+}
+.game-tracker-ready .game-ability-selected{background:#fff2ba}
+.game-ability-picker{min-width:0}
+.game-ability-selected{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ width:100%;
+ min-height:38px;
+ padding:3px 7px;
+ border:1px solid #777;
+ background:#fff;
+ color:#171717;
+ text-align:left;
+ font:700 .85rem/1.15 var(--display-font);
+ cursor:pointer;
+}
+.game-ability-selected > span:nth-child(2){flex:1;min-width:0}
+.game-ability-selected::after{content:"▾";font:17px/1 var(--reading-font)}
+.game-ability-menu[popover]{
+ position:fixed;
+ inset:auto;
+ margin:0;
+ padding:4px;
+ box-sizing:border-box;
+ overflow:auto;
+ overscroll-behavior:contain;
+ border:2px solid #111;
+ border-radius:2px;
+ background:white;
+ color:#171717;
+ box-shadow:2px 6px 18px #0009;
+ z-index:9999;
+}
+.game-ability-option{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ width:100%;
+ min-height:39px;
+ padding:4px 8px;
+ border:0;
+ background:#fff;
+ color:#111;
+ text-align:left;
+ font:700 .94rem/1.2 var(--display-font);
+ cursor:pointer;
+}
+.game-ability-option:hover,.game-ability-option:focus-visible,.game-ability-option.selected{background:#e4e9ee}
+.game-ability-selected .power-symbol,
+.game-ability-option .power-symbol,
+.game-special-icon{
+ display:inline-flex;
+ justify-content:center;
+ align-items:center;
+ flex:0 0 31px!important;
+ width:31px!important;
+ height:31px!important;
+ border:2px solid #fff!important;
+ border-radius:50%;
+ box-shadow:0 0 0 1px #555,0 2px 4px #0004;
+}
+/* This selector outranks the site's general monochrome-on-paper rule.
+   Game Tools always uses the original white PAC combat symbol artwork. */
+#view .game-tools-panel .game-ability-selected .power-symbol .power-category-icon,
+.game-ability-menu .game-ability-option .power-symbol .power-category-icon{
+ display:block;
+ width:21px!important;
+ height:21px!important;
+ object-fit:contain;
+ filter:none!important;
+ opacity:1!important;
+}
+.game-special-icon{
+ background:#fff;
+ color:#111;
+ border-color:#888!important;
+ font:900 21px/1 var(--reading-font);
+}
+.game-character{
+ width:100%;
+ min-width:0;
+ min-height:38px;
+ padding:5px 8px;
+ border:1px solid #888;
+ border-radius:2px;
+ background:#fff;
+ color:#171717;
+ font:inherit;
+}
+.game-use-toggle{
+ min-width:70px;
+ min-height:38px;
+ padding:5px 7px;
+ border:2px solid #151515;
+ border-radius:3px;
+ color:#fff;
+ font:800 .8rem var(--display-font);
+ cursor:pointer;
+}
+.game-use-unused{background:#16844b}
+.game-use-used{background:#b52e37}
+.game-remove-ability{
+ display:grid;
+ place-items:center;
+ width:38px;
+ height:38px;
+ padding:0;
+ border:2px solid #292929;
+ background:#f1f1f1;
+ color:#222;
+ font-size:21px;
+ cursor:pointer;
+}
+.game-remove-ability:hover{background:#ffd8d8}
+/* White Passenger source artwork is black on all light reading surfaces. */
+#view .pac-power-detail img.symbol-art.tone-monochrome-art,
+#view .game-tools-panel img.symbol-art.tone-monochrome-art,
+#view .pac-power-detail img.symbol-art[data-original-src*="/keyphrase/passenger-light.png"],
+#view .comic-reading-panel img.symbol-art[data-original-src*="/keyphrase/passenger-light.png"],
+.symbol-dialog .symbol-reference-panel img.symbol-art[data-original-src*="/keyphrase/passenger-light.png"]{
+ filter:brightness(0)!important;
+}
+@media(max-width:660px){
+ .game-tracker-row{grid-template-columns:minmax(0,1fr) auto auto}
+ .game-ability-picker{grid-column:1;grid-row:1}
+ .game-character{grid-column:1/-1;grid-row:2}
+ .game-use-toggle{grid-column:2;grid-row:1}
+ .game-remove-ability{grid-column:3;grid-row:1}
+ .game-die-button{width:62px;height:62px;flex-basis:62px}
+ .game-die-button .game-die-art{width:60px;height:60px}
+}
+@media(max-width:380px){
+ .game-tracker-row{gap:5px;padding:5px}
+ .game-use-toggle{min-width:62px;font-size:.73rem}
+ .game-remove-ability{width:33px}
+}
+
+/* Contact uses the same scalable comic panel as the reference and Tools pages. */
+#view .contact-panel.comic-reading-panel{
+ width:min(100%,680px);
+ max-width:680px;
+ margin:0 auto 12px!important;
+ padding:clamp(28px,4.5vw,42px) clamp(26px,6vw,52px)!important;
+}
+.contact-form{
+ display:flex;
+ flex-direction:column;
+ gap:15px;
+ width:100%;
+}
+.contact-field{
+ display:flex;
+ flex-direction:column;
+ gap:6px;
+ color:#161616;
+ font:750 clamp(.95rem,2vw,1.1rem)/1.3 var(--display-font);
+}
+.contact-input{
+ display:block;
+ box-sizing:border-box;
+ width:100%;
+ min-width:0;
+ padding:11px 13px;
+ border:2px solid #222;
+ border-radius:3px;
+ background:#fff;
+ color:#161616;
+ font:400 1rem/1.5 var(--reading-font);
+ outline-offset:2px;
+}
+.contact-input:focus-visible{
+ outline:2px solid #35638d;
+ border-color:#35638d;
+}
+.contact-message{
+ min-height:175px;
+ resize:vertical;
+}
+.contact-submit{
+ align-self:flex-start;
+ margin-top:3px;
+ padding:11px 20px;
+ border:2px solid #151515;
+ border-radius:3px;
+ background:#26364b;
+ color:#fff;
+ font:800 1rem/1.2 var(--display-font);
+ cursor:pointer;
+}
+.contact-submit:hover,.contact-submit:focus-visible{background:#3b536e}
+.contact-submit:disabled{opacity:.65;cursor:wait}
+.contact-status{
+ margin:0;
+ min-height:1.5em;
+ font:700 .95rem/1.5 var(--reading-font);
+ color:#202020;
+}
+.contact-success{color:#126c40}
+.contact-error{color:#a32931}
+.contact-honeypot{
+ position:absolute!important;
+ width:1px!important;
+ height:1px!important;
+ padding:0!important;
+ opacity:0!important;
+ pointer-events:none!important;
+ clip-path:inset(50%)!important;
 }
