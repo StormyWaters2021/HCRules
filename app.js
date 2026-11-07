@@ -644,10 +644,7 @@ function trackerIcon(name){
  }
  const p=trackerPower(name);
  if(!p)return E('span','game-special-icon','★');
- const circle=E('span','game-ability-icon');
- circle.style.background=p.color;
- const icon=E('img');icon.src=p.icon;icon.alt='';icon.loading='lazy';circle.append(icon);
- return circle;
+ return powerSymbol(p);
 }
 function dieIcon(sides){
  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
