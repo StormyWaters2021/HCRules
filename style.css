@@ -2044,13 +2044,16 @@ body.game-tools-mode #context{text-align:center}
  border-radius:50%;
  box-shadow:0 0 0 1px #555,0 2px 4px #0004;
 }
-.game-ability-selected .power-category-icon,
-.game-ability-option .power-category-icon{
+/* This selector outranks the site's general monochrome-on-paper rule.
+   Game Tools always uses the original white PAC combat symbol artwork. */
+#view .game-tools-panel .game-ability-selected .power-symbol .power-category-icon,
+.game-ability-menu .game-ability-option .power-symbol .power-category-icon{
  display:block;
  width:21px!important;
  height:21px!important;
  object-fit:contain;
  filter:none!important;
+ opacity:1!important;
 }
 .game-special-icon{
  background:#fff;
