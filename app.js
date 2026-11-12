@@ -893,6 +893,7 @@ function showGameTools(){
  tracker.append(controls);
  const rows=E('div','game-tracker-rows');rows.id='gameTrackerRows';tracker.append(rows);
  host.append(tracker);
+ advAttachMode(tracker,[controls,rows]);
  renderGameDiceResult();refreshTrackerRows();
 }
 
