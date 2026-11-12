@@ -63,3 +63,13 @@
  .advanced-stat-label{font-size:.55rem}
  .advanced-settings-grid{grid-template-columns:1fr}
 }
+
+.advanced-icon-picker{display:flex;flex-direction:column;gap:5px;position:relative;min-width:0}
+.advanced-icon-toggle{display:flex;align-items:center;gap:9px;width:100%;min-height:43px;padding:5px 9px;background:#fff;color:#111;border:2px solid #333;text-align:left;font:750 .9rem var(--display-font);cursor:pointer}
+.advanced-icon-arrow{margin-left:auto}
+.advanced-icon-options{max-height:195px;overflow:auto;border:2px solid #333;border-top:0;background:#fff}
+.advanced-icon-options[hidden]{display:none}
+.advanced-icon-option{display:flex;align-items:center;gap:8px;width:100%;min-height:38px;padding:4px 8px;background:#fff;border:0;border-bottom:1px solid #ddd;color:#111;font:700 .83rem var(--display-font);text-align:left;cursor:pointer}
+.advanced-icon-option:hover,.advanced-icon-option:focus-visible{background:#e6ebf1}
+.advanced-icon-picker .power-symbol,.advanced-icon-picker .game-special-icon,.advanced-icon-picker .advanced-star{width:29px!important;height:29px!important;flex:0 0 29px;display:grid;place-items:center;border-radius:50%;box-shadow:0 0 0 1px #444}
+.advanced-icon-picker .power-category-icon{width:21px!important;height:21px!important;filter:none!important}
