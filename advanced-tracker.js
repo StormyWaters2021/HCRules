@@ -76,12 +76,21 @@ function advRenderUnits(){
      visible.push({key,label:defined?.name||'Special',custom:true});
     }
    }
+   // Trait-granted PAC powers can be active even when absent from dial slots.
+   for(const trait of unit.special_powers||[]){
+    if(trait.type!=='trait'||!Array.isArray(trait.powers))continue;
+    for(const id of trait.powers){
+     const power=advPower(id);
+     if(power&&advancedPowers.includes(power.name)&&!visible.some(v=>v.key===power.name))
+      visible.push({key:power.name,label:power.name});
+    }
+   }
   }
   for(const extra of unit.custom||[]){
    if(extra.all||extra.clicks?.includes(Number(unit.click)))visible.push({key:'custom:'+extra.id,label:extra.name,custom:true,icon:extra.icon});
   }
   for(const entry of visible){
-   const cell=button('',()=>{unit.used=unit.used||{};const key=advUsedKey(entry,unit.click);unit.used[key]=!unit.used[key];advSave();advRenderUnits()},'advanced-ability'+(unit.used?.[advUsedKey(entry,unit.click)]?' is-used':'')+(unit.ready?.[advUsedKey(entry,unit.click)]?' is-ready':''));
+   const cell=button('',()=>{unit.used=unit.used||{};const key=advUsedKey(entry,unit.click);unit.used[key]=!unit.used[key];if(unit.used[key]&&unit.ready)delete unit.ready[key];advSave();advRenderUnits()},'advanced-ability'+(unit.used?.[advUsedKey(entry,unit.click)]?' is-used':'')+(unit.ready?.[advUsedKey(entry,unit.click)]?' is-ready':''));
    const badge=entry.icon?advPowerBadge(entry.icon):advPowerBadge(entry.label,entry.custom);
    cell.append(badge,E('span','advanced-ability-label',entry.label));
    cell.title=entry.label+(unit.used?.[advUsedKey(entry,unit.click)]?' (used)':' (unused)');
