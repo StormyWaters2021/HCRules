@@ -134,10 +134,24 @@ function advSetClick(unit,index){
 function advCustomModal(unit){
  const {layer,panel}=advModal('Add Custom Ability');
  const form=E('form','advanced-form');
- const iconLabel=E('label','','Icon');const select=E('select','advanced-field');
- const opts=['Special',...db.pac.map(p=>p.name)];
- for(const name of opts){const opt=E('option','',name);opt.value=name;select.append(opt)}
- iconLabel.append(select);
+ const iconLabel=E('div','advanced-icon-picker');
+ iconLabel.append(E('strong','','Icon'));
+ let selectedIcon='Special';
+ const iconToggle=button('',()=>{iconMenu.hidden=!iconMenu.hidden},'advanced-icon-toggle');
+ const iconMenu=E('div','advanced-icon-options');iconMenu.hidden=true;
+ function chooseIcon(value){
+  selectedIcon=value;
+  iconToggle.replaceChildren(advPowerBadge(value,value==='Special'),E('span','',value),E('span','advanced-icon-arrow','▾'));
+  iconMenu.hidden=true;
+ }
+ for(const value of ['Special',...db.pac.map(p=>p.name)]){
+  const option=button('',()=>chooseIcon(value),'advanced-icon-option');
+  option.append(advPowerBadge(value,value==='Special'),E('span','',value));
+  iconMenu.append(option);
+ }
+ iconToggle.setAttribute('aria-label','Select HeroClix power icon');
+ iconLabel.append(iconToggle,iconMenu);
+ chooseIcon('Special');
  const nameLabel=E('label','','Ability Name');const name=E('input','advanced-field');name.required=true;name.maxLength=70;name.placeholder='Name this ability';nameLabel.append(name);
  const checkLabel=E('strong','','Active on Clicks');
  const grid=E('div','advanced-click-checks');
@@ -157,7 +171,7 @@ function advCustomModal(unit){
   const clicks=clickInputs.filter(x=>x.input.checked).map(x=>x.click);
   if(!clicks.length){alert('Select at least one click.');return}
   unit.custom=unit.custom||[];
-  unit.custom.push({id:String(Date.now()),name:name.value.trim(),icon:select.value,all:all.checked,clicks});
+  unit.custom.push({id:String(Date.now()),name:name.value.trim(),icon:selectedIcon,all:all.checked,clicks});
   advSave();layer.remove();advRenderUnits();
  };
  panel.append(form);name.focus();
