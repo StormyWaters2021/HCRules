@@ -31,6 +31,12 @@
 #view .adv-card-trait .adv-card-trait-name {
  font:700 .56rem/1.08 var(--display-font);
  text-align:center;overflow-wrap:anywhere;
+ display:-webkit-box;
+ -webkit-box-orient:vertical;
+ -webkit-line-clamp:2;
+ line-clamp:2;
+ overflow:hidden;
+ max-height:2.16em;
 }
 #view .adv-card-trait:hover,#view .adv-card-trait:focus-visible{background:#e2eaf1}
 #advancedCardPowerOverlay.symbol-overlay{z-index:10050}
@@ -53,4 +59,159 @@
  }
  #view .adv-dial-stats .adv-card-trait{flex-basis:75px;max-width:90px}
  #view .adv-dial-stats .adv-special-value{min-width:17px;min-height:21px;padding:1px 2px}
+}
+
+/* Inline HCUnits team ability symbols in trait and special power descriptions. */
+#advancedCardPowerOverlay .adv-team-ability-icon {
+ display:inline-block;
+ width:auto;
+ max-width:2.4em;
+ height:1.35em;
+ vertical-align:-.3em;
+ margin:0 .1em;
+ object-fit:contain;
+}
+#advancedCardPowerOverlay .adv-team-ability-missing {
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ box-sizing:border-box;
+ width:1.4em;
+ height:1.4em;
+ vertical-align:-.26em;
+ margin:0 .12em;
+ border:2px dashed #a52727;
+ border-radius:3px;
+ background:#fff1f1;
+ color:#a52727;
+ font:bold .95em/1 sans-serif;
+}
+
+/* Scoped to HCUnits team abilities shown in the Advanced Tracker rules modal. */
+#advancedCardPowerOverlay .adv-team-ability-trigger,
+#advancedTeamAbilityOverlay .adv-team-ability-trigger {
+ display:inline-flex;align-items:center;justify-content:center;
+ padding:0;margin:0 .1em;vertical-align:-.3em;
+ background:transparent;border:0;cursor:pointer;line-height:1;
+}
+#advancedCardPowerOverlay .adv-team-ability-trigger:focus-visible,
+#advancedTeamAbilityOverlay .adv-team-ability-trigger:focus-visible {
+ outline:2px solid #bd7c18;outline-offset:2px;
+}
+#advancedCardPowerOverlay .adv-team-ability-trigger .adv-team-ability-icon,
+#advancedTeamAbilityOverlay .adv-team-ability-trigger .adv-team-ability-icon{
+ margin:0;
+}
+#advancedTeamAbilityOverlay.symbol-overlay{z-index:10060}
+#advancedTeamAbilityOverlay .adv-team-definition-dialog.symbol-dialog{width:min(100%,640px)}
+#advancedTeamAbilityOverlay .symbol-reference-panel.comic-reading-panel{
+ min-height:0;height:auto;margin:0 0 8px;
+}
+#advancedTeamAbilityOverlay .symbol-reference-text{
+ font:clamp(15px,2.2vw,17px)/1.55 var(--reading-font);overflow-wrap:anywhere;
+}
+#advancedTeamAbilityOverlay .adv-card-power-paragraph{margin:0 0 10px;white-space:pre-line}
+#advancedTeamAbilityOverlay .symbol-dialog-header>.adv-team-ability-icon{
+ max-height:34px;max-width:44px;flex:0 0 auto;
+}
+#advancedTeamAbilityOverlay .adv-team-definition-unavailable{
+ color:#a52727;font-weight:700;
+}
+#advancedTeamAbilityOverlay .adv-team-definition-source{
+ display:inline-block;margin-top:7px;
+ color:#224b7b;text-decoration:underline;
+}
+
+/* Character-name team ability icons: separate from tracked/used powers. */
+#advancedUnitRows .adv-unit-name-row{
+ display:flex;align-items:center;flex-wrap:wrap;gap:3px 5px;min-width:0;
+}
+#advancedUnitRows .adv-unit-name-row .adv-unit-name{min-width:0}
+#advancedUnitRows .adv-unit-team-abilities{
+ display:inline-flex;align-items:center;flex-wrap:wrap;gap:3px;min-width:0;
+}
+#advancedUnitRows .adv-unit-team-ability{
+ display:inline-grid;place-items:center;flex:0 0 auto;
+ width:26px;height:26px;padding:1px;
+ border:1px solid transparent;border-radius:3px;
+ background:transparent;cursor:pointer;
+}
+#advancedUnitRows .adv-unit-team-ability .adv-team-ability-icon{
+ display:block;width:22px;height:22px;max-width:100%;object-fit:contain;
+}
+#advancedUnitRows .adv-unit-team-ability .adv-team-ability-missing{
+ display:grid;place-items:center;width:22px;height:22px;
+ border:2px dashed #a52727;border-radius:3px;
+ background:#fff1f1;color:#a52727;font-weight:800;
+}
+#advancedUnitRows .adv-unit-team-ability:hover{background:#e2eaf1}
+#advancedUnitRows .adv-unit-team-ability:focus-visible{
+ outline:2px solid #bd7c18;outline-offset:1px;
+}
+
+/* Let the character name and its team symbols use the available header space. */
+#advancedUnitRows .adv-compact-line>.adv-compact-identity {
+ flex:0 1 auto;
+ width:max-content;
+ max-width:min(55%, 380px);
+ min-width:0;
+}
+#advancedUnitRows .adv-unit-name-row {
+ flex-wrap:wrap;
+ column-gap:5px;
+}
+#advancedUnitRows .adv-unit-name-row .adv-unit-name {
+ overflow-wrap:normal;
+ word-break:normal;
+}
+#advancedUnitRows .adv-unit-team-abilities {
+ flex:0 0 auto;
+ flex-wrap:nowrap;
+}
+@media(max-width:700px){
+ #advancedUnitRows .adv-compact-line>.adv-compact-identity {
+  flex:1 1 210px;
+  width:auto;
+  max-width:none;
+ }
+}
+
+/* Mobile header: name/TA symbols and click controls share one grid row. */
+@media(max-width:700px){
+ #advancedUnitRows .adv-compact-line {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:start;
+  column-gap:8px;
+  row-gap:5px;
+ }
+ #advancedUnitRows .adv-compact-line>.adv-compact-identity {
+  grid-column:1;
+  grid-row:1;
+  width:auto;
+  max-width:none;
+  min-width:0;
+  flex:none;
+ }
+ #advancedUnitRows .adv-compact-line>.adv-compact-click {
+  grid-column:2;
+  grid-row:1;
+  align-self:start;
+  margin-left:0;
+ }
+ #advancedUnitRows .adv-compact-line>.adv-compact-powers {
+  grid-column:1 / -1;
+  grid-row:2;
+  width:100%;
+  min-width:0;
+  margin:0;
+ }
+ #advancedUnitRows .adv-compact-line>.adv-compact-powers:empty {display:none}
+ #advancedUnitRows .adv-compact-line>.adv-compact-add,
+ #advancedUnitRows .adv-compact-line>.adv-compact-edit {
+  grid-column:2;
+  justify-self:end;
+ }
+ #advancedUnitRows .adv-unit-name-row {gap:3px 5px}
+ #advancedUnitRows .adv-unit-name-row .adv-unit-name {max-width:100%}
 }
